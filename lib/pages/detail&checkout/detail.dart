@@ -720,7 +720,7 @@ bool checkOutInitiated = false;
                                                       adminContact: foodItem.adminContact,
                                                       maxDistance: foodItem.maxDistance,
                                                       vendorAccount: foodItem.vendorAccount,
-                                                    ))):Notify(context, 'This item is not Available now', Colors.red);
+                                                    ))):Notify(context, 'UnAvailable now', Colors.red);
                                       },
                                       child: NewVerticalCard(foodItem.ProductImageUrl, foodItem.restaurant, foodItem.foodName,
                                           foodItem.price, foodItem.location, foodItem.time, foodItem.vendorId,
