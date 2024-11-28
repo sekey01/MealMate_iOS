@@ -896,7 +896,7 @@ bool checkOutInitiated = false;
 
                         Consumer<CartModel>(
                           builder: (context, CartModel, child) {
-                            overAllPrice = CartModel.getQuantity * widget.price + deliveryFee;
+                            overAllPrice = CartModel.getQuantity * widget.price;
                             return Text(
                                overAllPrice.toStringAsFixed(2),
                               style: TextStyle(
@@ -1276,9 +1276,15 @@ else if (snapshot.hasData) {
                                  style: TextStyle(color: Colors.red, fontSize: 12.spMin, fontWeight: FontWeight.bold, fontFamily: 'Poppins'),),
                              ),
 
+                              /// SINCE VENDDOR HAS NO COURIER ,
+                              /// THEN FOOD/PRODUCT PRICE IS SENT TO MEALMATE(which will be sent to the vendor by mealmate later...)
+                              /// AND THE DELIVERY FEE IS GIVEN TO THE COURIER WHEN HE ARRIVES
+
                               Padding(padding: const EdgeInsets.all(8),
                                 child: !widget.hasCourier?LiteRollingSwitch(
-                                  //initial value
+                                  /// SINCE VENDDOR HAS NO COURIER ,
+                                  /// THEN FOOD/PRODUCT PRICE IS SENT TO MEALMATE(which will be sent to the vendor by mealmate later...)
+                                  /// AND THE DELIVERY FEE IS GIVEN TO THE COURIER WHEN HE ARRIVES
                                   value: checkOutInitiated,
                                   width: 220.sp,
                                   textOn: 'CheckOut',
@@ -1307,8 +1313,8 @@ else if (snapshot.hasData) {
                                         ),
                                         content: WaitingPayment(),
                                       ).show();
-                                      final paymentProvider = Provider.of<PaystackPaymentProvider>(context, listen: false).
-                                      startPayment(context, widget.vendorAccount, overAllPrice.toInt()).then((result){
+                                       Provider.of<PaystackPaymentProvider>(context, listen: false).
+                                      startPayment(context,  overAllPrice.toInt(), widget.vendorid).then((result){
                                         if(result.success){
                                           Provider.of<SendOrderProvider>(context, listen: false).sendOrder(OrderInfo(
                                             time: time,
@@ -1342,13 +1348,14 @@ else if (snapshot.hasData) {
                                             CourierName: '',
                                             VendorAccount: widget.paymentKey,
                                           )).then((_){
-                                            ///END EMAIL TO ALERT VENDOR FUNCTION
+                                            ///END EMAIL TO ALERT VENDOR FUNCTION OF NEW ORDER
+                                            ///SEND EMAIL TO VENDOR
                                             Provider.of<IncomingOrdersProvider>(context, listen: false).sendEmail(widget.adminEmail, widget.foodName);
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => OrderSent(
-
+                                                  deliveryFee: deliveryFee,
                                                     vendorId: widget.vendorid,
                                                     time: time,
                                                     restaurant: widget.restaurant,
@@ -1391,8 +1398,8 @@ else if (snapshot.hasData) {
 
                                     if (Provider.of<LocalStorageProvider>(context,listen: false).phoneNumber.isNotEmpty && Provider.of<LocationProvider>(context, listen: false).determinePosition().toString().isNotEmpty)
                                     {
-                                      final paymentProvider = Provider.of<PaystackPaymentProvider>(context, listen: false).
-                                      startPayment(context, widget.vendorAccount, overAllPrice.toInt()).then((result){
+                                       Provider.of<PaystackPaymentProvider>(context, listen: false).
+                                      startPayment(context,overAllPrice.toInt(),widget.vendorid).then((result){
                                         if(result.success){
                                           Provider.of<SendOrderProvider>(context, listen: false).sendOrder(OrderInfo(
                                             time: time,
@@ -1432,8 +1439,8 @@ else if (snapshot.hasData) {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => OrderSent(
+                                                    deliveryFee: deliveryFee,
                                                     vendorId: widget.vendorid,
-
                                                     time: time,
                                                     restaurant: widget.restaurant,
                                                     adminEmail: widget.adminEmail,
@@ -1460,7 +1467,11 @@ else if (snapshot.hasData) {
                                       checkOutInitiated = false;
                                     }
                                   },
-                                ):LiteRollingSwitch(
+                                ):
+                                ///SINCE VENDOR HAS COURIER
+                                ///THEN FOOD/PRODUCT PRICE + DELIVERY FEE IS SENT TO THE COURIER WHEN HE ARRIVES
+                                ///
+                                LiteRollingSwitch(
                                   //initial value
                                   value: checkOutInitiated,
                                   width: 250.sp,
@@ -1520,7 +1531,7 @@ else if (snapshot.hasData) {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => OrderSent(
-
+                                                deliveryFee: '0.00',
                                                 vendorId: widget.vendorid,
                                                 time: time,
                                                 restaurant: widget.restaurant,
@@ -1582,7 +1593,7 @@ else if (snapshot.hasData) {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => OrderSent(
-
+                                                deliveryFee: '0.00',
                                                 vendorId: widget.vendorid,
                                                 time: time,
                                                 restaurant: widget.restaurant,

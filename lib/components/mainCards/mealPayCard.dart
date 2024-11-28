@@ -8,9 +8,10 @@ Widget MatePayCard(
   String CardNumber,
   String CardHolderName,
   String ID,
+    String Balance,
 ) {
   return Padding(
-    padding: const EdgeInsets.all(4.0),
+    padding: const EdgeInsets.all(2.0),
     child: Badge(
       alignment: Alignment.topCenter,
       backgroundColor: Colors.deepOrange,
@@ -19,13 +20,15 @@ Widget MatePayCard(
         Premium,
       ),
       child: Container(
-        height: 130.h,
+        height: 140.h,
         width: 290.w,
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Colors.blueGrey,Colors.black, Colors.deepOrangeAccent.shade100]),
+                colors: [
+                  Colors.blueGrey,Colors.black,
+                  Colors.deepOrangeAccent.shade100]),
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
@@ -38,14 +41,39 @@ Widget MatePayCard(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
-                height: 120.h,
+                height: 140.h,
                 width: 50.w,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
 
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                    Padding(padding: const EdgeInsets.only(top: 15),
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'GHS \n',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10.sp,
+                                  color: Colors.white),
+                            ),
+                            TextSpan(
+                              text: Balance,
+                              style: TextStyle(
+                                fontFamily: 'Righteous',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.sp,
+                                  color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    /*Padding(
+                      padding: const EdgeInsets.only(top: 10),
                       child: ClipRRect(
                         borderRadius: BorderRadius.all(Radius.circular(70)),
                         child: Image(
@@ -54,11 +82,11 @@ Widget MatePayCard(
                           width: 40.w,
                         ),
                       ),
-                    ),
+                    ),*/
                     SizedBox(
-                      height: 10.h,
+                      height: 5.h,
                     ),
-                   ImageIcon(AssetImage('assets/Icon/radio-waves.png',), size: 40, color: Colors.red,),
+                   ImageIcon(AssetImage('assets/images/logo.png',), size: 70, color: Colors.red,),
                   ],
                 )),
             Column(

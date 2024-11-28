@@ -23,7 +23,14 @@ class TrackOrder extends StatefulWidget {
   final String restaurant;
   final adminEmail;
   final adminContact;
-  const TrackOrder({super.key,required this.vendorId,required this.time, required this.restaurant, required this.adminEmail,required this.adminContact} );
+  final deliveryFee;
+  const TrackOrder({super.key,required this.vendorId,
+    required this.time,
+    required this.restaurant,
+    required this.adminEmail,
+    required this.adminContact,
+    required this.deliveryFee,
+  } );
 
   @override
   State<TrackOrder> createState() => _TrackOrderState();
@@ -180,7 +187,7 @@ class _TrackOrderState extends State<TrackOrder> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ImageIcon(const AssetImage('assets/Icon/cedi.png'),size: 20.sp,color: Colors.deepOrangeAccent,),
-                        Text( '${Order?.price.toString()}''0', style: TextStyle(color: Colors.black, fontSize: 15.spMin, fontWeight: FontWeight.bold)),
+                        Text( widget.deliveryFee.toString(), style: TextStyle(color: Colors.black, fontSize: 15.spMin, fontWeight: FontWeight.bold, fontFamily: 'Righteous'),),
 
                       ],
                     ),

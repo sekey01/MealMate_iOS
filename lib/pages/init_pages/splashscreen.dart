@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return another.FlutterSplashScreen(
       duration: const Duration(seconds: 10),
-      nextScreen: isLoggedIn ? const Login() : const Login(),
+      nextScreen: isLoggedIn ? const Home() : const Login(),
       backgroundColor: Colors.white,
       splashScreenBody: Center(
         child: Padding(

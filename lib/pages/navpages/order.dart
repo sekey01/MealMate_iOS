@@ -42,6 +42,36 @@ class _OrderListState extends State<OrderList> {
           letterSpacing: 3,
         ),
         backgroundColor: Colors.white,
+
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Container(
+              height: 25.h,
+              width: 80.w,
+              decoration: BoxDecoration(
+                color: Colors.deepOrangeAccent,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    // Handle deposit to wallet
+                  });
+                },
+                child: Text(
+                  'Deposit +',
+                  style: TextStyle(
+                    fontSize: 10.sp,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins'
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -58,6 +88,7 @@ class _OrderListState extends State<OrderList> {
                   ' XXXX - 0123',
                   Provider.of<LocalStorageProvider>(context, listen: true).userName,
                   Provider.of<LocalStorageProvider>(context, listen: true).phoneNumber.toString(),
+                  '0.00',
                 ),
               );
             }),
@@ -121,12 +152,13 @@ class _OrderListState extends State<OrderList> {
       ),
       bottomSheet: Container(
         width: double.infinity,
-        height: 300.h,
+        height: 250.h,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.blueGrey.shade100,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),
+
           ),
         ),
         child: Expanded(

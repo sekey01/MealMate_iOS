@@ -21,9 +21,9 @@ class PaystackPaymentProvider extends ChangeNotifier {
   static const String _baseUrl = 'https://api.paystack.co';
   final String _secretKey = 'sk_live_841205f21f17b0ef08f38682f2d99abbadd9407d';
 
-  Future<PaymentResult> startPayment(BuildContext context,String vendorAccount,int amount) async {
+  Future<PaymentResult> startPayment(BuildContext context,int amount,  String VendorID) async {
     try {
-      final response = await _initializeTransaction(vendorAccount,amount);
+      final response = await _initializeTransaction(amount, VendorID);
       if (response.statusCode == 200) {
         print('Payment initialized: ${response.body}');
         final responseData = jsonDecode(response.body);
@@ -61,33 +61,24 @@ class PaystackPaymentProvider extends ChangeNotifier {
     }
   }
 
-  Future<http.Response> _initializeTransaction(String vendorAccount,int amount) async {
+  Future<http.Response> _initializeTransaction(int amount, VendorID) async {
     final url = Uri.parse('$_baseUrl/transaction/initialize');
     final headers = {
       'Authorization': 'Bearer $_secretKey',
       'Content-Type': 'application/json',
     };
     final body = jsonEncode({
-      'email': 'customer@email.com',
-      'amount': amount*100,
+      'email': '$VendorID@mealmate.com',
+      'amount': amount * 100,
       'currency': 'GHS',
       'reference': _generateReference(),
       'callback_url': 'myapp://payment-success',
       'mobile_money': {
         'phone': '0553767177',
         'provider': 'MTN',
-      },
-      'split': {
-        'type': 'percentage',
-        'bearer_type': 'account',
-        'subaccounts': [
-          {
 
-            'subaccount': vendorAccount,
-            'share': 90,
-          },
-        ],
       },
+      //add my account id i.e ACCT_m4
 
     });
 
@@ -137,6 +128,6 @@ class PaystackPaymentProvider extends ChangeNotifier {
   }
 
   String _generateReference() {
-    return 'ChargedFromFlutter_${DateTime.now().millisecondsSinceEpoch}';
+    return 'MealMate${DateTime.now().millisecondsSinceEpoch}';
   }
 }
