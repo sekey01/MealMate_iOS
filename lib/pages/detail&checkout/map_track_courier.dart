@@ -5,8 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../UserLocation/LocationProvider.dart';
-import 'CustomLoading.dart';
+import '../../UserLocation/LocationProvider.dart';
+import '../../components/CustomLoading.dart';
 
 class TrackCourierMap extends StatefulWidget {
   final double courierLatitude;

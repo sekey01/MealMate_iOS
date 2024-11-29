@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mealmate_ios/UserLocation/LocationProvider.dart';
 import 'package:mealmate_ios/components/CustomLoading.dart';
-import 'package:mealmate_ios/components/map_track_courier.dart';
+import 'package:mealmate_ios/pages/detail&checkout/map_track_courier.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../Courier/courierInit.dart';
