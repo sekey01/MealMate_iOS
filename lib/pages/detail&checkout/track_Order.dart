@@ -5,7 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mealmate_ios/UserLocation/LocationProvider.dart';
 import 'package:mealmate_ios/components/CustomLoading.dart';
+import 'package:mealmate_ios/components/map_track_courier.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../Courier/courierInit.dart';
@@ -179,43 +181,55 @@ class _TrackOrderState extends State<TrackOrder> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-             ///MEALMATE HERE
+             ///AMOUNT TO PAY COURIER
+                  ///BUTTON TO CALL VENDOR
+                  ///
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.only(right: 8.0, left: 8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ImageIcon(const AssetImage('assets/Icon/cedi.png'),size: 20.sp,color: Colors.deepOrangeAccent,),
-                        Text( widget.deliveryFee.toString(), style: TextStyle(color: Colors.black, fontSize: 15.spMin, fontWeight: FontWeight.bold, fontFamily: 'Righteous'),),
+                        Column(
+                          children: [
+                            const Text('Amount to pay Courier', style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 10, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
+                            Row(
+                              children: [
+                                ImageIcon(const AssetImage('assets/Icon/cedi.png'),size: 20.sp,color: Colors.deepOrangeAccent,),
+                                Text( widget.deliveryFee.toString(), style: TextStyle(color: Colors.black, fontSize: 20.spMin, fontWeight: FontWeight.bold, fontFamily: 'Righteous'),),
+                              ],
+                            ),
+                          ],
+                        ),
+
+                        ///VENDOR CONTACT
+                        ///
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () async{
+                              ///THIS IS THE CALL FUNCTION TO CALL THE VENDOR
+                              EasyLauncher.call(number: widget.adminContact.toString());
+                            },
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+
+                                children: [
+
+                                  Text('Call Vendor ', style:TextStyle(color: Colors.blueGrey, fontSize: 15.sp, fontFamily: 'Poppins') ,),
+                                  ImageIcon(const AssetImage('assets/Icon/customer-service.png'),size: 25.sp,color: Colors.green,)
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
 
                       ],
                     ),
                   ),
 
-                  ///VENDOR CONTACT
-                  ///
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () async{
-                        ///THIS IS THE CALL FUNCTION TO CALL THE VENDOR
-                        EasyLauncher.call(number: widget.adminContact.toString());
-                      },
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-
-                          children: [
-
-                            Text('Tap here to Call Vendor ', style:TextStyle(color: Colors.blueGrey, fontSize: 15.sp, fontFamily: 'Poppins') ,),
-                            ImageIcon(const AssetImage('assets/Icon/customer-service.png'),size: 25.sp,color: Colors.green,)
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-            const Text('Order In progress...', style: TextStyle(color: Colors.blueGrey, fontSize: 25, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
+           // const Text('Order In progress...', style: TextStyle(color: Colors.blueGrey, fontSize: 25, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
 
                   ///LOADER
                   const Padding(padding: EdgeInsets.all(16), child: CustomLoGoLoading(),),
@@ -293,8 +307,46 @@ class _TrackOrderState extends State<TrackOrder> {
                     ),
                   ),
                   !Order.courier?Text(' Courier will get to your location soon...', style: TextStyle(color: Order.courier?Colors.green: Colors.grey, fontSize: 10.spMin, fontWeight: FontWeight.bold),):
+                      ///COURIER DETAILS IS DISPLAYED HERE WHEB THE COURIER IS ASSIGNED
+                  /// AND A BUTTON IS DISPLAYED TO TRACK THE COURIER ON THE MAP
+                  /// Center(
+                  //                             child: ExpansionTile(title: Text("Courier Details",style: TextStyle(color: Colors.blueGrey, fontFamily: 'Poppins'),),
+                  //                             children: [
+                  //                               ListTile(
+                  //                                 leading: CircleAvatar(
+                  //                                   backgroundImage: NetworkImage(courier.CourierPictureUrl),
+                  //                                   onBackgroundImageError: (exception, stackTrace) {
+                  //                                     const CircleAvatar(
+                  //                                       backgroundImage: AssetImage('assets/Icon/courier.png'),
+                  //                                     );
+                  //                                   },
+                  //                                 ),
+                  //                                 title: Text('Name: ${courier.CourierName}', style: const TextStyle(color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),),
+                  //                                 subtitle: Text('No: ${courier.CourierVehicleNumber}', style: const TextStyle(color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),),
+                  //
+                  //                                 ///CALL BUTTON
+                  //                                 ///WHEN PRESSED CALLS THE COURIER
+                  //                                 ///THE COURIER NUMBER IS STORED IN THE COURIER MODEL
+                  //                                 trailing: TextButton(onPressed: () async{
+                  //                                   EasyLauncher.call(number: courier.CourierContact.toString());
+                  //                                 }, child: const Text('Call Now', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),)),
+                  //                               ),
+                  //                               IconButton(onPressed: (){
+                  //                                 Navigator.push(context, MaterialPageRoute(builder: (context)=> TrackCourierMap(
+                  //                                   courierLatitude: courier.CourierLatitude,
+                  //                                   courierLongitude: courier.CourierLongitude,
+                  //                                 )));
+                  //                               }, icon: const Icon(Icons.map, color: Colors.green,)),
+                  //                             ],),
+                  //                           );
+                  ///
+                  ///
+                  ///
                   FutureBuilder(future: getCourierDetails(context, Order.CourierId.toString()),
                       builder: (context, snapshot){
+                    //generate time to display the current time and wherether ids m or pm
+                    final String time = DateTime.now().hour.toString() + ':' + DateTime.now().minute.toString() + ' ' + (DateTime.now().hour > 12 ? 'PM' : 'AM');
+                   // final String time = DateTime.now().hour.toString() + ':' + DateTime.now().minute.toString() ;
                         if(snapshot.connectionState == ConnectionState.waiting){
                           return const Text('Loading Courier Details...', style: TextStyle(color: Colors.grey,fontSize: 10,fontFamily: 'Poppins'),);
                         } else if (snapshot.hasError){
@@ -303,26 +355,172 @@ class _TrackOrderState extends State<TrackOrder> {
                           return const Text('Courier Will Call you soon...', style: TextStyle(color: Colors.red,fontSize: 10,fontFamily: 'Poppins'),);
                         } else {
                           final courier = snapshot.data as CourierModel;
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ListTile(
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(courier.CourierPictureUrl),
-                                  onBackgroundImageError: (exception, stackTrace) {
-                                     const CircleAvatar(
-                                      backgroundImage: AssetImage('assets/Icon/courier.png'),
-                                    );
-                                  },
+                          return  GestureDetector(
+                            onTap: (){
+                              showBottomSheet(context: (context),showDragHandle: true,enableDrag: true,backgroundColor: Colors.blueGrey.shade100, builder: (context){
+                                return Container(
+                                  height: 250.h,
+                                  color: Colors.blueGrey.shade100,
+
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.vertical,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 50.h,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15)),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            children: [
+
+                                              Icon(Icons.location_history, color: Colors.white,),
+                                              const Text('Courier Details', style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold, fontFamily: 'Poppins', letterSpacing: 1),),
+                                              Container(
+                                                height: 20.h,
+                                                width: 80.w,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.blueGrey,
+                                                  borderRadius: BorderRadius.circular(30),
+                                                ),
+                                                child:  Center(child: Text(time, style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, fontFamily: 'Poppins'),)),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(15),
+                                          ),
+                                          child: Column(
+                                            children: [
+
+                                              ///COURIER DETAILS
+                                              ListTile(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(15),
+                                                ),
+                                                leading: CircleAvatar(
+                                                  backgroundImage: NetworkImage(courier.CourierPictureUrl),
+                                                  onBackgroundImageError: (exception, stackTrace) {
+                                                    const CircleAvatar(
+                                                      backgroundImage: AssetImage('assets/Icon/courier.png'),
+                                                    );
+                                                  },
+                                                ),
+                                                title: Text('Name: ${courier.CourierName}', style: const TextStyle(color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),),
+                                                subtitle: Text('Vehicle N0: ${courier.CourierVehicleNumber}', style: const TextStyle(color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),),
+
+                                                ///CALL BUTTON
+                                                ///WHEN PRESSED CALLS THE COURIER
+                                                ///THE COURIER NUMBER IS STORED IN THE COURIER MODEL
+                                                trailing: TextButton(onPressed: () async{
+                                                  EasyLauncher.call(number: courier.CourierContact.toString());
+                                                }, child: LottieBuilder.asset('assets/Icon/online.json', height: 20, width: 20,)),
+                                              ),
+
+                                              ///BUTTONS TO TRACK COURIER AND CALL COURIER
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                children: [
+                                                  TextButton(onPressed: (){
+                                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> TrackCourierMap(
+                                                      courierLatitude: courier.CourierLatitude,
+                                                      courierLongitude: courier.CourierLongitude,
+                                                    )));
+                                                  }, child: const Text('Track On Map', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),)),
+                                                  TextButton(onPressed: (){
+                                                    EasyLauncher.call(number: courier.CourierContact.toString());
+                                                  }, child: const Text('Call Now', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),)),
+                                                ],
+                                              ),
+                                              
+                                              ///YOUR LOCATION
+                                              ListTile(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(15),
+                                                ),
+                                                leading: Icon(Icons.map_outlined, color: Colors.blueGrey,),
+                                                title: Text('Your Current Location is :', style: const TextStyle(color: Colors.black, fontSize: 15,fontFamily: 'Poppins' ),),
+                                                subtitle:
+                                                ///LOCATION DISPLAYED HERE
+                                                ///
+                                                SingleChildScrollView(
+                                                  scrollDirection: Axis.horizontal,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(bottom: 20),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                      children: [
+                                                        Icon(Icons.location_on_outlined, size: 20.spMin,color: Colors.blueGrey,),
+                                                        FutureBuilder(
+                                                            future:
+                                                            Provider.of<LocationProvider>(context, listen: false).determinePosition(),
+                                                            builder: (context, snapshot) {
+                                                              if (snapshot.hasData) {
+                                                                return Padding(
+                                                                  padding: const EdgeInsets.all(2.0),
+                                                                  child: Text(snapshot.data.toString(),
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: TextStyle(
+                                                                          overflow: TextOverflow.ellipsis,
+                                                                          color: Colors.black,
+                                                                          fontWeight: FontWeight.bold,
+                                                                          fontSize: 12.spMin)),
+                                                                );
+                                                              }
+                                                              return Text(
+                                                                'locating you...',
+                                                                style: TextStyle(color: Colors.blueGrey,fontWeight: FontWeight.normal,fontSize: 10.spMin),
+                                                              );
+                                                            }),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              ///A NOTE TO USER TO REPORT ALL ISSUE TO MEALMATE
+                                              GestureDetector(
+                                                onTap: () async{
+                                                  await EasyLauncher.call(number: '055 376 7177');
+                                                },
+                                                child: ListTile(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                  ),
+                                                  leading: const Icon(Icons.report, color: Colors.red,),
+                                                  title: const Text('Report any issue to MealMate', style: TextStyle(color: Colors.red, fontSize: 12, fontWeight: FontWeight.bold, fontFamily: 'Poppins'),),
+                                                  subtitle: const Text('We are here to help you...', style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold, fontFamily: 'Poppins'),),
+                                                    trailing: TextButton(onPressed: () async{
+                                                      await EasyLauncher.call(number: '055 376 7177');
+                                                    }, child: const Icon(Icons.call,color: Colors.red,),
+                                                ),),
+                                              ),
+
+
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              });
+                            },
+                            child: Center(
+                              child: Container(
+                                height: 20,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(30),
                                 ),
-                                title: Text('Name: ${courier.CourierName}', style: const TextStyle(color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),),
-                                subtitle: Text('No: ${courier.CourierVehicleNumber}', style: const TextStyle(color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),),
-                                trailing: TextButton(onPressed: () async{
-                                  EasyLauncher.call(number: courier.CourierContact.toString());
-                                }, child: const Text('Call Now', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),)),
-                              )
-                            ],
+                                child: Center(child: Text('Show Courier Details', style: TextStyle(color: Colors.white,fontSize: 10,fontFamily: 'Poppins'),)),
+                              ),
+                            ),
                           );
                         }
                       }),

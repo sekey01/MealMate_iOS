@@ -858,7 +858,7 @@ bool checkOutInitiated = false;
                         GestureDetector(
                           onTap: () async{
                             ///THIS IS THE CALL FUNCTION TO CALL THE VENDOR
-                            EasyLauncher.call(number: widget.adminContact.toString());
+                           await EasyLauncher.call(number: widget.adminContact.toString());
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
