@@ -16,8 +16,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  //check if user is logged in
-  //set this initial to true when testing on simulator since it will not have any user logged in
+  ///check if user is logged in
+  ///set this initial to true when testing on simulator since it will not have any user logged in
   bool isLoggedIn = false;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('User granted permission');
+      print('User granted permission to receive notifications');
     } else {
       print('User declined or has not accepted permission');
     }

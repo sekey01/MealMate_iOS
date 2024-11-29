@@ -1,3 +1,4 @@
+import 'package:easy_url_launcher/easy_url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -89,7 +90,6 @@ class _LoginState extends State<Login> {
   }
 
 
-
   Widget build(BuildContext context) {
 
     return Scaffold(
@@ -127,7 +127,8 @@ class _LoginState extends State<Login> {
                         'Building the Ecosystem with the Meal',
                         style: TextStyle(
                           fontFamily: 'Poppins',
-                            fontSize: 13.sp, color: Colors.black),
+                            fontSize: 13.sp,
+                            color: Colors.blueGrey),
                       ),
                       SizedBox(
                         height: 20.h,
@@ -146,38 +147,46 @@ class _LoginState extends State<Login> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,),
-    onPressed: ()  {
-        _handleSignIn();
-                          },
+                          onPressed: ()  {
+                                     _handleSignIn();
+                                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Continue with Google ",
+                                "Continue with Google",
                                 style: TextStyle(
+                                  fontWeight: FontWeight.bold,
                                   letterSpacing: 1,
                                   color: Colors.white,
                                   fontFamily: 'Poppins',
-                                  fontSize: 15.spMin,
+                                  fontSize: 15.sp,
                                 ),
                               ),
- Image(image: AssetImage('assets/Icon/google.png'),height: 50.sp,width: 40.spMin,)
-                              //ImageIcon(AssetImage('assets/Icon/google.png'), size: 30.sp,color: Colors.blue,)
-
+                 Image(
+                   image: AssetImage('assets/Icon/google.png'),
+                   height: 50.sp,width: 40.spMin,
+                 )
                             ],
                           ),
                         ),
                       ),
-                      RichText(text: TextSpan(
-                          children: [
-                            TextSpan(text: "By Continuing you agree to the ",
-                                style: TextStyle(color: Colors.black, fontSize: 10.spMin,fontFamily: 'Poppins',)),
-                            TextSpan(text: "Terms & Conditions",
-                                style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 10.spMin, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
+                      GestureDetector(
+
+                        onTap: () async{
+                          await EasyLauncher.url(url: 'https://www.google.com/', mode: Mode.platformDefault);
+                        },
+                        child: RichText(text: TextSpan(
+                            children: [
+                              TextSpan(text: "By Continuing you agree to the ",
+                                  style: TextStyle(color: Colors.black, fontSize: 10.spMin,fontFamily: 'Poppins',)),
+                              TextSpan(text: "Terms & Conditions",
+                                  style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 10.spMin, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
 
 
-                          ]
-                      )),
+                            ]
+                        )),
+                      ),
                       SizedBox(
                         height: 150.h,
                       ),

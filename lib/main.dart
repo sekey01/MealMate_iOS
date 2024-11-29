@@ -30,6 +30,7 @@ void main() async {
   );
   FirebaseFirestore.instance.settings = Settings(persistenceEnabled: true);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  //
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(MyApp());
@@ -38,7 +39,7 @@ void main() async {
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print("Handling a background message: ${message.messageId}");
+  print("Handling a background message : ${message.messageId}");
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
