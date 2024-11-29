@@ -1,14 +1,12 @@
 import 'dart:ui';
 
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart' as another;
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
-import 'package:mealmate_ios/AdminPanel/Pages/adminlogin.dart';
-
 import '../authpages/login.dart';
 import '../navpages/home.dart';
 
@@ -20,7 +18,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   //check if user is logged in
   //set this initial to true when testing on simulator since it will not have any user logged in
-  bool isLoggedIn = true;
+  bool isLoggedIn = false;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future CheckSignedIn() async {
@@ -28,18 +26,49 @@ class _SplashScreenState extends State<SplashScreen> {
       setState(() {
         isLoggedIn = true;
       });
-    } else {
-      setState(() {
-        isLoggedIn = false;
-      });
     }
   }
 
   @override
   initState() {
     super.initState();
-    //CheckSignedIn();
+    CheckSignedIn();
+
+    _requestNotificationPermissions();
+    _configureFirebaseListeners();
   }
+
+  void _requestNotificationPermissions() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('User granted permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
+  }
+
+  void _configureFirebaseListeners() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print('Received a message while in the foreground!');
+      print('Message data: ${message.data}');
+
+      if (message.notification != null) {
+        print('Message also contained a notification: ${message.notification}');
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('Message clicked!');
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {

@@ -326,8 +326,8 @@ class _IndexState extends State<Index> {
 
 
                   ///FOOD DELIVERY AND SUPERMARKET AND SHOPS
+                  ///
                   Container(
-                    height: 260.h,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.blueGrey.shade100,
@@ -343,9 +343,8 @@ class _IndexState extends State<Index> {
                     ),
 
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: Row(
-
                         children: [
                           ///FOOD DELIVERY
                           Expanded(
@@ -356,41 +355,44 @@ class _IndexState extends State<Index> {
 
                               },
                               child: Container(
-
+                                height: 250.h,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        'Food Delivery',
-                                        style: TextStyle(
-                                          fontFamily: 'Righteous',
-                                            color: Colors.black,
-                                            fontSize: 35.spMin,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        'Order from your favorite restaurant',
-                                        style: TextStyle(
-                                          wordSpacing: 2,
-                                            fontFamily: 'Poppins',
-                                            color: Colors.blueGrey,
-                                            fontSize: 13.spMin,
-
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          'Food Delivery',
+                                          style: TextStyle(
+                                            fontFamily: 'Righteous',
+                                              color: Colors.black,
+                                              fontSize: 35.spMin,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                    ),
-                                    Image(image: const AssetImage('assets/images/burger.png'), height: 100.h, width: 200.w,),
 
-                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: Text(
+                                          'Order from your favorite restaurant',
+                                          style: TextStyle(
+                                            wordSpacing: 2,
+                                              fontFamily: 'Poppins',
+                                              color: Colors.blueGrey,
+                                              fontSize: 13.spMin,
+
+                                          ),
+                                        ),
+                                      ),
+                                      Image(image: const AssetImage('assets/images/burger.png'), height: 100.h, width: 200.w,),
+
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -401,115 +403,118 @@ class _IndexState extends State<Index> {
                             flex: 2,
                             child: Padding(
                               padding: const EdgeInsets.only(left: 4),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  ///SUPERMARKET
-                                  ///
-                                  ///
-                                  GestureDetector(
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitPageSearch(searchCollection: 'Grocery 🛒', Title: 'Supermarket',)));
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    ///SUPERMARKET
+                                    ///
+                                    ///
+                                    GestureDetector(
+                                      onTap: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitPageSearch(searchCollection: 'Grocery 🛒', Title: 'Supermarket',)));
 
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 8.0,top: 8),
-                                            child: Text(
-                                              'Supermarket',
-                                              style: TextStyle(
-                                                  fontFamily: 'Righteous',
-                                                  color: Colors.black,
-                                                  fontSize: 18.spMin,
-                                                  fontWeight: FontWeight.bold),
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8.0,top: 8),
+                                              child: Text(
+                                                'Supermarket',
+                                                style: TextStyle(
+                                                    fontFamily: 'Righteous',
+                                                    color: Colors.black,
+                                                    fontSize: 18.spMin,
+                                                    fontWeight: FontWeight.bold),
+                                              ),
                                             ),
-                                          ),
 
 
-                                                                Padding(
-                                                                  padding: const EdgeInsets.only(left: 8.0,),
-                                                                  child: Text(
-                                                                    'Groceries and more...',
-                                                                    style: TextStyle(
-                                     // fontFamily: 'Popins',
-                                      color: Colors.blueGrey,
-                                      fontSize: 15.spMin,
-                                      //fontWeight: FontWeight.bold
-                                                                    ),
-                                                                  ),),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 16),
-                                            child: Image(image: const AssetImage('assets/images/grocery.png'), height: 100.h, width: 150.w,),
-                                          ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets.only(left: 8.0,),
+                                                                    child: Text(
+                                                                      'Groceries and more...',
+                                                                      style: TextStyle(
+                                       // fontFamily: 'Popins',
+                                        color: Colors.blueGrey,
+                                        fontSize: 15.spMin,
+                                        //fontWeight: FontWeight.bold
+                                                                      ),
+                                                                    ),),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 16),
+                                              child: Image(image: const AssetImage('assets/images/grocery.png'), height: 100.h, width: 150.w,),
+                                            ),
 
 
 
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(height: 5.h,),
+                                    SizedBox(height: 5.h,),
 
 
-                                  ///SHOPS
-                                  ///
-                                  ///
-                                  GestureDetector(
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitPageSearch(searchCollection: 'Clothing 👗', Title: ' Other Shops',)));
+                                    ///SHOPS
+                                    ///
+                                    ///
+                                    GestureDetector(
+                                      onTap: (){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitPageSearch(searchCollection: 'Clothing 👗', Title: ' Other Shops',)));
 
-                                    },
-                                    child: Container(
-                                      height: 95.h,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
+                                      },
+                                      child: Container(
+                                        height: 100.h,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Expanded(child: SingleChildScrollView(
+                                              scrollDirection: Axis.vertical,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  children: [
+                                                   Padding(
+                                                     padding: const EdgeInsets.only(left: 8,),
+                                                     child: Text('Shops', style: TextStyle(
+                                                         fontFamily: 'Righteous',
+                                                         color: Colors.black,
+                                                         fontSize: 16.spMin,
+                                                         fontWeight: FontWeight.bold),),
+                                                   ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left: 8.0),
+                                                      child: Text('Visit shops around you...',
+                                                        style: TextStyle(
+                                                            color: Colors.blueGrey,
+                                                            fontSize: 10.spMin,
+                                                            fontFamily: 'Poppins',
+                                                            //fontWeight: FontWeight.bold
+                                                        ),),
+                                                    ),
+
+                                                  ],
+                                              ),
+                                            )),
+                                            Expanded(child: Image(image: const AssetImage('assets/images/shops.jpg'), height: 60.h, width: 130.w,)),
+                                          ],
+                                        ),
                                       ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Expanded(child: SingleChildScrollView(
-                                            scrollDirection: Axis.vertical,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                children: [
-                                                 Padding(
-                                                   padding: const EdgeInsets.only(left: 8,),
-                                                   child: Text('Shops', style: TextStyle(
-                                                       fontFamily: 'Righteous',
-                                                       color: Colors.black,
-                                                       fontSize: 16.spMin,
-                                                       fontWeight: FontWeight.bold),),
-                                                 ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(left: 8.0),
-                                                    child: Text('Visit shops around you...',
-                                                      style: TextStyle(
-                                                          color: Colors.blueGrey,
-                                                          fontSize: 10.spMin,
-                                                          fontFamily: 'Poppins',
-                                                          //fontWeight: FontWeight.bold
-                                                      ),),
-                                                  ),
-
-                                                ],
-                                            ),
-                                          )),
-                                          Expanded(child: Image(image: const AssetImage('assets/images/shops.jpg'), height: 60.h, width: 130.w,)),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -536,6 +541,7 @@ class _IndexState extends State<Index> {
                     height: 20.h,
                   ),
                   ///COURRESSEL  FOR ADS
+                  ///
 
                   ///
 
@@ -570,7 +576,7 @@ class _IndexState extends State<Index> {
                               Text(
                                 'view all',
                                 style: TextStyle(
-                                    fontSize: 15.spMin, color: Colors.deepOrangeAccent,fontFamily: 'Poppins'),
+                                    fontSize: 12.spMin, color: Colors.deepOrangeAccent,fontFamily: 'Poppins'),
                               ),
                               Icon(
                                 Icons.arrow_forward_ios,

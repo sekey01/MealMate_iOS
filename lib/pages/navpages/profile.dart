@@ -108,7 +108,7 @@ class _ProfileState extends State<Profile> {
                           return Text(snapshot.data.toString(),  style: TextStyle(
                             letterSpacing: 1,
                             color: Colors.black,
-                            fontSize: 15.sp,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Poppins'
                           ),
@@ -117,7 +117,7 @@ class _ProfileState extends State<Profile> {
                           return Text('useremail@gmail.com',  style: TextStyle(
                             letterSpacing: 1,
                             color: Colors.black,
-                            fontSize: 15.sp,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Poppins'
                           ),);
@@ -139,7 +139,7 @@ class _ProfileState extends State<Profile> {
                               return Text(snapshot.data.toString(),  style: TextStyle(
                                 letterSpacing: 1,
                                 color: Colors.black,
-                                fontSize: 25.sp,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Righteous',
 
@@ -149,7 +149,7 @@ class _ProfileState extends State<Profile> {
                                 fontFamily:'Righteous',
                                 letterSpacing: 1,
                                 color: Colors.black,
-                                fontSize: 25.sp,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.bold,
                               ),);
                             }
@@ -175,7 +175,7 @@ class _ProfileState extends State<Profile> {
 
                         letterSpacing: 1,
                         color: Colors.deepOrangeAccent,
-                        fontSize: 20.sp,
+                        fontSize: 15.sp,
                       ),
                       );
                     }else{

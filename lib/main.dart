@@ -23,7 +23,6 @@ import 'firebase_options.dart';
 import 'models&ReadCollectionModel/cartmodel.dart';
 import 'models&ReadCollectionModel/sendOrderFunctionProvider.dart';
 import 'models&ReadCollectionModel/userReadwithCollection.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -41,7 +40,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   print("Handling a background message: ${message.messageId}");
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

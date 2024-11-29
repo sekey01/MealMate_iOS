@@ -283,9 +283,15 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                       ),
                                     ),
                                     keyboardType: TextInputType.number,
+
+                                    onChanged: (value){
+                                      if (formKey.currentState!.validate()) {
+                                        Provider.of<AdminFunctions>(context, listen: false).UpdateCourier(context, Orders.vendorId, Orders.phoneNumber,int.parse(value));
+                                      }
+                                    },
                                     onFieldSubmitted: (value) {
                                       if (formKey.currentState!.validate()) {
-                                        Provider.of<AdminFunctions>(context, listen: false).UpdateCourier(context, Orders.vendorId, Orders.phoneNumber,int.parse(value) , Orders.time);
+                                        Provider.of<AdminFunctions>(context, listen: false).UpdateCourier(context, Orders.vendorId, Orders.phoneNumber,int.parse(value));
                                                 }
                                     },
 
@@ -320,7 +326,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                           textSize: 8.0,
                           onChanged: (bool state) {
                             print('Served');
-                            Provider.of<AdminFunctions>(context, listen: false).switchServedFood(context,Orders.vendorId , Orders.phoneNumber, state, Orders.time);
+                            Provider.of<AdminFunctions>(context, listen: false).switchServedFood(context,Orders.vendorId , Orders.phoneNumber, state,);
                  //   print(Orders.vendorId);
                  //   print(Orders.phoneNumber);
                             ///Use it to manage the different states
