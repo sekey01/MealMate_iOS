@@ -25,7 +25,7 @@ class TrackOrder extends StatefulWidget {
   final String restaurant;
   final adminEmail;
   final adminContact;
-  final deliveryFee;
+  final double deliveryFee;
   const TrackOrder({super.key,required this.vendorId,
     required this.time,
     required this.restaurant,
@@ -196,7 +196,7 @@ class _TrackOrderState extends State<TrackOrder> {
                             Row(
                               children: [
                                 ImageIcon(const AssetImage('assets/Icon/cedi.png'),size: 20.sp,color: Colors.deepOrangeAccent,),
-                                Text( widget.deliveryFee.toString(), style: TextStyle(color: Colors.black, fontSize: 20.spMin, fontWeight: FontWeight.bold, fontFamily: 'Righteous'),),
+                                Text( widget.deliveryFee.toStringAsFixed(2), style: TextStyle(color: Colors.black, fontSize: 20.spMin, fontWeight: FontWeight.bold, fontFamily: 'Righteous'),),
                               ],
                             ),
                           ],

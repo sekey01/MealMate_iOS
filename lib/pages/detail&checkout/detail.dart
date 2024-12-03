@@ -135,6 +135,7 @@ bool checkOutInitiated = false;
 
   double overAllPrice = 0.00;
   late double deliveryFee;
+
   TextEditingController messageController = TextEditingController();
 
 
@@ -452,11 +453,10 @@ bool checkOutInitiated = false;
                               Builder(
                                 builder: (context) {
 
-
-                                  ///Delivery fee is GHC 10.00  per km, so i multiplied it by the distance between the vendor and buyer
+                                  ///Delivery fee is GHC 5.00  per km, so i multiplied it by the distance between the vendor and buyer
                                   ///
 
-                                   deliveryFee = Provider.of<LocationProvider>(context, listen: false).Distance * 10;
+                                   deliveryFee = Provider.of<LocationProvider>(context, listen: false).Distance * 5;
                                   return Text(
                                     deliveryFee.toStringAsFixed(2),
                                     style: TextStyle(
@@ -896,7 +896,7 @@ bool checkOutInitiated = false;
 
                         Consumer<CartModel>(
                           builder: (context, CartModel, child) {
-                            overAllPrice = CartModel.getQuantity * widget.price;
+                            overAllPrice = ((CartModel.getQuantity * widget.price) + deliveryFee).toDouble();
                             return Text(
                                overAllPrice.toStringAsFixed(2),
                               style: TextStyle(
@@ -1219,6 +1219,10 @@ else if (snapshot.hasData) {
                                   ),),),
 
                               SizedBox(height: 10.h,),
+
+                              ///TEXTFIELD FOR USER TO ENTER EXTRA INFORMATION
+                              ///
+                              ///
                               Padding(
                                 padding: const EdgeInsets.all(18.0),
                                 child: TextField(
@@ -1230,17 +1234,17 @@ else if (snapshot.hasData) {
                                   decoration: InputDecoration(
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Colors.blueGrey.shade100,
+                                        color: Colors.blueGrey.shade200,
                                         style: BorderStyle.solid,
                                       ),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                        color: Colors.blueGrey.shade100,
+                                        color: Colors.blueGrey.shade200,
                                         style: BorderStyle.solid,
                                       ),
                                     ),
-                                    label: const Text('Leave a message for Vendor/Courier ... \n - Landmark\n - Delivery Instructions\n - etc',),
+                                    label: const Text('Leave a message for Vendor/Courier ... \n - Landmark\n - Delivery Instructions\n - Another Location...',),
                                     labelStyle: TextStyle(
                                       color: Colors.blueGrey,
                                       fontSize: 12.sp,
@@ -1265,16 +1269,41 @@ else if (snapshot.hasData) {
 
                               SizedBox(height: 15.h),
 
-      Padding(
+                             Padding(
         padding: const EdgeInsets.all(8.0),
         child: Text('Swipe to Checkout', style: TextStyle(color: Colors.green, fontSize: 20.sp, fontWeight: FontWeight.bold, fontFamily: 'Righteous'),),
       ),
+
+
+                             /// INFORMING ON PAYMENT TO VENDOR AND COURIER
+                              ///
+                              ///
                              Padding(
                                padding: const EdgeInsets.all(8.0),
-                               child: Text(!widget.hasCourier?'make sure payment is done within 45 seconds after swipe': 'Pay to the Courier when he arrives',
-                                 textAlign: TextAlign.center,
-                                 style: TextStyle(color: Colors.red, fontSize: 12.spMin, fontWeight: FontWeight.bold, fontFamily: 'Poppins'),),
-                             ),
+                               child: widget.hasCourier?RichText(text: TextSpan(
+                                   children: [
+                                     TextSpan(text: 'Pay an amount  of ',style: TextStyle(color: Colors.blueGrey, fontSize: 10.sp, fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
+                                      TextSpan(text: ' GHC ${(overAllPrice).toStringAsFixed(2)} ',style: TextStyle(color: Colors.black, fontSize: 12.sp, fontFamily: 'Righteous', fontWeight: FontWeight.bold)),
+                                     TextSpan(text: ' to Courier upon arrival',style: TextStyle(color: Colors.blueGrey, fontSize: 10.sp, fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
+
+                                   ]
+                               )):
+                               RichText(text: TextSpan(
+                                    children: [
+                                      TextSpan(text: 'Pay an amount of ',style: TextStyle(color: Colors.blueGrey, fontSize: 10.sp, fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
+                                      TextSpan(text: ' GHC ${(deliveryFee).toStringAsFixed(2)} ',style: TextStyle(color: Colors.red, fontSize: 12.sp, fontFamily: 'Righteous', fontWeight: FontWeight.bold)),
+                                      TextSpan(text: ' to Courier as delivery fee when he arrives. But ',style: TextStyle(color: Colors.blueGrey, fontSize: 10.sp, fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
+                                      TextSpan(text: ' GHC ${(widget.price)} ',style: TextStyle(color: Colors.black, fontSize: 12.sp, fontFamily: 'Righteous', fontWeight: FontWeight.bold)),
+                                      TextSpan(text: ' will be paid to Vendor when you CHECKOUT below 👇 ',style: TextStyle(color: Colors.blueGrey, fontSize: 10.sp, fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
+
+                                    ]
+                                ), textAlign: TextAlign.center,),
+                               ),
+
+
+
+
+
 
                               /// SINCE VENDDOR HAS NO COURIER ,
                               /// THEN FOOD/PRODUCT PRICE IS SENT TO MEALMATE(which will be sent to the vendor by mealmate later...)
@@ -1346,6 +1375,7 @@ else if (snapshot.hasData) {
                                               CourierId: 0,
                                               CourierName: '',
                                               VendorAccount: widget.paymentKey,
+                                              isCashOnDelivery: false,
                                             )).then((_){
                                               ///END EMAIL TO ALERT VENDOR FUNCTION OF NEW ORDER
                                               ///SEND EMAIL TO VENDOR
@@ -1388,6 +1418,8 @@ else if (snapshot.hasData) {
                                   onDoubleTap: () {},
                                   onSwipe: (){},
                                 ):
+
+
                                 ///SINCE VENDOR HAS COURIER, ALL PAYMENT IS DONE TO THE COURIER
                                 ///THEN FOOD/PRODUCT PRICE + DELIVERY FEE IS SENT TO THE COURIER WHEN HE ARRIVES
                                 ///
@@ -1418,7 +1450,7 @@ else if (snapshot.hasData) {
                                           quantity: Provider.of<CartModel>(context,
                                               listen: false)
                                               .getQuantity,
-                                          price: widget.price,
+                                          price: overAllPrice,
                                           message: messageController.text.toString(),
                                           Latitude: Provider.of<LocationProvider>(
                                               context,
@@ -1443,6 +1475,7 @@ else if (snapshot.hasData) {
                                           CourierId: 0,
                                           CourierName: '',
                                           VendorAccount: '',
+                                          isCashOnDelivery: true,
                                         )).then((_){
                                           ///END EMAIL TO ALERT VENDOR FUNCTION
                                           Provider.of<IncomingOrdersProvider>(context, listen: false).sendEmail(widget.adminEmail, widget.foodName);
@@ -1450,7 +1483,7 @@ else if (snapshot.hasData) {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) => OrderSent(
-                                                  deliveryFee: '0.00',
+                                                  deliveryFee: overAllPrice,
                                                   vendorId: widget.vendorid,
                                                   time: time,
                                                   restaurant: widget.restaurant,

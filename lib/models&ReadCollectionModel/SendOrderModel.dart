@@ -17,6 +17,7 @@ class OrderInfo {
   final String adminEmail;
   final int adminContact;
   final String VendorAccount ;
+  final bool isCashOnDelivery;
 
 
 
@@ -39,6 +40,7 @@ class OrderInfo {
     required this.adminEmail,
     required  this.adminContact,
     required this.VendorAccount,
+    required this.isCashOnDelivery,
 
   });
 
@@ -62,6 +64,7 @@ class OrderInfo {
       'CourierName': CourierName,
       'CourierContact': CourierContact,
       'VendorAccount': VendorAccount,
+      'isCashOnDelivery': isCashOnDelivery,
 
     };
   }
@@ -86,6 +89,7 @@ class OrderInfo {
       adminEmail:  data['adminEmail']?? '',
         adminContact: data['adminContact'] ?? '',
       VendorAccount: data['VendorAccount']?? '',
+      isCashOnDelivery: data['isCashOnDelivery']?? false,
     );
   }
 }
