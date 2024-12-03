@@ -1282,7 +1282,7 @@ else if (snapshot.hasData) {
 
                               Padding(padding: const EdgeInsets.all(8),
                                 child: !widget.hasCourier?LiteRollingSwitch(
-                                  /// SINCE VENDDOR HAS NO COURIER ,
+                                  /// SINCE VENDDOR HAS NO COURIER , MUST PAY TO MEALMATE
                                   /// THEN FOOD/PRODUCT PRICE IS SENT TO MEALMATE(which will be sent to the vendor by mealmate later...)
                                   /// AND THE DELIVERY FEE IS GIVEN TO THE COURIER WHEN HE ARRIVES
                                   value: checkOutInitiated,
@@ -1297,178 +1297,98 @@ else if (snapshot.hasData) {
                                   iconOff: Icons.shopping_cart_checkout_outlined,
                                   textSize: 20.0,
                                   onChanged: (bool state) {
-
-                                  },
-                                  onTap: ()  {
-
-                                    ///Get the Time
-                                    DateTime time = DateTime.now();
-
-                                    if (Provider.of<LocalStorageProvider>(context,listen: false).phoneNumber.isNotEmpty && Provider.of<LocationProvider>(context, listen: false).determinePosition().toString().isNotEmpty)
+                                    if(state == true)
                                     {
 
-                                      Alert(context: context,
-                                        style: const AlertStyle(
-                                          backgroundColor: Colors.white,
-                                        ),
-                                        content: WaitingPayment(),
-                                      ).show();
-                                       Provider.of<PaystackPaymentProvider>(context, listen: false).
-                                      startPayment(context,  overAllPrice.toInt(), widget.vendorid).then((result){
-                                        if(result.success){
-                                          Provider.of<SendOrderProvider>(context, listen: false).sendOrder(OrderInfo(
-                                            time: time,
-                                            foodName: widget.foodName,
-                                            quantity: Provider.of<CartModel>(context,
-                                                listen: false)
-                                                .getQuantity,
-                                            price: widget.price,
-                                            message: messageController.text.toString(),
-                                            Latitude: Provider.of<LocationProvider>(
+                                      ///Get the Time
+                                      DateTime time = DateTime.now();
+
+                                      if (Provider.of<LocalStorageProvider>(context,listen: false).phoneNumber.isNotEmpty && Provider.of<LocationProvider>(context, listen: false).determinePosition().toString().isNotEmpty)
+                                      {
+
+                                        Alert(context: context,
+                                          style: const AlertStyle(
+                                            backgroundColor: Colors.white,
+                                          ),
+                                          content: WaitingPayment(),
+                                        ).show();
+                                        Provider.of<PaystackPaymentProvider>(context, listen: false).
+                                        startPayment(context,  overAllPrice.toInt(), widget.vendorid).then((result){
+                                          if(result.success){
+                                            Provider.of<SendOrderProvider>(context, listen: false).sendOrder(OrderInfo(
+                                              time: time,
+                                              foodName: widget.foodName,
+                                              quantity: Provider.of<CartModel>(context,
+                                                  listen: false)
+                                                  .getQuantity,
+                                              price: widget.price,
+                                              message: messageController.text.toString(),
+                                              Latitude: Provider.of<LocationProvider>(
+                                                  context,
+                                                  listen: false)
+                                                  .Lat,
+                                              Longitude: Provider.of<LocationProvider>(
+                                                  context,
+                                                  listen: false)
+                                                  .Long,
+                                              phoneNumber:
+                                              Provider.of<LocalStorageProvider>(
+                                                  context,
+                                                  listen: false)
+                                                  .phoneNumber,
+                                              vendorId: widget.vendorid,
+                                              served: false,
+                                              courier: false,
+                                              delivered: false,
+                                              adminEmail: widget.adminEmail,
+                                              adminContact: widget.adminContact,
+                                              CourierContact: '',
+                                              CourierId: 0,
+                                              CourierName: '',
+                                              VendorAccount: widget.paymentKey,
+                                            )).then((_){
+                                              ///END EMAIL TO ALERT VENDOR FUNCTION OF NEW ORDER
+                                              ///SEND EMAIL TO VENDOR
+                                              Provider.of<IncomingOrdersProvider>(context, listen: false).sendEmail(widget.adminEmail, widget.foodName);
+                                              Navigator.push(
                                                 context,
-                                                listen: false)
-                                                .Lat,
-                                            Longitude: Provider.of<LocationProvider>(
-                                                context,
-                                                listen: false)
-                                                .Long,
-                                            phoneNumber:
-                                            Provider.of<LocalStorageProvider>(
-                                                context,
-                                                listen: false)
-                                                .phoneNumber,
-                                            vendorId: widget.vendorid,
-                                            served: false,
-                                            courier: false,
-                                            delivered: false,
-                                            adminEmail: widget.adminEmail,
-                                            adminContact: widget.adminContact,
-                                            CourierContact: '',
-                                            CourierId: 0,
-                                            CourierName: '',
-                                            VendorAccount: widget.paymentKey,
-                                          )).then((_){
-                                            ///END EMAIL TO ALERT VENDOR FUNCTION OF NEW ORDER
-                                            ///SEND EMAIL TO VENDOR
-                                            Provider.of<IncomingOrdersProvider>(context, listen: false).sendEmail(widget.adminEmail, widget.foodName);
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => OrderSent(
-                                                  deliveryFee: deliveryFee,
-                                                    vendorId: widget.vendorid,
-                                                    time: time,
-                                                    restaurant: widget.restaurant,
-                                                    adminEmail: widget.adminEmail,
-                                                    adminContact: widget.adminContact),
-                                              ),
-                                            );
-                                          });
-                                        }
-                                        else{
-                                          Notify(context, 'Payment Failed', Colors.red);
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=> const PaymentUnsuccessful()));
-                                        }
+                                                MaterialPageRoute(
+                                                  builder: (context) => OrderSent(
+                                                      deliveryFee: deliveryFee,
+                                                      vendorId: widget.vendorid,
+                                                      time: time,
+                                                      restaurant: widget.restaurant,
+                                                      adminEmail: widget.adminEmail,
+                                                      adminContact: widget.adminContact),
+                                                ),
+                                              );
+                                            });
+                                          }
+                                          else{
+                                            Notify(context, 'Payment Failed', Colors.red);
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=> const PaymentUnsuccessful()));
+                                          }
 
-                                      });
+                                        });
 
 
 
 
 
+                                      }
+                                      else {
+                                        Notify(context, 'Please add Telephone number',
+                                            Colors.red);
+                                        checkOutInitiated = false;
+                                      }
                                     }
-                                    else {
-                                      Notify(context, 'Please add Telephone number',
-                                          Colors.red);
-                                      checkOutInitiated = false;
-                                    }
+
                                   },
+                                  onTap: (){}  ,
                                   onDoubleTap: () {},
-                                  onSwipe: ()   {
-                                    Alert(context: context,
-                                      style: const AlertStyle(
-                                        backgroundColor: Colors.white,
-                                      ),
-                                      content: WaitingPayment(),
-                                    ).show();
-
-                                    ///Get the Time
-                                    DateTime time = DateTime.now();
-                                    checkOutInitiated = false;
-
-                                    if (Provider.of<LocalStorageProvider>(context,listen: false).phoneNumber.isNotEmpty && Provider.of<LocationProvider>(context, listen: false).determinePosition().toString().isNotEmpty)
-                                    {
-                                       Provider.of<PaystackPaymentProvider>(context, listen: false).
-                                      startPayment(context,overAllPrice.toInt(),widget.vendorid).then((result){
-                                        if(result.success){
-                                          Provider.of<SendOrderProvider>(context, listen: false).sendOrder(OrderInfo(
-                                            time: time,
-                                            foodName: widget.foodName,
-                                            quantity: Provider.of<CartModel>(context,
-                                                listen: false)
-                                                .getQuantity,
-                                            price: widget.price,
-                                            message: messageController.text.toString(),
-                                            Latitude: Provider.of<LocationProvider>(
-                                                context,
-                                                listen: false)
-                                                .Lat,
-                                            Longitude: Provider.of<LocationProvider>(
-                                                context,
-                                                listen: false)
-                                                .Long,
-                                            phoneNumber:
-                                            Provider.of<LocalStorageProvider>(
-                                                context,
-                                                listen: false)
-                                                .phoneNumber,
-                                            vendorId: widget.vendorid,
-                                            served: false,
-                                            courier: false,
-                                            delivered: false,
-                                            adminEmail: widget.adminEmail,
-                                            adminContact: widget.adminContact,
-                                            CourierContact: '',
-                                            CourierId: 0,
-                                            CourierName: '',
-                                            VendorAccount: '',
-                                          )).then((_){
-                                            ///END EMAIL TO ALERT VENDOR FUNCTION
-                                            Provider.of<IncomingOrdersProvider>(context, listen: false).sendEmail(widget.adminEmail, widget.foodName);
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => OrderSent(
-                                                    deliveryFee: deliveryFee,
-                                                    vendorId: widget.vendorid,
-                                                    time: time,
-                                                    restaurant: widget.restaurant,
-                                                    adminEmail: widget.adminEmail,
-                                                    adminContact: widget.adminContact),
-                                              ),
-                                            );
-                                          });
-                                        }
-                                        else{
-                                          Notify(context, 'Payment Failed', Colors.red);
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=> const PaymentUnsuccessful()));
-                                        }
-
-                                      });
-
-
-
-
-
-                                    }
-                                    else {
-                                      Notify(context, 'Please add Telephone number',
-                                          Colors.red);
-                                      checkOutInitiated = false;
-                                    }
-                                  },
+                                  onSwipe: (){},
                                 ):
-                                ///SINCE VENDOR HAS COURIER
+                                ///SINCE VENDOR HAS COURIER, ALL PAYMENT IS DONE TO THE COURIER
                                 ///THEN FOOD/PRODUCT PRICE + DELIVERY FEE IS SENT TO THE COURIER WHEN HE ARRIVES
                                 ///
                                 LiteRollingSwitch(
@@ -1485,131 +1405,73 @@ else if (snapshot.hasData) {
                                   iconOff: Icons.shopping_cart_checkout_outlined,
                                   textSize: 20.0,
                                   onChanged: (bool state) {
-
-                                  },
-                                  onTap: ()  {
-                                    ///Get the Time on ios
-                                    DateTime time = DateTime.now();
-
-                                    if (Provider.of<LocalStorageProvider>(context,listen: false).phoneNumber.isNotEmpty && Provider.of<LocationProvider>(context, listen: false).determinePosition().toString().isNotEmpty)
+                                    if(state ==true)
                                     {
-                                      Provider.of<SendOrderProvider>(context, listen: false).sendOrder(OrderInfo(
-                                        time: time,
-                                        foodName: widget.foodName,
-                                        quantity: Provider.of<CartModel>(context,
-                                            listen: false)
-                                            .getQuantity,
-                                        price: widget.price,
-                                        message: messageController.text.toString(),
-                                        Latitude: Provider.of<LocationProvider>(
-                                            context,
-                                            listen: false)
-                                            .Lat,
-                                        Longitude: Provider.of<LocationProvider>(
-                                            context,
-                                            listen: false)
-                                            .Long,
-                                        phoneNumber:
-                                        Provider.of<LocalStorageProvider>(
-                                            context,
-                                            listen: false)
-                                            .phoneNumber,
-                                        vendorId: widget.vendorid,
-                                        served: false,
-                                        courier: false,
-                                        delivered: false,
-                                        adminEmail: widget.adminEmail,
-                                        adminContact: widget.adminContact,
-                                        CourierContact: '',
-                                        CourierId: 0,
-                                        CourierName: '',
-                                        VendorAccount: '',
-                                      )).then((_){
-                                        ///END EMAIL TO ALERT VENDOR FUNCTION
-                                        Provider.of<IncomingOrdersProvider>(context, listen: false).sendEmail(widget.adminEmail, widget.foodName);
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => OrderSent(
-                                                deliveryFee: '0.00',
-                                                vendorId: widget.vendorid,
-                                                time: time,
-                                                restaurant: widget.restaurant,
-                                                adminEmail: widget.adminEmail,
-                                                adminContact: widget.adminContact),
-                                          ),
-                                        );
-                                      });
+                                      ///Get the Time on ios
+                                      DateTime time = DateTime.now();
 
-                                    }
-                                    else {
-                                      Notify(context, 'Please add Telephone number',
-                                          Colors.red);
-                                      checkOutInitiated = false;
-                                    }
+                                      if (Provider.of<LocalStorageProvider>(context,listen: false).phoneNumber.isNotEmpty && Provider.of<LocationProvider>(context, listen: false).determinePosition().toString().isNotEmpty)
+                                      {
+                                        Provider.of<SendOrderProvider>(context, listen: false).sendOrder(OrderInfo(
+                                          time: time,
+                                          foodName: widget.foodName,
+                                          quantity: Provider.of<CartModel>(context,
+                                              listen: false)
+                                              .getQuantity,
+                                          price: widget.price,
+                                          message: messageController.text.toString(),
+                                          Latitude: Provider.of<LocationProvider>(
+                                              context,
+                                              listen: false)
+                                              .Lat,
+                                          Longitude: Provider.of<LocationProvider>(
+                                              context,
+                                              listen: false)
+                                              .Long,
+                                          phoneNumber:
+                                          Provider.of<LocalStorageProvider>(
+                                              context,
+                                              listen: false)
+                                              .phoneNumber,
+                                          vendorId: widget.vendorid,
+                                          served: false,
+                                          courier: false,
+                                          delivered: false,
+                                          adminEmail: widget.adminEmail,
+                                          adminContact: widget.adminContact,
+                                          CourierContact: '',
+                                          CourierId: 0,
+                                          CourierName: '',
+                                          VendorAccount: '',
+                                        )).then((_){
+                                          ///END EMAIL TO ALERT VENDOR FUNCTION
+                                          Provider.of<IncomingOrdersProvider>(context, listen: false).sendEmail(widget.adminEmail, widget.foodName);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => OrderSent(
+                                                  deliveryFee: '0.00',
+                                                  vendorId: widget.vendorid,
+                                                  time: time,
+                                                  restaurant: widget.restaurant,
+                                                  adminEmail: widget.adminEmail,
+                                                  adminContact: widget.adminContact),
+                                            ),
+                                          );
+                                        });
+
+                                      }
+                                      else {
+                                        Notify(context, 'Please add Telephone number',
+                                            Colors.red);
+                                        checkOutInitiated = false;
+                                      }
+                                    };
+
                                   },
-                                  onDoubleTap: () {},
-                                  onSwipe: (){
-                                    ///Get the Time
-                                    DateTime time = DateTime.now();
+                                  onTap: (){},  
+                                  onDoubleTap: () {}, onSwipe: (){},
 
-                                    if (!Provider.of<LocalStorageProvider>(context,listen: false).phoneNumber.isEmpty || Provider.of<LocationProvider>(context, listen: false).determinePosition().toString().isEmpty)
-                                    {
-                                      Provider.of<SendOrderProvider>(context, listen: false).sendOrder(OrderInfo(
-                                        time: time,
-                                        foodName: widget.foodName,
-                                        quantity: Provider.of<CartModel>(context,
-                                            listen: false)
-                                            .getQuantity,
-                                        price: widget.price,
-                                        message: messageController.text.toString(),
-                                        Latitude: Provider.of<LocationProvider>(
-                                            context,
-                                            listen: false)
-                                            .Lat,
-                                        Longitude: Provider.of<LocationProvider>(
-                                            context,
-                                            listen: false)
-                                            .Long,
-                                        phoneNumber:
-                                        Provider.of<LocalStorageProvider>(
-                                            context,
-                                            listen: false)
-                                            .phoneNumber,
-                                        vendorId: widget.vendorid,
-                                        served: false,
-                                        courier: false,
-                                        delivered: false,
-                                        adminEmail: widget.adminEmail,
-                                        adminContact: widget.adminContact,
-                                        CourierContact: '',
-                                        CourierId: 0,
-                                        CourierName: '',
-                                        VendorAccount: '',
-                                      )).then((_){
-                                        ///END EMAIL TO ALERT VENDOR FUNCTION
-                                        Provider.of<IncomingOrdersProvider>(context, listen: false).sendEmail(widget.adminEmail, widget.foodName);
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => OrderSent(
-                                                deliveryFee: '0.00',
-                                                vendorId: widget.vendorid,
-                                                time: time,
-                                                restaurant: widget.restaurant,
-                                                adminEmail: widget.adminEmail,
-                                                adminContact: widget.adminContact),
-                                          ),
-                                        );
-                                      });
-
-                                    }
-                                    else {
-                                      Notify(context, 'Please add Telephone number',
-                                          Colors.red);
-                                      checkOutInitiated = false;
-                                    }
-                                  },
                                 ),),
 
 

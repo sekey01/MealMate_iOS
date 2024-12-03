@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 import '../../components/CustomLoading.dart';
 import '../../components/NoFoodFound.dart';
 import '../../models&ReadCollectionModel/ListFoodItemModel.dart';
@@ -58,6 +57,7 @@ class _UploadedState extends State<Uploaded> {
     return [];
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,46 +102,46 @@ class _UploadedState extends State<Uploaded> {
           padding: const EdgeInsets.all(4.0),
           child: SafeArea(
               child: Center(
-            child: Container(
-                color: Colors.white,
-                width: double.infinity,
-                height: 19900,
-                child: FutureBuilder<List<FoodItem>>(
-                  future: fetchFoodItems(
-                    Provider.of<AdminCollectionProvider>(context)
-                        .collectionToUpload, Provider.of<AdminId>(context, listen: false).id
-                  ),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: NewSearchLoadingOutLook());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: Try Again later', style: TextStyle(color: Colors.deepOrangeAccent),));
-                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return Center(child: noFoodFound());
-                    } else {
-                      return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          final upload = snapshot.data![index];
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: adminHorizontalCard(
-                              upload.ProductImageUrl,
-                              upload.restaurant,
-                              upload.location,
-                              upload.foodName,
-                              upload.price,
-                              upload.vendorId,
-                              upload.time,
-                              upload.isAvailable,
-                            ),
+                child: Container(
+                    color: Colors.white,
+                    width: double.infinity,
+                    height: 19900,
+                    child: FutureBuilder<List<FoodItem>>(
+                      future: fetchFoodItems(
+                          Provider.of<AdminCollectionProvider>(context)
+                              .collectionToUpload, Provider.of<AdminId>(context, listen: false).id
+                      ),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(child: NewSearchLoadingOutLook());
+                        } else if (snapshot.hasError) {
+                          return Center(child: Text('Error: Try Again later', style: TextStyle(color: Colors.deepOrangeAccent),));
+                        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                          return Center(child: noFoodFound());
+                        } else {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              final upload = snapshot.data![index];
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: adminHorizontalCard(
+                                  upload.ProductImageUrl,
+                                  upload.restaurant,
+                                  upload.location,
+                                  upload.foodName,
+                                  upload.price,
+                                  upload.vendorId,
+                                  upload.time,
+                                  upload.isAvailable,
+                                ),
+                              );
+                            },
                           );
-                        },
-                      );
-                    }
-                  },
-                )),
-          )),
+                        }
+                      },
+                    )),
+              )),
         ),
       ),
     );

@@ -4,6 +4,7 @@ import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
@@ -28,6 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
     }
   }
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   @override
   initState() {
@@ -36,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     _requestNotificationPermissions();
     _configureFirebaseListeners();
+    _initializeLocalNotifications();
   }
 
   void _requestNotificationPermissions() async {
@@ -53,6 +56,24 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  void _initializeLocalNotifications() {
+    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    final IOSInitializationSettings initializationSettingsIOS = IOSInitializationSettings(
+      onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
+        // Handle notification tapped logic here
+      },
+    );
+    final InitializationSettings initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+    );
+
+    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (String? payload) async {
+      // Handle notification tapped logic here
+      // For example, navigate to a specific screen
+    });
+  }
+
   void _configureFirebaseListeners() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Received a message while in the foreground!');
@@ -60,12 +81,41 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (message.notification != null) {
         print('Message also contained a notification: ${message.notification}');
+        _showNotification(message.notification!);
       }
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('Message clicked!');
     });
+
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  }
+
+  Future<void> _showNotification(RemoteNotification notification) async {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'your_channel_id',
+      'your_channel_name',
+      'your_channel_description',
+      importance: Importance.max,
+      priority: Priority.high,
+      showWhen: false,
+    );
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: IOSNotificationDetails(),
+    );
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      notification.title,
+      notification.body,
+      platformChannelSpecifics,
+      payload: 'item x',
+    );
+  }
+
+  static Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+    print('Handling a background message: ${message.messageId}');
   }
 
 

@@ -67,18 +67,21 @@ dependencies:
   flutter_staggered_grid_view: ^0.7.0
   image_picker: ^1.1.2
   connectivity_plus: ^2.1.0
+  flutter_launcher_icons: ^0.11.0
+  flutter_local_notifications: ^8.2.0
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.11.0
   flutter_test:
     sdk: flutter
 
-flutter_launcher_icons:
+flutter_icons:
     android: true
     adaptive_icon_background: "#ffffff"
     background_color: "#ffffff"
     ios: true
-    remove_alpha_ios: true
     image_path: "assets/Icon/appLogo.png"
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

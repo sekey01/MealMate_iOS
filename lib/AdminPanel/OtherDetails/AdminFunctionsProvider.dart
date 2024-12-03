@@ -20,7 +20,7 @@ class AdminFunctions extends ChangeNotifier {
         await doc.reference.delete();
       }
 
-      print('isOnline Updated successfully');
+      //  print('isOnline Updated successfully');
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         elevation: 20,
         content: Center(
@@ -33,14 +33,14 @@ class AdminFunctions extends ChangeNotifier {
         backgroundColor: Colors.red,
       ));
     } catch (e) {
-      print('Error deleting document(s): $e');
+      // print('Error deleting document(s): $e');
     }
   }
 
 
   ///THIS FUNCTION TOGGLES THE ADMINS ALL PRODUCTS ONLINE AND OFFLINE
 
-  Future<void> SwitchOnline(BuildContext context, int id, bool isActive) async {
+  Future<void> SwitchOnline(BuildContext context, String id, bool isActive) async {
     final CollectionReference collectionRef = FirebaseFirestore.instance.collection(
         '${Provider.of<AdminCollectionProvider>(context, listen: false).collectionToUpload}');
 
@@ -73,6 +73,44 @@ class AdminFunctions extends ChangeNotifier {
     }
   }
 
+  Future<void> SwitchSingleFoodItem(BuildContext context, String id, String imgUrl, bool isActive) async {
+    final CollectionReference collectionRef = FirebaseFirestore.instance.collection(
+        '${Provider.of<AdminCollectionProvider>(context, listen: false).collectionToUpload}');
+
+    try {
+      // Query the collection for documents where 'vendorId' and 'imageUrl' fields match
+      final QuerySnapshot snapshot = await collectionRef
+          .where('vendorId', isEqualTo: id)
+          .where('ProductImageUrl', isEqualTo: imgUrl)
+          .limit(1)
+          .get();
+
+      // Check if any documents were found
+      if (snapshot.docs.isNotEmpty) {
+        // Update the first matching document
+        await snapshot.docs.first.reference.update({'isActive': isActive});
+
+        print('Document updated successfully');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          elevation: 20,
+          content: Center(
+            child: Text(
+              isActive ? 'Item is Online Now ...' : 'Item is Offline Now',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+          backgroundColor: isActive ? Colors.green : Colors.red,
+        ));
+      } else {
+        print('No matching document found');
+      }
+    } catch (e) {
+      print('Error updating document: $e');
+    }
+  }
 
   /// THIS FUNCTION SWITCH THE SERVED TO TRUE
 

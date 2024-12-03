@@ -544,6 +544,9 @@ class _TrackOrderState extends State<TrackOrder> {
                   if(
                   Order.courier && Order.served
                   ){
+                    //dispose all stream and close the stream
+
+
                     switchDelivered(context, widget.vendorId,Provider.of<LocalStorageProvider>(context, listen: false).phoneNumber,).then((value) {
 
                       Alert(
