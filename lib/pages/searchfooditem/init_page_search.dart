@@ -90,9 +90,14 @@ class _InitPageSearchState extends State<InitPageSearch> {
                       child: NewSearchLoadingOutLook(),
                     );
                   } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text('An error occurred: ${snapshot.error}'),
-                    );
+                    return Center(child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image(image: AssetImage('assets/Icon/route.png'),height: 50.h,width: 70.w,),
+                        Text(' ${snapshot.error}', style: TextStyle(color: Colors.black, fontFamily: 'Poppins')),
+                        Text('Enable Location in your Settings',style: TextStyle(color: Colors.black, fontFamily: 'Poppins'),)
+                      ],
+                    ));
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),

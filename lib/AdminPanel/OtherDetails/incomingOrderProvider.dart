@@ -55,7 +55,7 @@ class IncomingOrdersProvider extends ChangeNotifier {
           'to_email': '$VendorEmail',
           'from_name': 'MealMate',
           'message': 'There is a new Order...',
-          'to_name': 'Admin',
+          'to_name': 'Vendor',
         },
         const emailjs.Options(
             publicKey: 'o59sVSZoIT_TM0LMr',
@@ -63,6 +63,7 @@ class IncomingOrdersProvider extends ChangeNotifier {
             limitRate: const emailjs.LimitRate(
               //id: 'app',
               throttle: 10000,
+
 
             )),
       );

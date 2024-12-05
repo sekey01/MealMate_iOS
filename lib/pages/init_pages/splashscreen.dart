@@ -8,6 +8,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mealmate_ios/Notification/notification_Provider.dart';
+import 'package:mealmate_ios/UserLocation/LocationProvider.dart';
+import 'package:provider/provider.dart';
 import '../authpages/login.dart';
 import '../navpages/home.dart';
 
@@ -39,6 +42,8 @@ class _SplashScreenState extends State<SplashScreen> {
     _requestNotificationPermissions();
     _configureFirebaseListeners();
     _initializeLocalNotifications();
+    Provider.of<LocationProvider>(context,listen: false).enableLocation();
+    Provider.of<NotificationProvider>(context,listen: false).subscribeToTopic('all_users');
   }
 
   void _requestNotificationPermissions() async {

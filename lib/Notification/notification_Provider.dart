@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:twilio_flutter/twilio_flutter.dart';
 
 
 class Notification {
@@ -64,8 +66,15 @@ class NotificationProvider extends ChangeNotifier{
   }
 
 
-
-
-
-
+  /// Subscribe to a topic
+  Future<void> subscribeToTopic(String topic) async {
+    try {
+      await FirebaseMessaging.instance.subscribeToTopic(topic);
+      print('Subscribed to $topic');
+    } catch (e) {
+      print('Failed to subscribe to $topic: $e');
+    }
+  }
 }
+
+

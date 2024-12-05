@@ -169,6 +169,13 @@ Notify(context, 'Item Uploaded Successfully', Colors.green);
   bool _hasInternet = true;
 
 
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<NotificationProvider>(context,listen: false).subscribeToTopic('vendors');
+
+}
   Widget build(BuildContext context) {
  //   Provider.of<IncomingOrdersProvider>(context,listen: false).sendMessageToToken( 'title', 'body');
 
