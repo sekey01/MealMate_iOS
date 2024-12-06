@@ -2,6 +2,7 @@ import 'package:easy_url_launcher/easy_url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mealmate_ios/Other_Providers/Url_Launcher.dart';
 import 'package:mealmate_ios/pages/authpages/take_phonenumber.dart';
 import 'package:provider/provider.dart';
 import '../../AdminPanel/Pages/adminSplashScreen.dart';
@@ -115,7 +116,7 @@ class _LoginState extends State<Login> {
                       RichText(text: TextSpan(
                           children: [
                             TextSpan(text: "Wel", style: TextStyle(color: Colors.black, fontSize: 25.spMin, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
-                            TextSpan(text: "Come !", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 25.spMin, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
+                            TextSpan(text: "Come !", style: TextStyle(color: Colors.redAccent, fontSize: 25.spMin, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
 
 
                           ]
@@ -174,14 +175,14 @@ class _LoginState extends State<Login> {
                       GestureDetector(
 
                         onTap: () async{
-                          await EasyLauncher.url(url: 'https://www.google.com/', mode: Mode.platformDefault);
+                          await EasyLauncher.url(url: 'https://meal-mate-v8ps.vercel.app/', mode: Mode.platformDefault);
                         },
                         child: RichText(text: TextSpan(
                             children: [
                               TextSpan(text: "By Continuing you agree to the ",
                                   style: TextStyle(color: Colors.black, fontSize: 10.spMin,fontFamily: 'Poppins',)),
                               TextSpan(text: "Terms & Conditions",
-                                  style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 10.spMin, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
+                                  style: TextStyle(color: Colors.redAccent, fontSize: 10.spMin, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
 
 
                             ]
@@ -208,12 +209,12 @@ class _LoginState extends State<Login> {
                                       builder: ((context) => AdminsplashScreen())));
                             },
                             child: Text(
-                              ' Admin   /',
+                              ' Vendor  /',
                               style: TextStyle(
                                 fontFamily: 'Righteous',
                                 fontSize: 10.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.deepOrangeAccent,
+                                color: Colors.redAccent,
                               ),
 
                             ),
@@ -232,7 +233,7 @@ SizedBox(width: 10.w,),
                                 fontFamily: 'Righteous',
                                 fontSize: 10.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.deepOrangeAccent,
+                                color: Colors.redAccent,
                               ),
                             ),
                           ),

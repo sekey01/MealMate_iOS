@@ -268,7 +268,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           ListTile(
                             onTap: () async{
-                              await EasyLauncher.url(url: 'https://www.google.com/', mode: Mode.platformDefault);
+                              await EasyLauncher.url(url: 'https://meal-mate-v8ps.vercel.app/', mode: Mode.platformDefault);
                             },
                             title: Text(' MealMate Geo ', style: TextStyle(color: Colors.blueGrey,fontSize: 15.sp,fontFamily: "Righteous",),),
                           )

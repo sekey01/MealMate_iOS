@@ -1,21 +1,15 @@
-/*
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/cupertino.dart';
+
+class UrlValues extends ChangeNotifier{
+  String UserTermsAndConditions = 'https://meal-mate-v8ps.vercel.app/';
+
+  String VendorTermsAndConditions = 'https://meal-mate-v8ps.vercel.app/';
+
+  String CourierTermsAndConditions = 'https://meal-mate-v8ps.vercel.app/';
+
+  String CourierApplication = 'https://meal-mate-v8ps.vercel.app/';
+
+  String MealMateWebsite = 'https://meal-mate-v8ps.vercel.app/';
 
 
-class UrlLauncherProvider extends ChangeNotifier{
-  Future<void> callBuyer(String phoneNumber) async {
-    // Launch the given URL to call phone number
-
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-
-    );
-    if (await canLaunchUrl(launchUri)) {
-      await launchUrl(launchUri);
-    } else {
-      throw 'Could not launch $launchUri';
-    }
-  }
-}*/
+}

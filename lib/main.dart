@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mealmate_ios/Other_Providers/Url_Launcher.dart';
 import 'package:mealmate_ios/pages/init_pages/splashscreen.dart';
 import 'package:mealmate_ios/searchFoodItemProvider/searchFoodItemFunctionProvider.dart';
 import 'package:mealmate_ios/theme/themedata.dart';
@@ -61,7 +62,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => IncomingOrdersProvider()),
           ChangeNotifierProvider(create: (context) => NotificationProvider()),
           ChangeNotifierProvider(create: (context) => NetworkImageProvider()),
-          ChangeNotifierProvider(create: (context) => PaystackPaymentProvider())
+          ChangeNotifierProvider(create: (context) => PaystackPaymentProvider()),
+          ChangeNotifierProvider(create: (context)=>UrlValues())
         ],
         child: MaterialApp(
             navigatorObservers: [

@@ -54,7 +54,7 @@ class _AdminsplashScreenState extends State<AdminsplashScreen> {
                              RichText(text: TextSpan(
               children: [
                 TextSpan(text: "Vendor", style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
-                TextSpan(text: "Panel", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
+                TextSpan(text: "Panel", style: TextStyle(color: Colors.redAccent, fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
 
 
                    ]

@@ -75,6 +75,25 @@ class NotificationProvider extends ChangeNotifier{
       print('Failed to subscribe to $topic: $e');
     }
   }
+
+  Future<void> sendMessageToTopic() async{
+    try{
+
+      await FirebaseMessaging.instance.sendMessage(
+        to: 'all_users',
+        data: {
+          'title': 'New Notification',
+          'body': 'New Notification',
+        },
+
+      );
+      print('Message sent');
+    }catch(e){
+      debugPrint(e.toString());
+    }
+  }
+
+
 }
 
 

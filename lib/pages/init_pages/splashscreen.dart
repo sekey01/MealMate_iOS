@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _configureFirebaseListeners();
     _initializeLocalNotifications();
     Provider.of<LocationProvider>(context,listen: false).enableLocation();
-    Provider.of<NotificationProvider>(context,listen: false).subscribeToTopic('all_users');
+    Provider.of<NotificationProvider>(context,listen: false).sendMessageToTopic();
   }
 
   void _requestNotificationPermissions() async {
@@ -130,7 +130,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return another.FlutterSplashScreen(
       duration: const Duration(seconds: 10),
       nextScreen: isLoggedIn ? const Home() : const Login(),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.redAccent,
       splashScreenBody: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -140,6 +140,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                /*
                     Center(
                       child: Image(
                         image: const AssetImage('assets/Announcements/OrderNow.png'),
@@ -147,6 +148,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         width: double.infinity.w,
                       ),
                     ),
+                */
                     RichText(
                       text: const TextSpan(
                         children: [
@@ -162,7 +164,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           TextSpan(
                             text: "Mate",
                             style: TextStyle(
-                              color: Colors.deepOrangeAccent,
+                              color: Colors.white,
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Righteous',

@@ -1,3 +1,4 @@
+import 'package:easy_url_launcher/easy_url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +20,8 @@ class AdminLogin extends StatefulWidget {
 class _AdminLoginState extends State<AdminLogin> {
   bool isLoading = false;
   bool waiting = false;
+
+
 
   Future<void> adminSignIn() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
@@ -69,7 +72,7 @@ class _AdminLoginState extends State<AdminLogin> {
       });
     }
   }
-/*  Future<void> _checkLoginStatus() async {
+  Future<void> _checkLoginStatus() async {
     bool isLoggedIn = await Provider.of<LocalStorageProvider>(context, listen: false).getAdminLoginState();
 
     if (isLoggedIn) {
@@ -78,16 +81,25 @@ class _AdminLoginState extends State<AdminLogin> {
         MaterialPageRoute(builder: (context) => adminHome()),
       );
     }
-  }*/
+  }
+  Future<void> _sendPasswordResetLink(String _email) async{
+    if (_emailController.text.isEmpty) {
+      Notify(context, 'Please enter your email', Colors.red);
+    }
+    FirebaseAuth.instance.sendPasswordResetEmail(email: _email)
+        .then((value) => Notify(context, 'Password reset link sent to your email', Colors.green))
+        .catchError((error) => Notify(context, 'Failed to send password reset link', Colors.red));
+  }
 
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    //_checkLoginStatus();
+    _checkLoginStatus();
   }
 
   @override
@@ -124,7 +136,7 @@ class _AdminLoginState extends State<AdminLogin> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: "Admin",
+                                text: "Vendor",
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 27.sp,
@@ -135,7 +147,7 @@ class _AdminLoginState extends State<AdminLogin> {
                               TextSpan(
                                 text: "Login",
                                 style: TextStyle(
-                                  color: Colors.deepOrangeAccent,
+                                  color: Colors.redAccent,
                                   fontSize: 27.sp,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Righteous'
@@ -157,13 +169,13 @@ class _AdminLoginState extends State<AdminLogin> {
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide:
-                                    BorderSide(color: Colors.deepOrangeAccent
+                                    BorderSide(color: Colors.black
 
 
             ),
                               ),
                               prefixIcon: Icon(
-                                  Icons.supervised_user_circle_rounded,
+                                  Icons.email_outlined,
                                   color: Colors.deepOrangeAccent
 
 
@@ -171,7 +183,7 @@ class _AdminLoginState extends State<AdminLogin> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide:
-                                    BorderSide(color: Colors.deepOrangeAccent
+                                    BorderSide(color: Colors.black
 
 
             ),
@@ -194,7 +206,7 @@ class _AdminLoginState extends State<AdminLogin> {
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide:
-                                    BorderSide(color: Colors.deepOrangeAccent
+                                    BorderSide(color: Colors.black
 
 
             ),
@@ -208,7 +220,7 @@ class _AdminLoginState extends State<AdminLogin> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide:
-                                    BorderSide(color: Colors.deepOrangeAccent
+                                    BorderSide(color: Colors.black
 
 
             ),
@@ -260,20 +272,42 @@ class _AdminLoginState extends State<AdminLogin> {
                           ),
                           TextButton(
                             onPressed: () {
+                              if(_emailController.text.isNotEmpty) {
+                                _sendPasswordResetLink(_emailController.text);
+                              }else{
+                                Notify(context, 'Please enter your email', Colors.red);
+                              }
 
                             },
                             child: Text(
-                              ' Call Us for Verification...',
+                              ' Reset Pssword',
                               style: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.deepOrangeAccent
+                                color: Colors.redAccent
 
 
             ,
                               ),
                             ),
                           ),
+                          GestureDetector(
+
+                            onTap: () async{
+                              await EasyLauncher.url(url: 'https://meal-mate-v8ps.vercel.app/', mode: Mode.platformDefault);
+                            },
+                            child: RichText(text: TextSpan(
+                                children: [
+                                  TextSpan(text: "By Continuing you agree to the ",
+                                      style: TextStyle(color: Colors.black, fontSize: 10.spMin,fontFamily: 'Poppins',)),
+                                  TextSpan(text: "Terms & Conditions",
+                                      style: TextStyle(color: Colors.redAccent, fontSize: 10.spMin, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
+
+
+                                ]
+                            )),
+                          ),
+
                         ],
                       ),
                     ],

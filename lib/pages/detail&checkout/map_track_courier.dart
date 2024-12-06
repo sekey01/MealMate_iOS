@@ -50,10 +50,10 @@ class _TrackCourierMapState extends State<TrackCourierMap> {
 
   //CUSTOM ICON FOR VENDOR LOCATION
   Future<BitmapDescriptor> _loadCustomIcon(BuildContext context) async {
-    final ImageConfiguration configuration = createLocalImageConfiguration(context, size: const Size(40, 40));
-    setState(() async {
-      customMapIcon =  await BitmapDescriptor.asset(configuration, 'assets/Icon/courier.png');
-    });
+    final ImageConfiguration configuration = createLocalImageConfiguration(context, size: const Size(30, 30),);
+    if(mounted){
+      customMapIcon = await BitmapDescriptor.fromAssetImage(configuration, 'assets/Icon/courier.png');
+    }
     return await BitmapDescriptor.asset(configuration, 'assets/Icon/courier.png');
   }
 
