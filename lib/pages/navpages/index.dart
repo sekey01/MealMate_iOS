@@ -225,25 +225,25 @@ class _IndexState extends State<Index> {
                           children: [
                             InkWell(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'jollof')));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'grocery')));
                             },
-                                child: const InitRow(imageUrl: 'assets/images/jollof.png',name: 'Jollof',)),
+                                child: const InitRow(imageUrl: 'assets/adsimages/Grocery.jpeg',name: 'Grocery',)),
                             InkWell(
                               onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'Pizza')));
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'snacks')));
                               }
                             ,child: const InitRow(imageUrl: 'assets/images/burger.png',name: 'Snacks',)),
 
                             InkWell(onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'groceries')));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'shawama')));
                             }
-                            ,child: const InitRow(imageUrl: 'assets/images/shops.jpg',name: 'Grocery',)),
+                            ,child: const InitRow(imageUrl: 'assets/adsimages/shawama.jpeg',name: 'Local',)),
 
                             InkWell(
                             onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'Drinks')));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'drinks')));
                             },
-                            child: const InitRow(imageUrl: 'assets/images/burger.png',name: 'Drinks',)),
+                            child: const InitRow(imageUrl: 'assets/adsimages/drinks.jpeg',name: 'Drinks',)),
 
                           ],
                         ),
@@ -965,7 +965,7 @@ class _IndexState extends State<Index> {
                       Padding(
                         padding: EdgeInsets.all(4.0),
                         child: PromotionAdsCard(
-                          image: 'assets/images/jollof.png',
+                          image: 'assets/adsimages/Grocery.jpeg',
                           heading:'Satisfy Your cravings With MealMate',
                           content: 'Favorite food from your favorite restaurant',
                           contentColor: Colors.white,
@@ -977,7 +977,7 @@ class _IndexState extends State<Index> {
                         Padding(
                           padding: EdgeInsets.all(4.0),
                           child: PromotionAdsCard(
-                            image: 'assets/adsimages/ads2.png',
+                            image: 'assets/adsimages/local.jpeg',
                             heading: 'Eat what you desire',
                             content: 'Order your favorite food and get Lucky.. yh get lucky 🍀☺️',
                             contentColor: Colors.white70,
@@ -989,7 +989,7 @@ class _IndexState extends State<Index> {
                         Padding(
                           padding: EdgeInsets.all(4.0),
                           child: PromotionAdsCard(
-                            image: 'assets/images/burger.png',
+                            image: 'assets/adsimages/local.jpeg',
                             heading: 'Order Burger and get a free delivery',
                             content: 'Embrace the Ecosystem... Let love lead 🍀 ',
                             contentColor: Colors.white70,

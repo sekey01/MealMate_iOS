@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class OrderInfo {
   final String vendorId;
   final String foodName;
@@ -18,6 +20,7 @@ class OrderInfo {
   final int adminContact;
   final String VendorAccount ;
   final bool isCashOnDelivery;
+
 
 
 

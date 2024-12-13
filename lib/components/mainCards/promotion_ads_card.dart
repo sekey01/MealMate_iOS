@@ -23,7 +23,7 @@ class _PromotionAdsCardState extends State<PromotionAdsCard> {
       width: 340,
       decoration: BoxDecoration(
         color: widget.backgroundColor,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

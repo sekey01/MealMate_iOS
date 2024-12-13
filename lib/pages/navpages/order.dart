@@ -37,9 +37,9 @@ class _OrderListState extends State<OrderList> {
         titleTextStyle: const TextStyle(
           fontFamily: 'Righteous',
           color: Colors.blueGrey,
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.bold,
-          letterSpacing: 3,
+          letterSpacing: 1,
         ),
         backgroundColor: Colors.white,
 
@@ -175,6 +175,12 @@ class _OrderListState extends State<OrderList> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ExpansionTile(
+                          collapsedShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           iconColor: Colors.black,
                           collapsedBackgroundColor: Colors.grey.shade200,
                           leading: Text(
@@ -191,16 +197,18 @@ class _OrderListState extends State<OrderList> {
                                   text: "Meal",
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 15.spMin,
+                                    fontSize: 12.spMin,
                                     fontWeight: FontWeight.bold,
+                                    fontFamily: 'Righteous',
                                   ),
                                 ),
                                 TextSpan(
                                   text: "Mate",
                                   style: TextStyle(
                                     color: Colors.deepOrangeAccent,
-                                    fontSize: 15.spMin,
+                                    fontSize: 12.spMin,
                                     fontWeight: FontWeight.bold,
+                                    fontFamily: 'Righteous',
                                   ),
                                 ),
                               ],

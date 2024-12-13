@@ -183,6 +183,10 @@ flutter:
      - assets/adsimages/ads1.png
      - assets/adsimages/ads2.png
      - assets/adsimages/ads3.png
+     - assets/adsimages/drinks.jpeg
+     - assets/adsimages/Grocery.jpeg
+     - assets/adsimages/local.jpeg
+     - assets/adsimages/shawama.jpeg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
