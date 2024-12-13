@@ -526,7 +526,9 @@ class _TrackOrderState extends State<TrackOrder> {
                       }),
                   SizedBox(height: 10.h,),
                   Icon(Icons.arrow_downward, color: Order.courier?Colors.green: Colors.grey,),
+
                   SizedBox(height: 10.h,),
+
 
                   /// ORDER COMPLETE
                   Padding(padding: const EdgeInsets.all(8),
