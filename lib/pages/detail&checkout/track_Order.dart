@@ -535,7 +535,8 @@ class _TrackOrderState extends State<TrackOrder> {
                     child: ImageIcon(const AssetImage(('assets/Icon/orderComplete.png'),), size: Order.delivered?80:30,color: Order.delivered?Colors.green: Colors.grey,),
                   ),
                   Text(' Order Delivered ', style: TextStyle(color: Order.delivered?Colors.green: Colors.grey, fontSize: 10.spMin, fontWeight: FontWeight.bold),),
-                  SizedBox(height: 20.h,)
+                  SizedBox(height: 20.h,),
+
 
 
 
