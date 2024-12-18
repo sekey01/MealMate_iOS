@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 
 class OrderInfo {
   final String vendorId;
@@ -20,7 +19,7 @@ class OrderInfo {
   final int adminContact;
   final String VendorAccount ;
   final bool isCashOnDelivery;
-
+  final bool isCourierDelivered;
 
 
 
@@ -44,6 +43,7 @@ class OrderInfo {
     required  this.adminContact,
     required this.VendorAccount,
     required this.isCashOnDelivery,
+    required this.isCourierDelivered
 
   });
 
@@ -68,6 +68,7 @@ class OrderInfo {
       'CourierContact': CourierContact,
       'VendorAccount': VendorAccount,
       'isCashOnDelivery': isCashOnDelivery,
+      'isCourierDelivered': isCourierDelivered,
 
     };
   }
@@ -90,9 +91,10 @@ class OrderInfo {
       CourierContact: data['CourierContact']?? '',
       delivered: data['delivered']?? false,
       adminEmail:  data['adminEmail']?? '',
-        adminContact: data['adminContact'] ?? '',
+      adminContact: data['adminContact'] ?? '',
       VendorAccount: data['VendorAccount']?? '',
       isCashOnDelivery: data['isCashOnDelivery']?? false,
+      isCourierDelivered: data['isCourierDelivered']??false,
     );
   }
 }

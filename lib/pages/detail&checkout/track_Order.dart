@@ -530,12 +530,15 @@ class _TrackOrderState extends State<TrackOrder> {
                   SizedBox(height: 10.h,),
 
 
+
+
                   /// ORDER COMPLETE
                   Padding(padding: const EdgeInsets.all(8),
                     child: ImageIcon(const AssetImage(('assets/Icon/orderComplete.png'),), size: Order.delivered?80:30,color: Order.delivered?Colors.green: Colors.grey,),
                   ),
                   Text(' Order Delivered ', style: TextStyle(color: Order.delivered?Colors.green: Colors.grey, fontSize: 10.spMin, fontWeight: FontWeight.bold),),
                   SizedBox(height: 20.h,),
+
 
 
 
@@ -555,13 +558,14 @@ class _TrackOrderState extends State<TrackOrder> {
                       Alert(
                         context: context,
                         style: AlertStyle(
-                          backgroundColor: Colors.deepOrangeAccent,
+                          backgroundColor: Colors.white,
                           alertPadding: const EdgeInsets.all(88),
                           isButtonVisible: true,
                           descStyle: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 15.sp,
+                            fontFamily: 'Poppins',
                           ),
                         ),
                         desc: "Do you want to store order ? ",
@@ -572,7 +576,6 @@ class _TrackOrderState extends State<TrackOrder> {
                               Navigator.pop(context);
                               Navigator.pop(context);
                               Navigator.pop(context);
-
 
                               // print('DATA STORED');
                             },

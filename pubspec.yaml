@@ -70,6 +70,7 @@ dependencies:
   flutter_launcher_icons: ^0.11.0
   flutter_local_notifications: ^8.2.0
   twilio_flutter: ^0.9.0
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.11.0
@@ -104,6 +105,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
 
   assets:
+     - assets/.env
      - assets/Icon/online.json
      - assets/Icon/courier.json
      - assets/Icon/success.json
@@ -171,7 +173,6 @@ flutter:
      - assets/Icon/transaction.png
      - assets/Icon/filter.png
      - assets/Icon/VendorLocation.png
-     - assets/Icon/loading.gif
      - assets/Icon/notification.png
      - assets/Icon/admin_panel.png
      - assets/Announcements/An_Feedback.png
@@ -183,6 +184,8 @@ flutter:
      - assets/adsimages/ads1.png
      - assets/adsimages/ads2.png
      - assets/adsimages/ads3.png
+     - assets/adsimages/local.png
+     - assets/adsimages/pizza.png
      - assets/adsimages/drinks.jpeg
      - assets/adsimages/Grocery.jpeg
      - assets/adsimages/local.jpeg

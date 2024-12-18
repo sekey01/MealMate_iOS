@@ -219,35 +219,34 @@ class _IndexState extends State<Index> {
                       ),
 
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 16, top: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'grocery')));
-                            },
-                                child: const InitRow(imageUrl: 'assets/adsimages/Grocery.jpeg',name: 'Grocery',)),
-                            InkWell(
-                              onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'snacks')));
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              InkWell(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'grocery')));
+                                  },
+                                  child: InitRow(imageUrl: 'assets/adsimages/Grocery.png',name: 'Grocery',)),
+                              InkWell(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'snacks')));
+                                  }
+                                  ,child: InitRow(imageUrl: 'assets/images/burger.png',name: 'Snacks',)),
+
+                              InkWell(onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'pizza')));
                               }
-                            ,child: const InitRow(imageUrl: 'assets/images/burger.png',name: 'Snacks',)),
+                                  ,child: InitRow(imageUrl: 'assets/adsimages/pizza.png',name: 'Pizza',)),
 
-                            InkWell(onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'shawama')));
-                            }
-                            ,child: const InitRow(imageUrl: 'assets/adsimages/shawama.jpeg',name: 'Local',)),
+                              InkWell(
+                                  onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'drinks')));
+                                  },
+                                  child: InitRow(imageUrl: 'assets/adsimages/drinks.png',name: 'Drinks',)),
 
-                            InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitRowSearch(searchItem: 'drinks')));
-                            },
-                            child: const InitRow(imageUrl: 'assets/adsimages/drinks.jpeg',name: 'Drinks',)),
-
-                          ],
-                        ),
-                      ),
+                            ],
+                          )),
                     ),
                   ),
                 ),

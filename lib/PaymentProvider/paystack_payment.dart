@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_url_launcher/easy_url_launcher.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -18,8 +19,8 @@ class PaymentResult {
 }
 
 class PaystackPaymentProvider extends ChangeNotifier {
-  static const String _baseUrl = 'https://api.paystack.co';
-  final String _secretKey = 'sk_live_841205f21f17b0ef08f38682f2d99abbadd9407d';
+  final String _baseUrl = '${dotenv.env['PAYSTACK_BASE_URL']}';
+  final String _secretKey = '${dotenv.env['PAYSTACK_SECRET_KEY']}';
 
   Future<PaymentResult> startPayment(BuildContext context,int amount,  String VendorID) async {
     try {

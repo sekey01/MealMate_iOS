@@ -1376,6 +1376,7 @@ else if (snapshot.hasData) {
                                               CourierName: '',
                                               VendorAccount: widget.paymentKey,
                                               isCashOnDelivery: false,
+                                              isCourierDelivered: false,
                                             )).then((_){
                                               ///END EMAIL TO ALERT VENDOR FUNCTION OF NEW ORDER
                                               ///SEND EMAIL TO VENDOR
@@ -1476,6 +1477,8 @@ else if (snapshot.hasData) {
                                           CourierName: '',
                                           VendorAccount: '',
                                           isCashOnDelivery: true,
+                                          isCourierDelivered: false,
+
                                         )).then((_){
                                           ///END EMAIL TO ALERT VENDOR FUNCTION
                                           Provider.of<IncomingOrdersProvider>(context, listen: false).sendEmail(widget.adminEmail, widget.foodName);
