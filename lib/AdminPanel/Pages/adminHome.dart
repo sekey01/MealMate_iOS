@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mealmate_ios/AdminPanel/Pages/uploads.dart';
-
 import 'package:provider/provider.dart';
 import '../../Local_Storage/Locall_Storage_Provider/StoreCredentials.dart';
 import '../../Notification/notification_Provider.dart';
@@ -186,24 +186,24 @@ class _adminHomeState extends State<adminHome> {
         automaticallyImplyLeading: false,
         title: RichText(
             text: TextSpan(children: [
-          TextSpan(
-              text: "Meal",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 15.sp,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Righteous',
-              )),
-          TextSpan(
-            text: "Mate",
-            style: TextStyle(
-              color: Colors.deepOrangeAccent,
-              fontSize: 15.spMin,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Righteous',
-            ),
-          ),
-        ])),
+              TextSpan(
+                  text: "Welcome",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Poppins',
+                  )),
+              TextSpan(
+                text: "",
+                style: TextStyle(
+                  color: Colors.deepOrangeAccent,
+                  fontSize: 16.spMin,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            ])),
 
         // centerTitle: true,
         elevation: 3,
@@ -275,7 +275,7 @@ class _adminHomeState extends State<adminHome> {
 
         actions: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               /// ICON BUTTON TO SHOW THE LIST OF COMPLETED ORDERS
               GestureDetector(
@@ -337,12 +337,13 @@ class _adminHomeState extends State<adminHome> {
                           );
                         }
                       }),
-                  child: ImageIcon(
-                    AssetImage('assets/Icon/Orders.png'),
-                    size: 25.sp,
-                    color: Colors.blueGrey,
+                  child: Image(image: AssetImage('assets/Icon/Orders.png'),
+                    height: 25.h,width: 25.w,
                   ),
                 ),
+              ),
+              SizedBox(
+                width: 10.w,
               ),
 
               /// ICON BUTTON TO SHOW THE LIST OF ADMINS UPLOADS
@@ -354,39 +355,11 @@ class _adminHomeState extends State<adminHome> {
                 icon: ImageIcon(
                   AssetImage('assets/Icon/uploads.png'),
                   size: 25.sp,
-                  color: Colors.deepOrangeAccent,
+                  color: Colors.redAccent,
                 ),
               ),
 
-              /// THIS IS NOTIFICATION TO ALL ADMINS
-              ///
-              IconButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AdminNotice()));
-                  },
-                  icon: Badge(
-                    backgroundColor: Colors.green,
-                    label: Builder(builder: (context) {
-                      Provider.of<NotificationProvider>(context, listen: false)
-                          .getAdminNotifications();
-                      return Consumer<NotificationProvider>(
-                          builder: (context, value, child) {
-                        value.getAdminNotifications();
 
-                        return Text(
-                          value.adminNotificationLength.toString(),
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        );
-                      });
-                    }),
-                    child: ImageIcon(
-                      AssetImage('assets/Icon/notification.png'),
-                      color: Colors.blueGrey,
-                      size: 25.sp,
-                    ),
-                  )),
 
               ///ICON BUTTON CHANGE THE ID OF ADMIN
               /// IT OPENS BUTTOMSHEETVIEW TO CHANGE THE ID
@@ -399,10 +372,10 @@ class _adminHomeState extends State<adminHome> {
                       MaterialPageRoute(
                           builder: (context) => ChangeAdminCredentials()));
                 },
-                icon: ImageIcon(
-                  AssetImage('assets/Icon/change.png'),
-                  size: 25.sp,
+                icon: Icon(
+                  Icons.edit_note,
                   color: Colors.blueGrey,
+                  size: 30.sp,
                 ),
               ),
             ],
@@ -416,87 +389,6 @@ class _adminHomeState extends State<adminHome> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                ///ADMIN PANEL TEXT
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                      text: "Admin",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 25.spMin,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Righteous',
-                      )),
-                  TextSpan(
-                    text: "Panel",
-                    style: TextStyle(
-                      color: Colors.deepOrangeAccent,
-                      fontSize: 25.spMin,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Righteous',
-                    ),
-                  ),
-                ])),
-
-                Padding(
-                    padding: EdgeInsets.only(top: 20, bottom: 20),
-                    child: PromotionAdsCard(
-                      image: 'assets/Icon/food.png',
-                      heading: 'Welcome to Admin Panel',
-                      content:
-                          'Upload your food items here and manage your orders',
-                      contentColor: Colors.white70,
-                      headingColor: Colors.white,
-                      backgroundColor: Colors.black,
-                    )),
-
-                /// GET ADMIN EMAIL
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Image(
-                        image: AssetImage('assets/Icon/gmail.png'),
-                        height: 20.h,
-                        width: 20.h,
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: FutureBuilder(
-                            future: Provider.of<LocalStorageProvider>(context,
-                                    listen: false)
-                                .getAdminEmail(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return Text(
-                                  snapshot.data.toString(),
-                                  style: TextStyle(
-                                      letterSpacing: 1,
-                                      color: Colors.black,
-                                      fontSize: 15.sp,
-                                      fontFamily: 'Poppins'),
-                                );
-                              } else {
-                                return Text(
-                                  'adminemail@gmail.com ',
-                                  style: TextStyle(
-                                    letterSpacing: 1,
-                                    color: Colors.black,
-                                    fontSize: 15.spMin,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                );
-                              }
-                            }),
-                      ),
-                    ],
-                  ),
-                ),
-
                 ///LOCATION OF THE ADMIN
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
@@ -517,7 +409,7 @@ class _adminHomeState extends State<adminHome> {
                           scrollDirection: Axis.horizontal,
                           child: FutureBuilder(
                               future: Provider.of<LocationProvider>(context,
-                                      listen: false)
+                                  listen: false)
                                   .determinePosition(),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
@@ -542,85 +434,89 @@ class _adminHomeState extends State<adminHome> {
                   ),
                 ),
 
-                /// AVAILABLE COURIERS
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CouriersAvailable()));
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0.0, 1.0), //(x,y)
-                          blurRadius: 6.0,
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Tap to view Available Couriers',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Poppins'),
-                      ),
-                    ),
-                  ),
-                ),
+              ///ROW OF BUTTONS TO SHOW THE ONLINE STATUS OF THE FOOD
+                 Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                   children: [
+                     Column(
+                       children: [
 
-                SizedBox(
-                  height: 30.h,
-                ),
+                         ///TOGGLE BUTTON TO SHOW FOOD IS ONLINE
+                         _hasInternet
+                             ? LiteRollingSwitch(
+                           //initial value
+                           value: false,
+                           width: 100.w,
+                           textOn: 'Online',
+                           textOnColor: Colors.white,
+                           textOff: 'Offline',
+                           textOffColor: Colors.white,
+                           colorOn: CupertinoColors.activeGreen,
+                           colorOff: Colors.redAccent,
+                           iconOn: Icons.done,
+                           iconOff: Icons.remove_circle_outline,
+                           textSize: 12.0,
+                           onChanged: (bool state) {
+                             /// print(Provider.of<AdminId>(context, listen: false).id);
 
-                ///TOGGLE BUTTON TO SHOW FOOD IS ONLINE
-                _hasInternet
-                    ? LiteRollingSwitch(
-                        //initial value
-                        value: false,
-                        width: 200.w,
-                        textOn: 'Online',
-                        textOnColor: Colors.white,
-                        textOff: 'Offline',
-                        textOffColor: Colors.white,
-                        colorOn: CupertinoColors.activeGreen,
-                        colorOff: Colors.redAccent,
-                        iconOn: Icons.done,
-                        iconOff: Icons.remove_circle_outline,
-                        textSize: 20.0,
-                        onChanged: (bool state) {
-                          /// print(Provider.of<AdminId>(context, listen: false).id);
+                             setState(() {
+                               //  Provider.of<IncomingOrdersProvider>(context, listen: false).fetchOrders(Provider.of<AdminId>(context).id);
 
-                          setState(() {
-                            //  Provider.of<IncomingOrdersProvider>(context, listen: false).fetchOrders(Provider.of<AdminId>(context).id);
+                               Provider.of<AdminFunctions>(context, listen: false)
+                                   .SwitchOnline(
+                                   context,
+                                   Provider.of<AdminId>(context, listen: false)
+                                       .id,
+                                   state);
+                             });
 
-                            Provider.of<AdminFunctions>(context, listen: false)
-                                .SwitchOnline(
-                                    context,
-                                    Provider.of<AdminId>(context, listen: false)
-                                        .id,
-                                    state);
-                          });
+                             ///Use it to manage the different states
+                             //print('Current State of SWITCH IS: $state');
+                           },
+                           onTap: () {},
+                           onDoubleTap: () {},
+                           onSwipe: () {},
+                         )
+                             : NoInternetConnection(),
+                         Text(
+                           'Restaurant Online Status',
+                           style: TextStyle(color: Colors.black, fontSize: 8.sp),
+                         ),
+                       ],
+                     ),
+                     Column(
+                       children: [
+                         InkWell(
+                           onTap: () {
+                             Navigator.push(
+                                 context,
+                                 MaterialPageRoute(
+                                     builder: (context) => CouriersAvailable()));
+                           },
+                           child: Badge(
+                             backgroundColor: Colors.green,
+                             label: Lottie.asset('assets/Icon/online.json',
+                                 height: 20.h, width: 20.w),
+                             child: ImageIcon(
+                                AssetImage('assets/Icon/courier.png'),
+                                size: 50.sp,
+                                color: Colors.black,
+                             ),
+                           ),
+                         ),
+                          Text(
+                            'Available Couriers',
+                            style: TextStyle(color: Colors.black, fontSize: 8.sp),
+                          ),
+                       ],
+                     ),
 
-                          ///Use it to manage the different states
-                          //print('Current State of SWITCH IS: $state');
-                        },
-                        onTap: () {},
-                        onDoubleTap: () {},
-                        onSwipe: () {},
-                      )
-                    : NoInternetConnection(),
-                Text(
-                  'Restaurant Online Status',
-                  style: TextStyle(color: Colors.blueGrey, fontSize: 15.sp),
-                ),
+                   ],
+                 ),
+
+
+
+
                 SizedBox(
                   height: 30.h,
                 ),
@@ -637,79 +533,6 @@ class _adminHomeState extends State<adminHome> {
                   height: 10.h,
                 ),
 
-                ///ROW OF BUTTONS TO SELECT THE FOOD COLLECTION YOU WAN TO UPLOAD
-
-                Text(
-                  'Please Select Collection bellow before Uploading Product and to view your uploads',
-                  style: TextStyle(
-                      fontSize: 10.sp,
-                      color: Colors.blueGrey,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-
-                ///COLLECTION FOR THE TYPE OF PRODUCT TO BE UPLOADED
-
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  child: Consumer<AdminCollectionProvider>(
-                      builder: (context, value, child) {
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: value.collectionList.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                value.changeIndex(index);
-                              });
-                            },
-                            child: adminCollectionItemsRow(
-                                value.collectionList[index]));
-                      },
-                    );
-                  }),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-
-                /// CONTAINER TO SHOW/DISPLAY SELECTED COLLECTION
-                Container(
-                  height: 40,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Upload to : ',
-                            style: TextStyle(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.bold)),
-                        TextSpan(
-                            text: Provider.of<AdminCollectionProvider>(context,
-                                    listen: false)
-                                .collectionToUpload,
-                            style: TextStyle(
-                                fontFamily: 'Righteous',
-                                letterSpacing: 1,
-                                color: Colors.white,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold)),
-                      ]),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30.h,
-                ),
 
                 ///IMAGE PICKER (SHOP PICTURE AND ID CARD)
                 SingleChildScrollView(
@@ -738,8 +561,8 @@ class _adminHomeState extends State<adminHome> {
                                       ? Padding(
                                           padding: const EdgeInsets.all(16.0),
                                           child: Image.file(
-                                            height: 100,
-                                            width: 100,
+                                            height: 50.h,
+                                            width: 50.h,
                                             _productImage!,
                                             fit: BoxFit.fill,
                                           ),
@@ -749,8 +572,8 @@ class _adminHomeState extends State<adminHome> {
                                           child: Image(
                                             image: const AssetImage(
                                                 'assets/Icon/restaurant.png'),
-                                            height: 100.h,
-                                            width: 100.h,
+                                            height: 50.h,
+                                            width: 50.h,
                                           ),
                                         ),
                                 ),
@@ -760,7 +583,7 @@ class _adminHomeState extends State<adminHome> {
                           Text('Product Image',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.sp,
+                                fontSize: 10.sp,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Poppins',
                               ),
@@ -791,8 +614,8 @@ class _adminHomeState extends State<adminHome> {
                                         ? Padding(
                                             padding: const EdgeInsets.all(16.0),
                                             child: Image.file(
-                                              height: 100,
-                                              width: 100,
+                                              height: 50.h,
+                                              width: 50.w,
                                               _shopImage!,
                                               fit: BoxFit.fill,
                                             ),
@@ -802,8 +625,8 @@ class _adminHomeState extends State<adminHome> {
                                             child: Image(
                                               image: const AssetImage(
                                                   'assets/Icon/VendorLocation.png'),
-                                              height: 100.h,
-                                              width: 100.h,
+                                              height: 50.h,
+                                              width: 50.h,
                                             ),
                                           ),
                                   ),
@@ -814,7 +637,7 @@ class _adminHomeState extends State<adminHome> {
                           Text('Shop Image',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15.sp,
+                                fontSize: 10.sp,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Poppins',
                               ),
@@ -1072,7 +895,7 @@ class _adminHomeState extends State<adminHome> {
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: const BorderSide(
-                                          color: Colors.white, width: 1.0),
+                                          color: Colors.black, width: 1.0),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     focusedBorder: OutlineInputBorder(
@@ -1085,7 +908,7 @@ class _adminHomeState extends State<adminHome> {
                                     DropdownMenuItem(
                                       value: false,
                                       child: const Text(
-                                          'I don\'nt have a Courier'),
+                                          'I don\'t have a Courier'),
                                       onTap: () {
                                         setState(() {
                                           hasCourier = false;
@@ -1182,6 +1005,80 @@ class _adminHomeState extends State<adminHome> {
                   ],
                 ),
 
+                ///ROW OF BUTTONS TO SELECT THE FOOD COLLECTION YOU WAN TO UPLOAD
+
+                Text(
+                  'Please Select Collection bellow before Uploading Product and to view your uploads',
+                  style: TextStyle(
+                      fontSize: 10.sp,
+                      color: Colors.blueGrey,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+
+                ///COLLECTION FOR THE TYPE OF PRODUCT TO BE UPLOADED
+
+                Container(
+                  height: 50,
+                  width: double.infinity,
+                  child: Consumer<AdminCollectionProvider>(
+                      builder: (context, value, child) {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: value.collectionList.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    value.changeIndex(index);
+                                  });
+                                },
+                                child: adminCollectionItemsRow(
+                                    value.collectionList[index]));
+                          },
+                        );
+                      }),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+
+                /// CONTAINER TO SHOW/DISPLAY SELECTED COLLECTION
+                Container(
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text: 'Upload to : ',
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                color: Colors.white,
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.bold)),
+                        TextSpan(
+                            text: Provider.of<AdminCollectionProvider>(context,
+                                listen: false)
+                                .collectionToUpload,
+                            style: TextStyle(
+                                fontFamily: 'Righteous',
+                                letterSpacing: 1,
+                                color: Colors.white,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold)),
+                      ]),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 30.h,
+                ),
+
                 SizedBox(
                   height: 20.h,
                 ),
@@ -1259,6 +1156,8 @@ class _adminHomeState extends State<adminHome> {
                           child: Text(
                             'Upload Food',
                             style: TextStyle(
+                              fontFamily: 'Righteous',
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),

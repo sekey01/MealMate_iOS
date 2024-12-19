@@ -140,15 +140,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                /*
-                    Center(
-                      child: Image(
-                        image: const AssetImage('assets/Announcements/OrderNow.png'),
-                        height: 250.h,
-                        width: double.infinity.w,
-                      ),
-                    ),
-                */
+
                     RichText(
                       text: const TextSpan(
                         children: [

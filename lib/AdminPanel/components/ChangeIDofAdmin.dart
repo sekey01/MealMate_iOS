@@ -4,9 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../Local_Storage/Locall_Storage_Provider/StoreCredentials.dart';
+import '../../Notification/notification_Provider.dart';
 import '../../components/Notify.dart';
 import '../../pages/authpages/login.dart';
+import '../../pages/navpages/notifications.dart';
 import '../OtherDetails/ID.dart';
+import '../Pages/adminNotificationPage.dart';
 
 class ChangeAdminCredentials extends StatefulWidget {
   const ChangeAdminCredentials({super.key});
@@ -24,9 +27,9 @@ class _ChangeAdminCredentialsState extends State<ChangeAdminCredentials> {
       appBar: AppBar(
         title:RichText(text: TextSpan(
             children: [
-              TextSpan(text: "Admin", style: TextStyle(color: Colors.black, fontSize: 20.sp,fontWeight: FontWeight.bold,fontFamily: 'Righteous',
+              TextSpan(text: "Admin", style: TextStyle(color: Colors.black, fontSize: 16.sp,fontWeight: FontWeight.bold,fontFamily: 'Righteous',
               )),
-              TextSpan(text: "Credentials", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 20.spMin,fontWeight: FontWeight.bold,fontFamily: 'Righteous',
+              TextSpan(text: "Credentials", style: TextStyle(color: Colors.redAccent, fontSize: 16.sp,fontWeight: FontWeight.bold,fontFamily: 'Righteous',
               )),
 
 
@@ -35,6 +38,40 @@ class _ChangeAdminCredentialsState extends State<ChangeAdminCredentials> {
         centerTitle: true,
         backgroundColor: Colors.white,
         actions: [
+          ///NOTIFICATION HERE
+          ///
+          /// THIS IS NOTIFICATION TO ALL ADMINS
+          ///
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AdminNotice()));
+              },
+              icon: Badge(
+                backgroundColor: Colors.green,
+                label: Builder(builder: (context) {
+                  Provider.of<NotificationProvider>(context, listen: false)
+                      .getAdminNotifications();
+                  return Consumer<NotificationProvider>(
+                      builder: (context, value, child) {
+                        value.getAdminNotifications();
+
+                        return Text(
+                          value.adminNotificationLength.toString(),
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        );
+                      });
+                }),
+                child: ImageIcon(
+                  AssetImage('assets/Icon/notification.png'),
+                  color: Colors.blueGrey,
+                  size: 25.sp,
+                ),
+              )),
+          SizedBox(
+            width: 10.w,
+          ),
           Padding(
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
@@ -51,9 +88,10 @@ class _ChangeAdminCredentialsState extends State<ChangeAdminCredentials> {
           ),
         );
       });},
-              icon: Text('Logout', style: TextStyle(fontSize: 13,fontFamily: 'Poppins',color: Colors.red,fontWeight: FontWeight.bold),),
+              icon: Text('Logout', style: TextStyle(fontSize: 12.sp,fontFamily: 'Poppins',color: Colors.redAccent,fontWeight: FontWeight.bold),),
             ),
-          )
+          ),
+
         ],
       ),
       body:
@@ -67,6 +105,52 @@ class _ChangeAdminCredentialsState extends State<ChangeAdminCredentials> {
                  padding: const EdgeInsets.all(28.0),
                  child: Column(
                    children: [
+                     /// GET ADMIN EMAIL
+                     SingleChildScrollView(
+                       scrollDirection: Axis.horizontal,
+                       child: Row(
+                         mainAxisAlignment: MainAxisAlignment.start,
+                         children: [
+                           Image(
+                             image: AssetImage('assets/Icon/gmail.png'),
+                             height: 20.h,
+                             width: 20.h,
+                           ),
+                           SizedBox(
+                             width: 10.w,
+                           ),
+                           SingleChildScrollView(
+                             scrollDirection: Axis.horizontal,
+                             child: FutureBuilder(
+                                 future: Provider.of<LocalStorageProvider>(context,
+                                     listen: false)
+                                     .getAdminEmail(),
+                                 builder: (context, snapshot) {
+                                   if (snapshot.hasData) {
+                                     return Text(
+                                       snapshot.data.toString(),
+                                       style: TextStyle(
+                                           letterSpacing: 1,
+                                           color: Colors.black,
+                                           fontSize: 15.sp,
+                                           fontFamily: 'Poppins'),
+                                     );
+                                   } else {
+                                     return Text(
+                                       'adminemail@gmail.com ',
+                                       style: TextStyle(
+                                         letterSpacing: 1,
+                                         color: Colors.black,
+                                         fontSize: 15.spMin,
+                                         fontWeight: FontWeight.bold,
+                                       ),
+                                     );
+                                   }
+                                 }),
+                           ),
+                         ],
+                       ),
+                     ),
                      SizedBox(
                        height: 30.h,
                      ),

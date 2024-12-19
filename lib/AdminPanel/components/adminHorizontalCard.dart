@@ -13,7 +13,7 @@ ListView adminHorizontalCard(String ProductImageUrl, String restaurant, String l
       return Padding(
           padding: const EdgeInsets.all(4.0),
           child: Container(
-            height: 170.h,
+            height: 140.h,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -57,32 +57,17 @@ ListView adminHorizontalCard(String ProductImageUrl, String restaurant, String l
                     ),
                   ),
                   SizedBox(
-                    width: 20.w,
+                    width: 5.w,
                   ),
                   Container(
-                    height: 200.h,
+                    height: 150.h,
                     color: Colors.white,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       //Column to Shaow Name OF Restaurant,Food Name, and Price Of the Food
                       children: [
-                        SizedBox(
-                          height: 5,
-                        ),
 
-                        ///Row for restaurant name
-                        Text(
-                          restaurant,
-                          style: TextStyle(
-                              fontSize: 10.sp,
-                              letterSpacing: 1,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
 
                         ///Row for food name
                         Text(
@@ -91,10 +76,7 @@ ListView adminHorizontalCard(String ProductImageUrl, String restaurant, String l
                               letterSpacing: 1,
                               fontSize: 10.sp,
                               fontWeight: FontWeight.bold,
-                              color: Colors.deepOrangeAccent),
-                        ),
-                        SizedBox(
-                          height: 5.h,
+                              color: Colors.redAccent),
                         ),
 
                         ///Row for price
@@ -119,38 +101,11 @@ ListView adminHorizontalCard(String ProductImageUrl, String restaurant, String l
                               style: TextStyle(
                                   fontSize: 8.sp,
                                   //fontWeight: FontWeight.bold,
-                                  color: Colors.deepOrangeAccent),
+                                  color: Colors.black),
                             ),
                           ],
                         ),
 
-                        ///Row for time and id
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Icon(Icons.timelapse_rounded,
-                                color: Colors.black, size: 10.sp),
-                            Text(
-                              time,
-                              style: TextStyle(
-                                  fontSize: 8.sp,
-                                  //fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            SizedBox(
-                              width: 10.h,
-                            ),
-                            Icon(Icons.payment_outlined,
-                                color: Colors.black, size: 10.sp),
-                            Text(
-                              '  $id',
-                              style: TextStyle(
-                                  fontSize: 8.sp,
-                                  //fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                          ],
-                        ),
 
                         ///THE BUTTON THAT DELETES THE FOOD ITEM
                         ///
@@ -193,12 +148,14 @@ ListView adminHorizontalCard(String ProductImageUrl, String restaurant, String l
                               'Remove Item',
                               style: TextStyle(
                                   letterSpacing: 1,
+                                  fontSize: 10.sp,
                                   fontFamily: 'Righteous',
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.deepOrangeAccent),
+                                  color: Colors.redAccent),
                             )),
                         LiteRollingSwitch(
-
+                           width: 100.w,
+                          textOnColor: Colors.white,
                           textOn: 'Online',
                           textOff: 'Offline',
                           colorOn: (isAvailable) ? Colors.green : Colors.red,

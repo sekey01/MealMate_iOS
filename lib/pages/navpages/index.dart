@@ -106,32 +106,7 @@ class _IndexState extends State<Index> {
             width: 20.w,
           ),
 
-          ///NOTIFICATION HERE
-          ///
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const Notice()));
-            },
-            child: Badge(
-              backgroundColor: Colors.green,
-              label: Consumer<NotificationProvider>(
-                  builder: (context, value, child)
-                  {
-                   value.getUserNotifications();
 
-                    return  Text(
-                          value.userNotificationLength.toString(),
-                          style: const TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        );
-                      }),
-              child: ImageIcon(const AssetImage(
-                  'assets/Icon/notification.png'
-              ), color: Colors.blueGrey,size: 30.spMin,
-              ),
-            ),
-          ),
 
 
           SizedBox(
@@ -198,7 +173,9 @@ class _IndexState extends State<Index> {
                     ),
                   ),
 
-
+                  ///ROW OF FOOD COLLECTION ITEMS
+                  ///
+                  ///
                    SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
@@ -227,7 +204,7 @@ class _IndexState extends State<Index> {
                                   onTap: (){
                                     Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'grocery')));
                                   },
-                                  child: InitRow(imageUrl: 'assets/adsimages/Grocery.png',name: 'Grocery',)),
+                                  child: InitRow(imageUrl: 'assets/adsimages/Grocery.jpeg',name: 'Grocery',)),
                               InkWell(
                                   onTap: (){
                                     Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'snacks')));
@@ -243,7 +220,7 @@ class _IndexState extends State<Index> {
                                   onTap: (){
                                     Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'drinks')));
                                   },
-                                  child: InitRow(imageUrl: 'assets/adsimages/drinks.png',name: 'Drinks',)),
+                                  child: InitRow(imageUrl: 'assets/adsimages/drinks.jpeg',name: 'Drinks',)),
 
                             ],
                           )),
@@ -321,7 +298,7 @@ class _IndexState extends State<Index> {
                     ),
                   ),
 
-                  SizedBox(height: 30.h,),
+                  SizedBox(height: 20.h,),
 
 
                   ///FOOD DELIVERY AND SUPERMARKET AND SHOPS
@@ -522,7 +499,7 @@ class _IndexState extends State<Index> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20.h,),
+                  SizedBox(height: 10.h,),
 
                   const Padding(padding: EdgeInsets.all(1),
                       child: PromotionAdsCard(
@@ -738,7 +715,7 @@ class _IndexState extends State<Index> {
 
 
                   SizedBox(
-                    height: 20.h,
+                    height: 10.h,
                   ),
 
 
@@ -751,7 +728,7 @@ class _IndexState extends State<Index> {
                       scrollDirection: Axis.horizontal,
                       children: const [
                         PromotionAdsCard(
-                          image: 'assets/adsimages/ads2.png',
+                          image: 'assets/adsimages/fufu.png',
                           heading: 'Eat what you desire',
                           content: 'Order your favorite food and get Lucky.. yh get lucky 🍀☺️',
                           contentColor: Colors.white70,
@@ -760,7 +737,7 @@ class _IndexState extends State<Index> {
                         ),
 
                         PromotionAdsCard(
-                          image: 'assets/adsimages/ads3.png',
+                          image: 'assets/adsimages/local.png',
                           heading: 'Order Pizza and get a free drink',
                           content: 'Embrace the Ecosystem... Let love lead',
                           contentColor: Colors.white70,
@@ -776,7 +753,7 @@ class _IndexState extends State<Index> {
                   ///
                   ///
                   SizedBox(
-                    height: 20.h,
+                    height: 10.h,
                   ),
 
                   ///

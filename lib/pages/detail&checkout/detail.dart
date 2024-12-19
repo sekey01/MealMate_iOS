@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:mealmate_ios/Notification/notification_Provider.dart';
 import 'package:mealmate_ios/pages/detail&checkout/payment_unsuccessful.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -1378,9 +1379,13 @@ else if (snapshot.hasData) {
                                               isCashOnDelivery: false,
                                               isCourierDelivered: false,
                                             )).then((_){
-                                              ///END EMAIL TO ALERT VENDOR FUNCTION OF NEW ORDER
-                                              ///SEND EMAIL TO VENDOR
-                                              Provider.of<IncomingOrdersProvider>(context, listen: false).sendEmail(widget.adminEmail, widget.foodName);
+                                              ///SEND SMS TO ALERT VENDOR FUNCTION OF NEW ORDER
+                                              ///SEND SMSL TO VENDOR
+                                              Provider.of<NotificationProvider>(context, listen: false).sendSms(
+                                                widget.adminContact.toString(),
+                                                'New Order Alert \n from ${Provider.of<LocalStorageProvider>(context, listen: false).phoneNumber} \n for ${widget.foodName} \n from ${widget.restaurant} \n Please check MealMate App for more details',
+
+                                              );
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -1480,8 +1485,16 @@ else if (snapshot.hasData) {
                                           isCourierDelivered: false,
 
                                         )).then((_){
-                                          ///END EMAIL TO ALERT VENDOR FUNCTION
-                                          Provider.of<IncomingOrdersProvider>(context, listen: false).sendEmail(widget.adminEmail, widget.foodName);
+
+
+                                          ///SEND SMS TO ALERT VENDOR FUNCTION OF NEW ORDER
+                                          ///SEND SMSL TO VENDOR
+                                          Provider.of<NotificationProvider>(context, listen: false).sendSms(
+                                            widget.adminContact.toString(),
+                                            'New Order Alert \n from ${Provider.of<LocalStorageProvider>(context, listen: false).phoneNumber} \n for ${widget.foodName} \n from ${widget.restaurant} \n Please check MealMate App for more details',
+
+                                          );
+
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(

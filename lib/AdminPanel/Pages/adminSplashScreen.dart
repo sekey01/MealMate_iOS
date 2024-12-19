@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mealmate_ios/AdminPanel/OtherDetails/ID.dart';
 import 'package:provider/provider.dart';
 
 import '../../Local_Storage/Locall_Storage_Provider/StoreCredentials.dart';
@@ -33,11 +34,12 @@ class _AdminsplashScreenState extends State<AdminsplashScreen> {
     // TODO: implement initState
     super.initState();
     _checkLoginStatus();
+    Provider.of<AdminId>(context, listen: false).loadId();
   }
   @override
   Widget build(BuildContext context) {
     return FlutterSplashScreen(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.redAccent,
       duration: Duration(seconds: 5),
       nextScreen: AdminLogin(),
     splashScreenBody: Center(
@@ -50,11 +52,10 @@ class _AdminsplashScreenState extends State<AdminsplashScreen> {
                          return  Column(
                             mainAxisAlignment: MainAxisAlignment.center,
              children: [
-                              Center(child: Image(image: AssetImage('assets/Announcements/OrderNow.png'), height: 250.h, width: double.infinity.w)),
                              RichText(text: TextSpan(
               children: [
                 TextSpan(text: "Vendor", style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
-                TextSpan(text: "Panel", style: TextStyle(color: Colors.redAccent, fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
+                TextSpan(text: "Panel", style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
 
 
                    ]

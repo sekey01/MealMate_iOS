@@ -185,10 +185,11 @@ flutter:
      - assets/adsimages/ads2.png
      - assets/adsimages/ads3.png
      - assets/adsimages/local.png
+     - assets/adsimages/fufu.png
      - assets/adsimages/pizza.png
      - assets/adsimages/drinks.jpeg
      - assets/adsimages/Grocery.jpeg
-     - assets/adsimages/local.jpeg
+     - assets/adsimages/local.png
      - assets/adsimages/shawama.jpeg
 
 

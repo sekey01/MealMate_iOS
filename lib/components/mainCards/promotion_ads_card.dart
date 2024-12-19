@@ -18,80 +18,89 @@ final Color backgroundColor;
 class _PromotionAdsCardState extends State<PromotionAdsCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      width: 340,
-      decoration: BoxDecoration(
-        color: widget.backgroundColor,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    '${widget.heading}',
-                    style: TextStyle(
-                      fontFamily: 'Righteous',
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w800,
-                      //letterSpacing: 2,
-                      color: widget.headingColor,
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      child: Container(
+        height: 150,
+        width: 340,
+        decoration: BoxDecoration(
+          color: widget.backgroundColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        '${widget.heading}',
+                        style: TextStyle(
+                          fontFamily: 'Righteous',
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w800,
+                          //letterSpacing: 2,
+                          color: widget.headingColor,
+                        ),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 3.h,
-                  ),
-                  Text(
-                    '${widget.content}',
-                    softWrap: true,
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1,
-                      color: widget.contentColor,
+                    SizedBox(
+                      height: 5.h,
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              height: 150,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                  topLeft: Radius.circular(60),
-                  bottomLeft: Radius.circular(60),
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                  topLeft: Radius.circular(60),
-                  bottomLeft: Radius.circular(60),
-                ),
-                child: Image(
-                  fit: BoxFit.fill,
-                  image: AssetImage(widget.image),
-                  height: 50,
-                  width: 150,
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Text(
+                        '${widget.content}',
+                        softWrap: true,
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1,
+                          color: widget.contentColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    topLeft: Radius.circular(60),
+                    bottomLeft: Radius.circular(60),
+                  ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                    topLeft: Radius.circular(60),
+                    bottomLeft: Radius.circular(60),
+                  ),
+                  child: Image(
+                    fit: BoxFit.fill,
+                    image: AssetImage(widget.image),
+                    height: 50,
+                    width: 150,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

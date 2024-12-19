@@ -89,7 +89,7 @@ class IncomingOrdersProvider extends ChangeNotifier {
 
   void _startFetchingOrders(String id) async {
     int retryCount = 0;
-    const maxRetries = 3;
+    const maxRetries = 1;
     const retryDelay = Duration(seconds: 60);
 
     while (true) {
