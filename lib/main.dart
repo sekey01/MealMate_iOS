@@ -26,7 +26,7 @@ import 'models&ReadCollectionModel/cartmodel.dart';
 import 'models&ReadCollectionModel/sendOrderFunctionProvider.dart';
 import 'models&ReadCollectionModel/userReadwithCollection.dart';
 void main() async {
-  await dotenv.load(fileName: "assets/.env");
+  await dotenv.load(fileName: ".env");
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
