@@ -325,7 +325,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                           iconOff: Icons.remove_circle_outline,
                           textSize: 8.0,
                           onChanged: (bool state) {
-                            print('Served');
+                            //print('Served');
                             Provider.of<AdminFunctions>(context, listen: false).switchServedFood(context,Orders.vendorId , Orders.phoneNumber, state,);
                  //   print(Orders.vendorId);
                  //   print(Orders.phoneNumber);
@@ -353,8 +353,12 @@ class _IncomingOrdersState extends State<IncomingOrders> {
 
                             if(formKey.currentState!.validate()){
 
-                              Provider.of<AdminFunctions>(context, listen: false).switchCourier(context,Orders.vendorId , Orders.phoneNumber, state, Orders.time);
-                              print('Given to Courier');                            }
+                              Provider.of<AdminFunctions>(context, listen: false).switchIsGivenToCourierState(context,Orders.vendorId , Orders.phoneNumber, state, Orders.time).then((_){
+                                Provider.of<AdminFunctions>(context, listen: false).UpdateCourier(context, Orders.vendorId, Orders.phoneNumber,int.parse(courierIdController.text));
+                              });
+                              print('Given to Courier');
+                              courierIdController.clear();
+                            }
 
 
 

@@ -144,7 +144,7 @@ class _LoginState extends State<Login> {
                       ///GOOGLE SIGN IN BUTTON HERE
                       SizedBox(
                         width: double.infinity,
-                        height: 50.h,
+                        height: 40.h,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,),
@@ -161,16 +161,20 @@ class _LoginState extends State<Login> {
                                   letterSpacing: 1,
                                   color: Colors.white,
                                   fontFamily: 'Poppins',
-                                  fontSize: 15.sp,
+                                  fontSize: 12.sp,
                                 ),
                               ),
                  Image(
                    image: AssetImage('assets/Icon/google.png'),
-                   height: 50.sp,width: 40.spMin,
+                   height: 40.sp,width: 30.sp,
                  )
                             ],
                           ),
                         ),
+                      ),
+
+                      SizedBox(
+                        height: 20.h,
                       ),
                       GestureDetector(
 

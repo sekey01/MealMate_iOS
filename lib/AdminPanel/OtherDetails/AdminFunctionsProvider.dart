@@ -127,7 +127,7 @@ class AdminFunctions extends ChangeNotifier {
 
       // Check if any documents were found
       if (querySnapshot.docs.isEmpty) {
-        print('No matching documents found');
+       // print('No matching documents found');
         return;
       }
 
@@ -136,9 +136,9 @@ class AdminFunctions extends ChangeNotifier {
         await doc.reference.update({'served': isServed});
       }
 
-      print('isServed updated successfully');
+     // print('isServed updated successfully');
     } catch (e) {
-      print('Error updating document(s): $e');
+     // print('Error updating document(s): $e');
       // You might want to show an error message to the user here
     }
   }
@@ -156,7 +156,7 @@ class AdminFunctions extends ChangeNotifier {
 
       // Check if any documents were found
       if (querySnapshot.docs.isEmpty) {
-        print('No matching documents found');
+       // print('No matching documents found');
         return;
       }
 
@@ -165,15 +165,18 @@ class AdminFunctions extends ChangeNotifier {
         await doc.reference.update({'CourierId': CourierId});
       }
 
-      print('isCourier updated successfully');
+     // print('isCourier updated successfully');
     } catch (e) {
-      print('Error updating document(s): $e');
+    //  print('Error updating document(s): $e');
       // You might want to show an error message to the user here
     }
   }
 
-
-  Future<void> switchCourier(BuildContext context, String id, String phoneNumber, bool isCourier, DateTime time) async {
+/// THIS FUNCTION FINDS THE RIGHT ORDER IN THE ORDERS COLLECTION AND
+  /// UPDATE  THE COURIER ID ,
+  /// IN THE USER PAGE , A FUNCTION IS THERE TO GET THE COURIER ID AND USE THE THE ID TO GET THE COURIER DETAILS
+  /// IN THE COURIERS COLLECTION
+  Future<void> switchIsGivenToCourierState(BuildContext context, String id, String phoneNumber, bool isCourier, DateTime time) async {
     final CollectionReference collectionRef = FirebaseFirestore.instance.collection('OrdersCollection');
 
     try {

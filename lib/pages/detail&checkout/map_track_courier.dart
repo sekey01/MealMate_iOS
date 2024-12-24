@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -100,6 +102,18 @@ class _TrackCourierMapState extends State<TrackCourierMap> {
                         Provider.of<LocationProvider>(context, listen: false).Long = argument.longitude;
                       });
                     },
+
+
+                    gestureRecognizers: Set.from([
+                      Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
+                      Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer()),
+                      Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()),
+                      Factory<PanGestureRecognizer>(() => PanGestureRecognizer()),
+                      Factory<HorizontalDragGestureRecognizer>(() => HorizontalDragGestureRecognizer()),
+                      Factory<TapGestureRecognizer>(() => TapGestureRecognizer()),
+
+
+                    ]),
                     markers: {
                       Marker(
                         markerId: const MarkerId('Vendor'),

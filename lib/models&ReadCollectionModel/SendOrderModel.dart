@@ -1,4 +1,3 @@
-
 class OrderInfo {
   final String vendorId;
   final String foodName;

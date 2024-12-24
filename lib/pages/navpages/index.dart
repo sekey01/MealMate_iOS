@@ -180,55 +180,38 @@ class _IndexState extends State<Index> {
                   scrollDirection: Axis.horizontal,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 0,right: 0),
-                    child: Container(
-                     width: 350.w,
-                      decoration: BoxDecoration(
-                        color: Colors.blueGrey.shade100,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.blueGrey.shade200,
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'grocery')));
+                                },
+                                child: InitRow(imageUrl: 'assets/adsimages/Grocery.jpeg',name: 'Grocery',)),
+                            InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'snacks')));
+                                }
+                                ,child: InitRow(imageUrl: 'assets/images/burger.png',name: 'Snacks',)),
 
-                      child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'grocery')));
-                                  },
-                                  child: InitRow(imageUrl: 'assets/adsimages/Grocery.jpeg',name: 'Grocery',)),
-                              InkWell(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'snacks')));
-                                  }
-                                  ,child: InitRow(imageUrl: 'assets/images/burger.png',name: 'Snacks',)),
+                            InkWell(onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'pizza')));
+                            }
+                                ,child: InitRow(imageUrl: 'assets/adsimages/pizza.png',name: 'Pizza',)),
 
-                              InkWell(onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'pizza')));
-                              }
-                                  ,child: InitRow(imageUrl: 'assets/adsimages/pizza.png',name: 'Pizza',)),
+                            InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'drinks')));
+                                },
+                                child: InitRow(imageUrl: 'assets/adsimages/drinks.jpeg',name: 'Drinks',)),
 
-                              InkWell(
-                                  onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> InitRowSearch(searchItem: 'drinks')));
-                                  },
-                                  child: InitRow(imageUrl: 'assets/adsimages/drinks.jpeg',name: 'Drinks',)),
-
-                            ],
-                          )),
-                    ),
+                          ],
+                        )),
                   ),
                 ),
 
-                //  SizedBox(height: 30.h,),
 
 
 

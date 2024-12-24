@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_url_launcher/easy_url_launcher.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' as gmaps;
@@ -400,7 +402,7 @@ class _CouriersAvailableState extends State<CouriersAvailable> {
                   ),
                 ],
               ),
-                child: FutureBuilder<List<CourierModel>>(future: getNearbyCouriers(context, 10),
+                child: FutureBuilder<List<CourierModel>>(future: getNearbyCouriers(context, Provider.of<LocationProvider>(context, listen: false).distanceRangeToSearch.toDouble()),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: Column(
@@ -430,12 +432,23 @@ class _CouriersAvailableState extends State<CouriersAvailable> {
 
                           mapType: gmaps.MapType.normal,
                           initialCameraPosition: gmaps.CameraPosition(
-                            target: gmaps.LatLng(5.6037, -0.1870),
+                            target: gmaps.LatLng(Provider.of<LocationProvider>(context,listen: false).Lat, Provider.of<LocationProvider>(context,listen: false).Long),
                             zoom: 11.5,
                           ),
                           myLocationButtonEnabled: true,
                           compassEnabled: true,
+                          rotateGesturesEnabled: true,
                           myLocationEnabled: true,
+                          gestureRecognizers: Set.from([
+                            Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer()),
+                            Factory<VerticalDragGestureRecognizer>(() => VerticalDragGestureRecognizer()),
+                            Factory<ScaleGestureRecognizer>(() => ScaleGestureRecognizer()),
+                            Factory<PanGestureRecognizer>(() => PanGestureRecognizer()),
+                            Factory<HorizontalDragGestureRecognizer>(() => HorizontalDragGestureRecognizer()),
+                            Factory<TapGestureRecognizer>(() => TapGestureRecognizer()),
+
+
+                          ]),
 
                           markers: nearbyCouriers
                               .map(

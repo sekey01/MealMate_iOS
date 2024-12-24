@@ -554,9 +554,10 @@ final String name;
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade200,
+
+              color: Colors.blueGrey.shade200,
               spreadRadius: 2,
-              //blurRadius: 5,
+              blurRadius: 2,
               offset: Offset(0, 3), // changes position of shadow
             ),
           ],
