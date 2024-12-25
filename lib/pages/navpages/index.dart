@@ -936,8 +936,8 @@ class _IndexState extends State<Index> {
                         Padding(
                           padding: EdgeInsets.all(4.0),
                           child: PromotionAdsCard(
-                            image: 'assets/adsimages/local.jpeg',
-                            heading: 'Eat what you desire',
+                            image: 'assets/adsimages/pizza.png',
+                            heading: 'Eat pizza and get a free drink',
                             content: 'Order your favorite food and get Lucky.. yh get lucky 🍀☺️',
                             contentColor: Colors.white70,
                             headingColor: Colors.white,
@@ -948,8 +948,8 @@ class _IndexState extends State<Index> {
                         Padding(
                           padding: EdgeInsets.all(4.0),
                           child: PromotionAdsCard(
-                            image: 'assets/adsimages/local.jpeg',
-                            heading: 'Order Burger and get a free delivery',
+                            image: 'assets/adsimages/fufu.png',
+                            heading: 'Order Fufu and get a free delivery',
                             content: 'Embrace the Ecosystem... Let love lead 🍀 ',
                             contentColor: Colors.white70,
                             headingColor: Colors.white,

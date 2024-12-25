@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:mealmate_ios/Notification/notification_Provider.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_url_launcher/easy_url_launcher.dart';
 import '../../UserLocation/LocationProvider.dart';
@@ -323,10 +324,17 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                           colorOff: Colors.redAccent,
                           iconOn: Icons.done,
                           iconOff: Icons.remove_circle_outline,
-                          textSize: 8.0,
+                          textSize: 12.0,
                           onChanged: (bool state) {
                             //print('Served');
-                            Provider.of<AdminFunctions>(context, listen: false).switchServedFood(context,Orders.vendorId , Orders.phoneNumber, state,);
+                            Provider.of<AdminFunctions>(context, listen: false).switchServedFood(context,Orders.vendorId , Orders.phoneNumber, state,).then((_){
+                              Provider.of<NotificationProvider>(context,listen: false).sendSms(Orders.phoneNumber, 'Your Order \n '
+                                  '${Orders.foodName} X ${Orders.quantity} '
+                                  ' has been Confirmed and being prepared'
+                                  ' Thank you for choosing MealMate '
+
+                              );
+                            });
                  //   print(Orders.vendorId);
                  //   print(Orders.phoneNumber);
                             ///Use it to manage the different states
@@ -348,7 +356,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                           colorOff: Colors.redAccent,
                           iconOn: Icons.done,
                           iconOff: Icons.remove_circle_outline,
-                          textSize: 8.0,
+                          textSize: 12.0,
                           onChanged: (bool state) {
 
                             if(formKey.currentState!.validate()){
@@ -356,7 +364,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                               Provider.of<AdminFunctions>(context, listen: false).switchIsGivenToCourierState(context,Orders.vendorId , Orders.phoneNumber, state, Orders.time).then((_){
                                 Provider.of<AdminFunctions>(context, listen: false).UpdateCourier(context, Orders.vendorId, Orders.phoneNumber,int.parse(courierIdController.text));
                               });
-                              print('Given to Courier');
+                              //print('Given to Courier');
                               courierIdController.clear();
                             }
 

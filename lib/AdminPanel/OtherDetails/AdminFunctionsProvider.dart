@@ -143,6 +143,12 @@ class AdminFunctions extends ChangeNotifier {
     }
   }
 
+
+
+  /// THIS FUNCTION FINDS THE RIGHT ORDER IN THE ORDERS COLLECTION AND
+  /// UPDATE  THE COURIER ID,
+  /// IN THE USER PAGE , A FUNCTION IS THERE TO GET THE COURIER ID AND USE THE THE ID TO GET THE COURIER DETAILS
+  /// IN THE COURIERS COLLECTION
   Future<void> UpdateCourier(BuildContext context, String id, String phoneNumber, int CourierId,) async {
     final CollectionReference collectionRef = FirebaseFirestore.instance.collection('OrdersCollection');
 
@@ -172,10 +178,7 @@ class AdminFunctions extends ChangeNotifier {
     }
   }
 
-/// THIS FUNCTION FINDS THE RIGHT ORDER IN THE ORDERS COLLECTION AND
-  /// UPDATE  THE COURIER ID ,
-  /// IN THE USER PAGE , A FUNCTION IS THERE TO GET THE COURIER ID AND USE THE THE ID TO GET THE COURIER DETAILS
-  /// IN THE COURIERS COLLECTION
+
   Future<void> switchIsGivenToCourierState(BuildContext context, String id, String phoneNumber, bool isCourier, DateTime time) async {
     final CollectionReference collectionRef = FirebaseFirestore.instance.collection('OrdersCollection');
 
@@ -205,30 +208,5 @@ class AdminFunctions extends ChangeNotifier {
     }
   }
 
-/*///BELLOW IS THE FUNCTION TO FREQUENTLY UPDATE THE ADMIN ON INCOMING ORDERS
-///
-  Future<List<OrderInfo>> IncomingOrders(String collection) async {
-    int retryCount = 3;
-    int attempt = 0;
-    while (attempt < retryCount) {
-      try {
-        QuerySnapshot snapshot =
-        await FirebaseFirestore.instance.collection(collection).get();
-        return snapshot.docs.map((doc) => OrderInfo.fromMap(doc.data() as Map<String, dynamic>, doc.id))
-            .toList();
-      } on SocketException catch (e) {
-        attempt++;
-        if (attempt >= retryCount) {
-          print("Internet Problem: $e");
-          return [];
-        }
-        await Future.delayed(Duration(seconds: 2)); // wait before retrying
-      } catch (e) {
-        print("Error fetching food items: $e");
-        return [];
-      }
-    }
-    return [];
-  }
-  */
+
 }
