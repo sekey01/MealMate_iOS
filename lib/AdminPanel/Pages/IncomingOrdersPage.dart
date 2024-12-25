@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -85,7 +87,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                   final Orders = snapshot.data![index];
                   return Badge(
                     alignment: Alignment.topCenter,
-                    backgroundColor: Orders.delivered?Colors.green:Colors.red,
+                    backgroundColor: Orders.delivered?Colors.green:Colors.redAccent,
                     label: Text(Orders.delivered?' Order Completed': 'Incomplete Order', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,fontFamily: 'Righteous',),),
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
@@ -99,7 +101,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                           child: ExpansionTile(leading: RichText(text: TextSpan(
                               children: [
                                 TextSpan(text: "Meal", style: TextStyle(color: Colors.black, fontSize: 15.spMin,fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
-                                TextSpan(text: "Mate", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 15.spMin,fontWeight: FontWeight.bold, fontFamily: 'Righteous',)),
+                                TextSpan(text: "Mate", style: TextStyle(color: Colors.redAccent, fontSize: 15.spMin,fontWeight: FontWeight.bold, fontFamily: 'Righteous',)),
 
 
                               ]
@@ -156,13 +158,34 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                               ),
                               ListTile(
 
-                                trailing: Text(
-                                  '${Orders.vendorId}',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10.sp,
-                                      color: Colors.black,
-                                  fontStyle: FontStyle.italic),
+                                trailing: InkWell(
+                                  onTap: () {
+                                    Provider.of<AdminFunctions>(context, listen: false).RejectOrder(context, Orders.vendorId, Orders.phoneNumber).then((_){
+                                      Provider.of<NotificationProvider>(context,listen: false).sendSms(Orders.phoneNumber, 'Your Order \n '
+                                          '${Orders.foodName} X ${Orders.quantity} '
+                                          ' has been Rejected'
+                                          ' Thank you for choosing MealMate '
+                                      );
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        'Reject Order',
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10.spMin,
+                                            color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 title: Text('Latitude : '' ${Orders.Latitude.toString()}' ,style: TextStyle(color: Colors.black, fontSize: 15.sp, fontWeight: FontWeight.bold)),
                                 subtitle: Text('Longitude  : ''${Orders.Longitude.toString()}', style: TextStyle(color: Colors.black, fontSize: 15.sp,fontWeight: FontWeight.bold)),
@@ -222,7 +245,22 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                         _Usercontroller.complete(_Usercontroller
                                             as FutureOr<GoogleMapController>?);
                                       },
-                                      gestureRecognizers: Set(),
+                                      gestureRecognizers: Set.from(
+                                        [
+                                          Factory<OneSequenceGestureRecognizer>(
+                                              () => EagerGestureRecognizer()),
+                                          Factory<VerticalDragGestureRecognizer>(
+                                              () => VerticalDragGestureRecognizer()),
+                                          Factory<ScaleGestureRecognizer>(
+                                              () => ScaleGestureRecognizer()),
+                                          Factory<PanGestureRecognizer>(
+                                              () => PanGestureRecognizer()),
+                                          Factory<HorizontalDragGestureRecognizer>(
+                                              () => HorizontalDragGestureRecognizer()),
+                                          Factory<TapGestureRecognizer>(
+                                              () => TapGestureRecognizer()),
+                                        ]
+                                      ),
                                       initialCameraPosition: CameraPosition(
                                         bearing: 192.8334901395799,
                                         target: LatLng(

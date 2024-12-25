@@ -102,6 +102,7 @@ class IncomingOrdersProvider extends ChangeNotifier {
             .collection('OrdersCollection')
             .where('vendorId', isEqualTo: id)
             .where('delivered', isEqualTo: false)
+            .where('isRejected', isEqualTo: false)
             .get();
 
         List<OrderInfo> orders = snapshot.docs

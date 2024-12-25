@@ -5,9 +5,12 @@ import '../models&ReadCollectionModel/ListFoodItemModel.dart';
 
 class SearchProvider extends ChangeNotifier {
   String _searchItem = '';
-  String _foodCollection = 'Food 🍔';
-  String _drinksCollection = 'Drinks 🍷';
-  String _groceryCollection = 'Grocery 🛒';
+  String _foodCollection = 'Food ';
+  String _drinksCollection = 'Drinks ';
+  String _groceryCollection = 'Grocery ';
+  String _snacksCollection = 'Snacks ';
+  String _breakfastCollection = 'Breakfast ';
+  String _othersCollection = 'Others ';
   // Default collection name
 
   set searchItem(String value) {
@@ -31,11 +34,6 @@ class SearchProvider extends ChangeNotifier {
             .get(),
         FirebaseFirestore.instance
             .collection(_foodCollection)
-            .where('location', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
-            .where('location', isLessThan: _searchItem.toLowerCase() + 'z')
-            .get(),
-        FirebaseFirestore.instance
-            .collection(_foodCollection)
             .where('restaurant', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
             .where('restaurant', isLessThan: _searchItem.toLowerCase() + 'z')
             .get(),
@@ -45,24 +43,29 @@ class SearchProvider extends ChangeNotifier {
             .where('foodName', isLessThan: _searchItem.toLowerCase() + 'z')
             .get(),
         FirebaseFirestore.instance
-            .collection(_drinksCollection)
-            .where('restaurant', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
-            .where('restaurant', isLessThan: _searchItem.toLowerCase() + 'z')
-            .get(),
-        FirebaseFirestore.instance
             .collection(_groceryCollection)
             .where('foodName', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
             .where('foodName', isLessThan: _searchItem.toLowerCase() + 'z')
             .get(),
         FirebaseFirestore.instance
             .collection(_groceryCollection)
-            .where('location', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
-            .where('location', isLessThan: _searchItem.toLowerCase() + 'z')
-            .get(),
-        FirebaseFirestore.instance
-            .collection(_groceryCollection)
             .where('restaurant', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
             .where('restaurant', isLessThan: _searchItem.toLowerCase() + 'z')
+            .get(),
+        FirebaseFirestore.instance
+            .collection(_snacksCollection)
+            .where('foodName', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
+            .where('foodName', isLessThan: _searchItem.toLowerCase() + 'z')
+            .get(),
+        FirebaseFirestore.instance
+            .collection(_breakfastCollection)
+            .where('foodName', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
+            .where('foodName', isLessThan: _searchItem.toLowerCase() + 'z')
+            .get(),
+        FirebaseFirestore.instance
+            .collection(_othersCollection)
+            .where('foodName', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
+            .where('foodName', isLessThan: _searchItem.toLowerCase() + 'z')
             .get(),
       ]);
 
@@ -70,10 +73,14 @@ class SearchProvider extends ChangeNotifier {
       final foodNameDocs = results[0].docs;
       final restaurantDocs = results[1].docs;
       final groceryDocs = results[2].docs;
+      final drinksDocs = results[3].docs;
+      final snacksDocs = results[4].docs;
+      final breakfastDocs = results[5].docs;
+      final othersDocs = results[6].docs;
 
       // Combine the documents and remove duplicates
       final combinedDocs =
-          [...foodNameDocs, ...restaurantDocs, ...groceryDocs].toSet().toList();
+          [...foodNameDocs, ...restaurantDocs, ...groceryDocs, ...breakfastDocs,...snacksDocs, ...othersDocs, ...drinksDocs].toSet().toList();
 
       // Map the combined documents to FoodItem objects
       final combinedResults = combinedDocs

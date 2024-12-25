@@ -45,7 +45,7 @@ class _SearchFoodItemState extends State<SearchFoodItem> {
             color: Colors.blueGrey,
             fontWeight: FontWeight.normal,
             letterSpacing: 2,
-            fontSize: 20.sp),
+            fontSize: 20.spMin),
         backgroundColor: Colors.white,
       ),
       body: Padding(
@@ -72,7 +72,7 @@ class _SearchFoodItemState extends State<SearchFoodItem> {
                   controller: searchitemController,
                   style: const TextStyle(color: Colors.deepOrange),
                   decoration: InputDecoration(
-                    hintText: 'Search : foodName / restaurant / location',
+                    hintText: 'Search : foodName / restaurant ',
                     fillColor: Colors.grey.shade100,
                     filled: true,
                     prefixIcon:  Padding(
@@ -112,7 +112,7 @@ class _SearchFoodItemState extends State<SearchFoodItem> {
                         style: BorderStyle.solid,
                       ),
                     ),
-                    label: const Text('foodName / restaurant / location'),
+                    label: const Text('foodName / restaurant '),
                     labelStyle: TextStyle(color: Colors.grey, fontSize: 10.spMin),
                   ),
                   onChanged: (value) {
@@ -147,7 +147,7 @@ class _SearchFoodItemState extends State<SearchFoodItem> {
                             RichText(text: TextSpan(
                                 children: [
                                   TextSpan(text: "Search for : ", style: TextStyle(color: Colors.black, fontSize: 12.sp, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
-                                  TextSpan(text: " \" FoodName, Restaurant or location \"", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 12.sp, fontWeight: FontWeight.bold,fontFamily: 'Poppins',)),
+                                  TextSpan(text: " \" FoodName, Restaurant  \"", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 12.sp, fontWeight: FontWeight.bold,fontFamily: 'Poppins',)),
                                 ]
                             )),
                             noFoodFound(),
@@ -172,9 +172,9 @@ class _SearchFoodItemState extends State<SearchFoodItem> {
                             ),
                           ));
                         } else if (locationSnapshot.hasError) {
-                          return Center(child: Text('Error : ${locationSnapshot.error}'));
+                          return Center(child: Text('Turn On your Location in settings'));
                         } else if (!locationSnapshot.hasData) {
-                          return const Center(child: Text('Unable to detect location'));
+                          return const Center(child: Text('Unable to detect your location'));
                         } else {
                           LatLng userLocation = locationSnapshot.data!;
                           List<FoodItem> nearbyRestaurants = foodItems.where((foodItem) {

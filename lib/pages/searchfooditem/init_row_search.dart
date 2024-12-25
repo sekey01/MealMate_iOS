@@ -19,9 +19,13 @@ class InitRowSearch extends StatefulWidget {
   State<InitRowSearch> createState() => _InitRowSearchState();
 }
 
-String _foodCollection = 'Food 🍔';
-String _drinksCollection = 'Drinks 🍷';
-String _groceryCollection = 'Grocery 🛒';
+String _foodCollection = 'Food ';
+String _drinksCollection = 'Drinks ';
+String _groceryCollection = 'Grocery ';
+String _snacksCollection = 'Snacks ';
+String _breakfastCollection = 'Breakfast ';
+String _othersCollection = 'Others ';
+
 Future<List<FoodItem>> searchFoodItems(String _searchItem) async {
   if (_searchItem.isNotEmpty) {
     // Perform the queries concurrently
@@ -41,18 +45,40 @@ Future<List<FoodItem>> searchFoodItems(String _searchItem) async {
           .where('foodName', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
           .where('foodName', isLessThan: _searchItem.toLowerCase() + 'z')
           .get(),
+      FirebaseFirestore.instance
+          .collection(_snacksCollection)
+          .where('foodName', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
+          .where('foodName', isLessThan: _searchItem.toLowerCase() + 'z')
+          .get(),
+      FirebaseFirestore.instance
+          .collection(_breakfastCollection)
+          .where('foodName', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
+          .where('foodName', isLessThan: _searchItem.toLowerCase() + 'z')
+          .get(),
+      FirebaseFirestore.instance
+          .collection(_othersCollection)
+          .where('foodName', isGreaterThanOrEqualTo: _searchItem.toLowerCase())
+          .where('foodName', isLessThan: _searchItem.toLowerCase() + 'z')
+          .get(),
     ]);
 
     // Extract the documents from the query snapshots
     final foodNameDocs = results[0].docs;
     final drinksFoodNameDocs = results[1].docs;
     final groceryFoodNameDocs = results[2].docs;
+    final snacksFoodNameDocs = results[3].docs;
+    final breakfastFoodNameDocs = results[4].docs;
+    final othersFoodNameDocs = results[5].docs;
+
 
     // Combine the documents and remove duplicates
     final combinedDocs = [
       ...foodNameDocs,
       ...drinksFoodNameDocs,
       ...groceryFoodNameDocs,
+      ...snacksFoodNameDocs,
+      ...breakfastFoodNameDocs,
+      ...othersFoodNameDocs,
     ].toSet().toList();
 
     // Map the combined documents to FoodItem objects

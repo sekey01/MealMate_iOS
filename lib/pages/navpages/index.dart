@@ -310,7 +310,7 @@ class _IndexState extends State<Index> {
                             flex: 2,
                             child: GestureDetector(
                               onTap: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitPageSearch(searchCollection: 'Food 🍔', Title: 'Food Delivery',)));
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitPageSearch(searchCollection: 'Food ', Title: 'Food Delivery',)));
 
                               },
                               child: Container(
@@ -372,7 +372,7 @@ class _IndexState extends State<Index> {
                                     ///
                                     GestureDetector(
                                       onTap: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitPageSearch(searchCollection: 'Grocery 🛒', Title: 'Supermarket',)));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitPageSearch(searchCollection: 'Grocery', Title: 'Supermarket',)));
 
                                       },
                                       child: Container(
@@ -426,7 +426,7 @@ class _IndexState extends State<Index> {
                                     ///
                                     GestureDetector(
                                       onTap: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitPageSearch(searchCollection: 'Clothing 👗', Title: ' Other Shops',)));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> const InitPageSearch(searchCollection: 'Others', Title: ' Other Shops',)));
 
                                       },
                                       child: Container(
@@ -559,7 +559,7 @@ class _IndexState extends State<Index> {
                     width: double.infinity,
                     height: 200.h,
                     child: FutureBuilder<List<FoodItem>>(
-                      future: fetchFoodItems('Food 🍔'),
+                      future: fetchFoodItems('Food'),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return ListView.builder(
@@ -794,7 +794,7 @@ class _IndexState extends State<Index> {
                     width: double.infinity,
                     height: 200.h,
                     child: FutureBuilder<List<FoodItem>>(
-                      future: fetchFoodItems('Drinks 🍷'),
+                      future: fetchFoodItems('Drinks'),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return ListView.builder(
@@ -1013,7 +1013,7 @@ class _IndexState extends State<Index> {
                     width: double.infinity,
                     height: 200.h,
                     child: FutureBuilder<List<FoodItem>>(
-                      future: fetchFoodItems('Grocery 🛒'),
+                      future: fetchFoodItems('Grocery'),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return ListView.builder(

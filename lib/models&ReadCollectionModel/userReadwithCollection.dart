@@ -7,22 +7,22 @@ class userCollectionProvider extends ChangeNotifier {
   /// So that the user can select the collection they want to see to for easy search functionality in the user page
   /// Here we have a list of collections that the admin can select from,
   /// I used the value of COLLECTIONTOUPLOAD to get the collection the admin selected AND USE IT TO UPLOAD THE COLLECTION TO FIREBASE
-  String collectionToRead = 'Food 🍔';
+  String collectionToRead = 'Food ';
   final List<String> collectionList = [
-    'Drinks 🍷',
-    'Food 🍔',
-    'Grocery 🛒',
-    'Clothing 👗',
-    'Electronics 🚃',
-    'Furniture 🪑',
+    'Drinks ',
+    'Food ',
+    'Breakfast ',
+    'Grocery ',
+    'Snacks ',
+    'Others ',
   ];
   final List<String> collectionImageList = [
     'assets/Icon/Drinks.png',
     'assets/Icon/Foods.png',
+    'assets/Icon/restaurant.png',
     'assets/Icon/Grocery.png',
-    'assets/Icon/Clothing.png',
+    'assets/adsimages/pizza.png',
     'assets/Icon/Electronics.png',
-    'assets/Icon/Furniture.png',
   ];
   int selectedIndex = 0;
 

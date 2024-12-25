@@ -1398,6 +1398,8 @@ class _DetailedCardState extends State<DetailedCard> {
                                                   VendorAccount: widget.paymentKey,
                                                   isCashOnDelivery: false,
                                                   isCourierDelivered: false,
+                                                  isRejected: false,
+
                                                 )).then((_){
                                                   ///END SMS TO ALERT VENDOR FUNCTION OF NEW ORDER
                                                   ///SEND SMS TO VENDOR
@@ -1504,6 +1506,7 @@ class _DetailedCardState extends State<DetailedCard> {
                                               VendorAccount: '',
                                               isCashOnDelivery: true,
                                               isCourierDelivered: false,
+                                              isRejected: false,
                                             )).then((_){
                                               ///SEND SMS TO ALERT VENDOR FUNCTION
                                               Provider.of<NotificationProvider>(context,listen: false).sendSms(

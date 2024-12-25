@@ -43,7 +43,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
         title:  RichText(text: TextSpan(
             children: [
               TextSpan(text: "Completed", style: TextStyle(color: Colors.black, fontSize: 18.sp,fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
-              TextSpan(text: "Orders", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 17.sp,fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
+              TextSpan(text: "Orders", style: TextStyle(color: Colors.redAccent, fontSize: 17.sp,fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
 
 
             ]
@@ -100,7 +100,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                           child: ExpansionTile(leading: RichText(text: TextSpan(
                               children: [
                                 TextSpan(text: "Meal", style: TextStyle(color: Colors.black, fontSize: 15.spMin,fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
-                                TextSpan(text: "Mate", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 15.spMin,fontWeight: FontWeight.bold, fontFamily: 'Righteous',)),
+                                TextSpan(text: "Mate", style: TextStyle(color: Colors.redAccent, fontSize: 15.spMin,fontWeight: FontWeight.bold, fontFamily: 'Righteous',)),
 
 
                               ]
