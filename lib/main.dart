@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mealmate_ios/Other_Providers/Url_Launcher.dart';
+import 'package:mealmate_ios/PaymentProvider/payment_provider.dart';
 import 'package:mealmate_ios/pages/init_pages/splashscreen.dart';
 import 'package:mealmate_ios/searchFoodItemProvider/searchFoodItemFunctionProvider.dart';
 import 'package:mealmate_ios/theme/themedata.dart';
@@ -66,6 +67,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => NotificationProvider()),
           ChangeNotifierProvider(create: (context) => NetworkImageProvider()),
           ChangeNotifierProvider(create: (context) => PaystackPaymentProvider()),
+          ChangeNotifierProvider(create: (context) => PaymentProvider()),
           ChangeNotifierProvider(create: (context)=>UrlValues())
         ],
         child: MaterialApp(

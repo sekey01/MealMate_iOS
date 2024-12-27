@@ -308,7 +308,7 @@ class _adminHomeState extends State<adminHome> {
                           return Center(
                               child: Center(
                                   child: Text(
-                            '🔃',
+                            '0',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -463,7 +463,7 @@ class _adminHomeState extends State<adminHome> {
                                //  Provider.of<IncomingOrdersProvider>(context, listen: false).fetchOrders(Provider.of<AdminId>(context).id);
 
                                Provider.of<AdminFunctions>(context, listen: false)
-                                   .SwitchOnline(
+                                   .SwitchAllState(
                                    context,
                                    Provider.of<AdminId>(context, listen: false)
                                        .id,

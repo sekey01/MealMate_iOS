@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mealmate_ios/Notification/notification_Provider.dart';
+import 'package:mealmate_ios/PaymentProvider/payment_provider.dart';
 import 'package:mealmate_ios/UserLocation/LocationProvider.dart';
 import 'package:provider/provider.dart';
 import '../authpages/login.dart';
@@ -44,6 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
     _initializeLocalNotifications();
     Provider.of<LocationProvider>(context,listen: false).enableLocation();
     Provider.of<NotificationProvider>(context,listen: false).sendMessageToTopic();
+
   }
 
   void _requestNotificationPermissions() async {

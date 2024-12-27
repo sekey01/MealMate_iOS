@@ -4,9 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mealmate_ios/pages/navpages/profile.dart';
 import 'package:mealmate_ios/pages/navpages/searchByCollection.dart';
-
 import 'package:provider/provider.dart';
-import '../../Notification/notification_Provider.dart';
 import '../../UserLocation/LocationProvider.dart';
 import '../../components/CustomLoading.dart';
 import '../../components/NoInternet.dart';
@@ -18,7 +16,6 @@ import '../detail&checkout/detail.dart';
 import '../searchfooditem/init_page_search.dart';
 import '../searchfooditem/init_row_search.dart';
 import '../searchfooditem/searchFoodItem.dart';
-import 'notifications.dart';
 
 
 class Index extends StatefulWidget {
@@ -484,16 +481,50 @@ class _IndexState extends State<Index> {
                   ),
                   SizedBox(height: 10.h,),
 
-                  const Padding(padding: EdgeInsets.all(1),
-                      child: PromotionAdsCard(
-                        image: 'assets/images/MealmateDress.png',
-                        heading:'Get Rewarded With MealMate Shirt',
-                        content: 'Order your favorite food and get Lucky..',
-                        contentColor: Colors.white70,
-                        headingColor: Colors.white,
-                        backgroundColor: Colors.black,
 
-                      )),
+
+                  SizedBox(
+                    width: double.infinity,
+                    height: 110.h,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: const [
+                        Padding(padding: EdgeInsets.all(8),
+                            child: PromotionAdsCard(
+                              image: 'assets/images/MealmateDress.png',
+                              heading:'Get Rewarded With MealMate Shirt',
+                              content: 'Order your favorite food and get Lucky..',
+                              contentColor: Colors.white70,
+                              headingColor: Colors.white,
+                              backgroundColor: Colors.black,
+
+                            )),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: PromotionAdsCard(
+                            image: 'assets/adsimages/fufu.png',
+                            heading: 'Eat what you desire',
+                            content: 'Order your favorite food and get Lucky.. yh get lucky 🍀☺️',
+                            contentColor: Colors.white70,
+                            headingColor: Colors.white,
+                            backgroundColor: Colors.redAccent,
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: PromotionAdsCard(
+                            image: 'assets/adsimages/local.png',
+                            heading: 'Order Pizza and get a free drink',
+                            content: 'Embrace the Ecosystem... Let love lead',
+                            contentColor: Colors.white70,
+                            headingColor: Colors.white,
+                            backgroundColor: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
 
                   SizedBox(
@@ -1013,7 +1044,7 @@ class _IndexState extends State<Index> {
                     width: double.infinity,
                     height: 200.h,
                     child: FutureBuilder<List<FoodItem>>(
-                      future: fetchFoodItems('Grocery'),
+                      future: fetchFoodItems('Others'),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return ListView.builder(

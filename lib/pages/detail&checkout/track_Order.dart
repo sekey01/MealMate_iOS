@@ -11,6 +11,7 @@ import '../../Courier/courier_model.dart';
 import '../../Local_Storage/Locall_Storage_Provider/StoreCredentials.dart';
 import '../../Local_Storage/Locall_Storage_Provider/storeOrderModel.dart';
 import '../../Notification/notification_Provider.dart';
+import '../../PaymentProvider/payment_provider.dart';
 import '../../UserLocation/LocationProvider.dart';
 import '../../components/CustomLoading.dart';
 import '../../components/Notify.dart';
@@ -25,8 +26,11 @@ class TrackOrder extends StatefulWidget {
   final String restaurant;
   final adminEmail;
   final adminContact;
-  final deliveryFee;
-  const TrackOrder({super.key,required this.vendorId,
+  final double deliveryFee;
+  final bool isCashOnDelivery;
+  const TrackOrder({super.key,
+    required this.isCashOnDelivery,
+    required this.vendorId,
     required this.time,
     required this.restaurant,
     required this.adminEmail,
@@ -39,7 +43,11 @@ class TrackOrder extends StatefulWidget {
 }
 
 class _TrackOrderState extends State<TrackOrder> {
+
+  bool isLoading = false;
+
   String courierContact = '';
+  String courierId = '';
   Stream<int> countdownTimer(int start) async* {
     for (int i = start; i >= 0; i--) {
       await Future.delayed(const Duration(seconds: 1));
@@ -190,17 +198,17 @@ class _TrackOrderState extends State<TrackOrder> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Column(
+                                widget.isCashOnDelivery? Column(
                                   children: [
                                     const Text('Amount to pay Courier', style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 10, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
                                     Row(
                                       children: [
                                         ImageIcon(const AssetImage('assets/Icon/cedi.png'),size: 20.sp,color: Colors.deepOrangeAccent,),
-                                        Text( '${widget.deliveryFee}.00', style: TextStyle(color: Colors.black, fontSize: 20.spMin, fontWeight: FontWeight.bold, fontFamily: 'Righteous'),),
+                                        Text( '${widget.deliveryFee.truncateToDouble()}', style: TextStyle(color: Colors.black, fontSize: 20.spMin, fontWeight: FontWeight.bold, fontFamily: 'Righteous'),),
                                       ],
                                     ),
                                   ],
-                                ),
+                                ) : Lottie.asset('assets/Icon/online.json',height: 50.h,width: 40.w),
 
                                 ///VENDOR CONTACT
                                 ///
@@ -217,7 +225,7 @@ class _TrackOrderState extends State<TrackOrder> {
 
                                         children: [
 
-                                          Text('Call Vendor ', style:TextStyle(color: Colors.blueGrey, fontSize: 15.sp, fontFamily: 'Poppins') ,),
+                                          Text('Call Vendor ', style:TextStyle(color: Colors.blueGrey, fontSize: 14.sp, fontFamily: 'Poppins') ,),
                                           ImageIcon(const AssetImage('assets/Icon/customer-service.png'),size: 25.sp,color: Colors.green,)
                                         ],
                                       ),
@@ -229,10 +237,7 @@ class _TrackOrderState extends State<TrackOrder> {
                             ),
                           ),
 
-                          // const Text('Order In progress...', style: TextStyle(color: Colors.blueGrey, fontSize: 25, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
-
-                          ///LOADER
-                          const Padding(padding: EdgeInsets.all(16), child: CustomLoGoLoading(),),
+                           const Text('Order In progress...', style: TextStyle(color: Colors.blueGrey, fontSize: 12, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
 
                           StreamBuilder<int>(
                             stream: countdownTimer(90), // Countdown from 60 seconds
@@ -240,7 +245,7 @@ class _TrackOrderState extends State<TrackOrder> {
                               if (snapshot.connectionState == ConnectionState.waiting) {
                                 return const Text(
                                   'Starting...',
-                                  style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
                                 );
                               } else if (snapshot.hasData) {
                                 return Padding(
@@ -248,7 +253,7 @@ class _TrackOrderState extends State<TrackOrder> {
                                   child: RichText(textAlign: TextAlign.center,text: TextSpan(
                                       children: [
                                         TextSpan(text: " Order will be served in :  ", style: TextStyle(color: Colors.blueGrey, fontSize: 10.sp,)),
-                                        TextSpan(text: "${snapshot.data} seconds \n ", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 15.sp,fontWeight: FontWeight.bold,fontFamily: 'Righteous')),
+                                        TextSpan(text: "${snapshot.data} seconds \n ", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 15.sp,fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
                                         TextSpan(text: "if the Order Served  Icon is not ticked green, try calling the vendor ", style: TextStyle(color: Colors.blueGrey, fontSize: 10.sp,fontFamily: 'Poppins')),
 
 
@@ -322,6 +327,7 @@ class _TrackOrderState extends State<TrackOrder> {
                                 } else {
                                   final courier = snapshot.data as CourierModel;
                                   courierContact = courier.CourierContact.toString();
+                                  courierId = courier.CourierId;
                                   return  GestureDetector(
                                     onTap: (){
                                       showBottomSheet(context: (context),showDragHandle: true,enableDrag: true,backgroundColor: Colors.blueGrey.shade100, builder: (context){
@@ -505,53 +511,27 @@ class _TrackOrderState extends State<TrackOrder> {
 
 
 
-                          Material(  borderRadius: BorderRadius.circular(10),
+                          !isLoading ? Material(  borderRadius: BorderRadius.circular(10),
                               color: Colors.green,
                               elevation: 3,
-                              child: TextButton(onPressed: (){
+                              child: TextButton(onPressed: () async {
                                 if(
                                 Order.courier && Order.served
                                 ){
-
-                                  switchDelivered(context, widget.vendorId,Provider.of<LocalStorageProvider>(context, listen: false).phoneNumber,).then((value) {
-
-                                    Alert(
-                                      context: context,
-                                      style: AlertStyle(
-                                        backgroundColor: Colors.deepOrangeAccent,
-                                        alertPadding: const EdgeInsets.all(88),
-                                        isButtonVisible: true,
-                                        descStyle: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                          fontSize: 15.sp,
-                                        ),
-                                      ),
-                                      desc: " Order Received ?",
-                                      buttons: [
-                                        DialogButton(
-                                          onPressed: () {
-                                            Provider.of<NotificationProvider>(context,listen:false).sendSms(courierContact, 'Your Order has been received by the buyer,\n'
-                                                'amount to be paid is GHC ${widget.deliveryFee}.00\n'
-                                                ' Thank you for using MealMate 😊');
-                                            Provider.of<LocalStorageProvider>(context,listen: false).addOrder( StoreOrderLocally(id:widget.restaurant , item: Order.foodName, price: Order.price,time: DateTime.timestamp().toString()));
-                                            Navigator.pop(context);
-                                            Navigator.pop(context);
-                                            Navigator.pop(context);
-
-
-                                            // print('DATA STORED');
-                                          },
-                                          width: 100.w,
-                                          child: const Text('Yes', style: TextStyle(color: Colors.deepOrangeAccent,fontWeight: FontWeight.bold),),
-                                        ),
-                                      ],
-                                    ).show();
+                                  Provider.of<PaymentProvider>(context,listen: false).addMoneyToCourierAccount(context, courierId, widget.deliveryFee.truncateToDouble() , courierContact).then((_){
+                                    switchDelivered(context, widget.vendorId,Provider.of<LocalStorageProvider>(context, listen: false).phoneNumber);
+                                  });
+                                  setState(() {
+                                    isLoading = true;
                                   });
 
-
-                                  Notify(context, 'Thanks for Using MealMate 😊', Colors.green);
-
+                                  await Future.delayed(const Duration(seconds: 10)).then((_){
+                                    Provider.of<LocalStorageProvider>(context,listen: false).addOrder( StoreOrderLocally(id:widget.restaurant , item: Order.foodName, price: Order.price,time: DateTime.timestamp().toString()));
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    Notify(context, 'Thanks for Using MealMate 😊', Colors.green);
+                                  });
 
                                 } else{
                                   Notify(context, 'Order Not received yet', Colors.red);
@@ -560,7 +540,7 @@ class _TrackOrderState extends State<TrackOrder> {
 
 
 
-                              }, child: const Text('Order Received', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,letterSpacing: 1,fontFamily: 'Righteous'),))),
+                              }, child: const Text('Order Received', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,letterSpacing: 1,fontFamily: 'Righteous'),))) : CustomLoGoLoading(),
 
 
                           SizedBox(height: 30.h,)

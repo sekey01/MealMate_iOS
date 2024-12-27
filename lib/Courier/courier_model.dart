@@ -10,6 +10,7 @@ class CourierModel {
   final String CourierVehicle;
   final String CourierVehicleNumber;
   final bool isCourierOnline;
+  final double CourierAccountBalance;
 
   CourierModel({
     required this.CourierId,
@@ -23,6 +24,7 @@ class CourierModel {
     required this.CourierVehicle,
     required this.CourierVehicleNumber,
     this.isCourierOnline = false,
+    required this.CourierAccountBalance,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,6 +40,7 @@ class CourierModel {
       'CourierVehicle': CourierVehicle,
       'CourierVehicleNumber': CourierVehicleNumber,
       'isCourierOnline': isCourierOnline,
+      'CourierAccountBalance': CourierAccountBalance,
     };
   }
 
@@ -54,6 +57,7 @@ class CourierModel {
       CourierVehicle: data['CourierVehicle'] ?? '',
       CourierVehicleNumber: data['CourierVehicleNumber'] ?? '',
       isCourierOnline: data['isCourierOnline'] ?? false,
+      CourierAccountBalance: (data['CourierAccountBalance'] ?? 0.0).toDouble(),
     );
   }
 }

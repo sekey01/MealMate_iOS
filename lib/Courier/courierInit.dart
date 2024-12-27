@@ -244,7 +244,7 @@ class _CourierInitState extends State<CourierInit> {
                     return FutureBuilder(future: getCourierDetails(context,Provider.of<LocalStorageProvider>(context,listen: false).courierId),
                             builder: (context,snapshot){
                     if(snapshot.connectionState == ConnectionState.waiting){
-                      return CourierDetailsLoading();
+                      return NewSearchLoadingOutLook();
                     }
                     if(snapshot.hasError){
                       return Text('Error: ${snapshot.error}');
@@ -274,6 +274,12 @@ class _CourierInitState extends State<CourierInit> {
                                 trailing: courier.isCourierOnline ? LottieBuilder.asset('assets/Icon/online.json', height: 50.h, width: 30.w,): Icon(Icons.offline_bolt, color: Colors.red),
 
                               ),
+
+                              ListTile(
+                                leading: Text('ACC :', style: TextStyle(fontFamily: 'Righteous', fontSize: 12.sp),),
+                                title: Text('GHC ' + courier.CourierAccountBalance.toStringAsFixed(2),style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold,fontSize: 15.sp,fontFamily: 'Poppins'),),
+                              ),
+
                               ListTile(
                                 leading: Icon(Icons.phone_android_outlined, color: Colors.blueGrey,),
                                 title: Text('+233' + courier.CourierContact.toString(),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15.sp,fontFamily: 'Poppins'),),
@@ -419,7 +425,7 @@ SizedBox(height: 20.h,),
                           hintStyle: TextStyle(color: Colors.black),
                           //label: Text('Restaurant Name'),
                           labelStyle: TextStyle(color: Colors.black),
-                          labelText: 'Receive\'s Phone Number',
+                          labelText: 'Receiver\'s Phone Number',
                           hintText: ' Telephone Number',
 
                           border: OutlineInputBorder(

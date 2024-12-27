@@ -45,11 +45,12 @@ class AdminFunctions extends ChangeNotifier {
   Future<void> SwitchAllState(BuildContext context, String id, bool isActive) async {
     for (String collection in collections) {
       final CollectionReference collectionRef = FirebaseFirestore.instance.collection(collection);
+      print('Collection: $collection');
 
       try {
         // Query the collection for documents where 'vendorId' field matches id
         final QuerySnapshot snapshot = await collectionRef.where('vendorId', isEqualTo: id).get();
-
+      print('Snapshot: ${snapshot.docs}');
         // Iterate through each document and update it
         for (var doc in snapshot.docs) {
           await doc.reference.update({'isActive': isActive});
