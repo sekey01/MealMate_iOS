@@ -354,7 +354,7 @@ class _adminHomeState extends State<adminHome> {
                 },
                 icon: ImageIcon(
                   AssetImage('assets/Icon/uploads.png'),
-                  size: 25.sp,
+                  size: 24.sp,
                   color: Colors.redAccent,
                 ),
               ),
