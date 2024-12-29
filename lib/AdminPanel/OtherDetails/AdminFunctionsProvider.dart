@@ -1,46 +1,70 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mealmate_ios/components/Notify.dart';
+import 'package:mealmate_ios/AdminPanel/OtherDetails/vendor_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../components/Notify.dart';
 import '../collectionUploadModelProvider/collectionProvider.dart';
 
 class AdminFunctions extends ChangeNotifier {
+
+
+  Future<VendorModel?> getVendorDetails(String id) async {
+    try {
+      final DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('Vendors')
+          .doc(id)
+          .get();
+
+      if (doc.exists) {
+        return VendorModel.fromMap(doc.data() as Map<String, dynamic>);
+      } else {
+        print('Vendor not found');
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching vendor details: $e');
+      return null;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
   ///THIS FUNCTION DELETES THE ITEM FROM THE COLLECTION
-  Future<void> deleteItem(BuildContext context, String imgUrl) async {
+  Future<void> deleteItem(BuildContext context, String ProductImageUrl) async {
     final CollectionReference collectionRef = FirebaseFirestore.instance.collection(
         '${Provider.of<AdminCollectionProvider>(context, listen: false).collectionToUpload}');
 
     try {
       // Query the collection for documents where 'imageUrl' field matches imgUrl
       final QuerySnapshot snapshot =
-      await collectionRef.where('imageUrl', isEqualTo: imgUrl).get();
-
+      await collectionRef.where('ProductImageUrl', isEqualTo: ProductImageUrl).get();
       // Iterate through each document and delete it
       for (var doc in snapshot.docs) {
         await doc.reference.delete();
+        Notify(context, 'item deleted', Colors.red);
+
       }
 
       //  print('isOnline Updated successfully');
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        elevation: 20,
-        content: Center(
-          child: Text(
-            'Item Successfully Deleted...',
-            style: TextStyle(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ),
-        backgroundColor: Colors.red,
-      ));
+      Notify(context, 'item deleted', Colors.red);
     } catch (e) {
+      Notify(context, 'Check your internet', Colors.red);
+
       // print('Error deleting document(s): $e');
     }
   }
 
   ///SWITCH ALL FOOD ITEMS WITH THE SAME VENDOR ID TO ONLINE OR OFFLINE
-  List<String> collections = ['Food', 'Drinks', 'Grocery', 'Snacks', 'Electronics', 'Others'];
+  List<String> collections = ['Food', 'Drinks', 'Grocery', 'Snacks', 'Breakfast', 'Others'];
 
   Future<void> SwitchAllState(BuildContext context, String id, bool isActive) async {
     for (String collection in collections) {
@@ -48,16 +72,16 @@ class AdminFunctions extends ChangeNotifier {
       print('Collection: $collection');
 
       try {
-        // Query the collection for documents where 'vendorId' field matches id
-        final QuerySnapshot snapshot = await collectionRef.where('vendorId', isEqualTo: id).get();
-      print('Snapshot: ${snapshot.docs}');
+        // Query the collection for documents where the document ID matches the vendor ID
+        final QuerySnapshot snapshot = await collectionRef.where(FieldPath.documentId, isEqualTo: id).get();
+        print('Snapshot: ${snapshot.docs}');
         // Iterate through each document and update it
         for (var doc in snapshot.docs) {
           await doc.reference.update({'isActive': isActive});
         }
 
       } catch (e) {
-        print('Error deleting document(s): $e');
+        print('Error updating document(s): $e');
       }
     }
   }
@@ -163,7 +187,7 @@ class AdminFunctions extends ChangeNotifier {
 
       // Check if any documents were found
       if (querySnapshot.docs.isEmpty) {
-       // print('No matching documents found');
+        // print('No matching documents found');
         return;
       }
 
@@ -172,9 +196,9 @@ class AdminFunctions extends ChangeNotifier {
         await doc.reference.update({'served': isServed});
       }
 
-     // print('isServed updated successfully');
+      // print('isServed updated successfully');
     } catch (e) {
-     // print('Error updating document(s): $e');
+      // print('Error updating document(s): $e');
       // You might want to show an error message to the user here
     }
   }
@@ -198,7 +222,7 @@ class AdminFunctions extends ChangeNotifier {
 
       // Check if any documents were found
       if (querySnapshot.docs.isEmpty) {
-       // print('No matching documents found');
+        // print('No matching documents found');
         return;
       }
 
@@ -207,9 +231,9 @@ class AdminFunctions extends ChangeNotifier {
         await doc.reference.update({'CourierId': CourierId});
       }
 
-     // print('isCourier updated successfully');
+      // print('isCourier updated successfully');
     } catch (e) {
-    //  print('Error updating document(s): $e');
+      //  print('Error updating document(s): $e');
       // You might want to show an error message to the user here
     }
   }

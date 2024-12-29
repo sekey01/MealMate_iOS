@@ -6,8 +6,8 @@ adminCollectionItemsRow(item) {
     child: GestureDetector(
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          color: Colors.transparent,
+          border: Border.all(color: Colors.blueGrey),
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
@@ -15,7 +15,7 @@ adminCollectionItemsRow(item) {
           child: Text(
             '$item',
             style: TextStyle(
-                color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),
+                color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),
           ),
         ),
       ),

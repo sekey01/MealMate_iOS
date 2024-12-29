@@ -16,7 +16,6 @@ import 'package:mealmate_ios/pages/detail&checkout/payment_unsuccessful.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../Local_Storage/Locall_Storage_Provider/StoreCredentials.dart';
-import '../../Notification/notification_Provider.dart';
 import '../../PaymentProvider/paystack_payment.dart';
 import '../../UserLocation/LocationProvider.dart';
 import '../../components/CustomLoading.dart';
@@ -80,6 +79,7 @@ class DetailedCard extends StatefulWidget {
 }
 
 class _DetailedCardState extends State<DetailedCard> {
+  ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
   Future<List<FoodItem>> fetchSimilarFoodItems(List<String> collections, String vendorId) async {
     List<FoodItem> allFoodItems = [];
@@ -1293,10 +1293,21 @@ class _DetailedCardState extends State<DetailedCard> {
 
                                   SizedBox(height: 15.h),
 
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text('Swipe to Checkout', style: TextStyle(color: Colors.green, fontSize: 20.sp, fontWeight: FontWeight.bold, fontFamily: 'Righteous'),),
-                                  ),
+                                  ValueListenableBuilder(valueListenable: isLoading,
+                                      builder:(context,value,child){
+                                        return value ? Column(
+                                          children: [
+                                            CustomLoGoLoading(),
+                                            Text('Processing Order...', style: TextStyle(color: Colors.black, fontSize: 15.sp, fontFamily: 'Righteous',fontStyle: FontStyle.italic),),
+                                          ],
+                                        ) :
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text('Swipe to Checkout', style: TextStyle(color: Colors.green, fontSize: 20.sp, fontWeight: FontWeight.bold, fontFamily: 'Righteous'),),
+                                        );
+                                      }),
+
+
 
 
                                   /// INFORMING ON PAYMENT TO VENDOR AND COURIER
@@ -1314,11 +1325,8 @@ class _DetailedCardState extends State<DetailedCard> {
                                     )):
                                     RichText(text: TextSpan(
                                         children: [
-                                          TextSpan(text: 'Pay an amount of ',style: TextStyle(color: Colors.blueGrey, fontSize: 10.sp, fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
-                                          TextSpan(text: ' GHC ${(deliveryFee).toStringAsFixed(2)} ',style: TextStyle(color: Colors.red, fontSize: 12.sp, fontFamily: 'Righteous', fontWeight: FontWeight.bold)),
-                                          TextSpan(text: ' to Courier as delivery fee when he arrives. But ',style: TextStyle(color: Colors.blueGrey, fontSize: 10.sp, fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
-                                          TextSpan(text: ' GHC ${(widget.price)} ',style: TextStyle(color: Colors.black, fontSize: 12.sp, fontFamily: 'Righteous', fontWeight: FontWeight.bold)),
-                                          TextSpan(text: ' will be paid to Vendor when you CHECKOUT below 👇 ',style: TextStyle(color: Colors.blueGrey, fontSize: 10.sp, fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
+                                          TextSpan(text: ' GHC ${(overAllPrice.toStringAsFixed(2))} ',style: TextStyle(color: Colors.black, fontSize: 12.sp, fontFamily: 'Righteous', fontWeight: FontWeight.bold)),
+                                          TextSpan(text: ' will be paid when you CHECKOUT below 👇 ',style: TextStyle(color: Colors.blueGrey, fontSize: 10.sp, fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
 
                                         ]
                                     ), textAlign: TextAlign.center,),
@@ -1350,9 +1358,10 @@ class _DetailedCardState extends State<DetailedCard> {
                                       iconOff: Icons.shopping_cart_checkout_outlined,
                                       textSize: 20.0,
                                       onChanged: (bool state) {
+                                        isLoading.value = state;
+
                                         if(state == true)
                                         {
-
                                           ///Get the Time
                                           DateTime time = DateTime.now();
 
@@ -1366,9 +1375,9 @@ class _DetailedCardState extends State<DetailedCard> {
                                               content: WaitingPayment(),
                                             ).show();
                                             Provider.of<PaystackPaymentProvider>(context, listen: false).
-                                            startPayment(context,  overAllPrice.toInt(), widget.vendorid).then((result){
+                                            startPayment(context,  overAllPrice.toInt(), widget.vendorid).then((result) async {
                                               if(result.success){
-                                                Provider.of<SendOrderProvider>(context, listen: false).sendOrder(OrderInfo(
+                                                await  Provider.of<SendOrderProvider>(context, listen: false).sendOrder(context,OrderInfo(
                                                   time: time,
                                                   foodName: widget.foodName,
                                                   quantity: Provider.of<CartModel>(context,
@@ -1403,15 +1412,15 @@ class _DetailedCardState extends State<DetailedCard> {
                                                   isCourierDelivered: false,
                                                   isRejected: false,
 
-                                                )).then((_){
+                                                ), widget.hasCourier,widget.vendorid, overAllPrice.toDouble(),widget.adminContact.toString()   ).then((_){
                                                   ///END SMS TO ALERT VENDOR FUNCTION OF NEW ORDER
                                                   ///SEND SMS TO VENDOR
-                                                  Provider.of<NotificationProvider>(context,listen: false).sendSms(
+                                                  /*          Provider.of<NotificationProvider>(context,listen: false).sendSms(
                                                       widget.adminContact.toString(), ' ${widget.restaurant},'
-                                                      ' you have a new order from'
+                                                      'you have a new order from'
                                                       ' ${Provider.of<LocalStorageProvider>(context, listen: false).phoneNumber} for ${widget.foodName}'
-                                                      '\nplease check MealMate App for more details'
-                                                  );
+                                                      '\n please check MealMate App for more details'
+                                                  );*/
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -1469,7 +1478,9 @@ class _DetailedCardState extends State<DetailedCard> {
                                       iconOn: Icons.done,
                                       iconOff: Icons.shopping_cart_checkout_outlined,
                                       textSize: 20.0,
-                                      onChanged: (bool state) {
+                                      onChanged: (bool state) async {
+                                        isLoading.value = state;
+
                                         if(state ==true)
                                         {
                                           ///Get the Time on ios
@@ -1477,13 +1488,13 @@ class _DetailedCardState extends State<DetailedCard> {
 
                                           if (Provider.of<LocalStorageProvider>(context,listen: false).phoneNumber.isNotEmpty && Provider.of<LocationProvider>(context, listen: false).determinePosition().toString().isNotEmpty)
                                           {
-                                            Provider.of<SendOrderProvider>(context, listen: false).sendOrder(OrderInfo(
+                                            await  Provider.of<SendOrderProvider>(context, listen: false).sendOrder(context,OrderInfo(
                                               time: time,
                                               foodName: widget.foodName,
                                               quantity: Provider.of<CartModel>(context,
                                                   listen: false)
                                                   .getQuantity,
-                                              price: overAllPrice.toDouble(),
+                                              price: widget.price,
                                               message: messageController.text.toString(),
                                               Latitude: Provider.of<LocationProvider>(
                                                   context,
@@ -1507,18 +1518,19 @@ class _DetailedCardState extends State<DetailedCard> {
                                               CourierContact: '',
                                               CourierId: 0,
                                               CourierName: '',
-                                              VendorAccount: '',
-                                              isCashOnDelivery: true,
+                                              VendorAccount: widget.paymentKey,
+                                              isCashOnDelivery: false,
                                               isCourierDelivered: false,
                                               isRejected: false,
-                                            )).then((_){
+
+                                            ), widget.hasCourier,widget.vendorid, overAllPrice.toDouble(),widget.adminContact.toString()   ).then((_){
                                               ///SEND SMS TO ALERT VENDOR FUNCTION
-                                              Provider.of<NotificationProvider>(context,listen: false).sendSms(
+                                              /*    Provider.of<NotificationProvider>(context,listen: false).sendSms(
                                                   widget.adminContact.toString(), ' ${widget.restaurant},'
                                                   ' you have a new order from'
                                                   ' ${Provider.of<LocalStorageProvider>(context, listen: false).phoneNumber} for ${widget.foodName}'
                                                   '\n please check MealMate App for more details'
-                                              );
+                                              );*/
 
                                               Navigator.push(
                                                 context,

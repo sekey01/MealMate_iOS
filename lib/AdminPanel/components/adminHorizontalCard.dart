@@ -81,7 +81,7 @@ ListView adminHorizontalCard(String ProductImageUrl, String restaurant, String l
 
                         ///Row for price
                         Text(
-                          'GHC $price 0 ',
+                          'GHC${price.toStringAsFixed(2)} ',
                           style: TextStyle(
                               letterSpacing: 1,
                               fontSize: 10.sp,
@@ -116,27 +116,33 @@ ListView adminHorizontalCard(String ProductImageUrl, String restaurant, String l
                                   context: context,
                                   // type: AlertType.warning,
 
-                                  title:
-                                  ' Are you sure you want to delete this food ?',
+                                  title: 'Delete Item ? ' ,
 
                                   content: Center(
-                                    child: CardLoading(
-                                        height: 20.h,
-                                        child: Consumer<AdminFunctions>(
-                                          builder: (context, value, child) =>
-                                              TextButton(
-                                                  onPressed: () {
-                                                    value.deleteItem(
-                                                        context, ProductImageUrl);
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text('Yes',style: TextStyle(
-                                                    fontFamily: 'Righteous',
-                                                    fontWeight: FontWeight.bold,
-                                                  ),)),
-                                        )),
+                                    child: Consumer<AdminFunctions>(
+                                      builder: (context, value, child) =>
+                                          TextButton(
+                                              onPressed: () {
+                                                value.deleteItem(
+                                                    context, ProductImageUrl);
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text('Yes',style: TextStyle(
+
+                                                fontFamily: 'Poppins',
+                                                fontWeight: FontWeight.bold,
+                                              ),)),
+                                    ),
                                   ),
                                   style: AlertStyle(
+                                      titleStyle: TextStyle(
+                                        fontSize: 14.sp,
+                                        color: Colors.black,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1,
+                                      ),
+
                                       animationDuration:
                                       Duration(milliseconds: 500),
                                       alertPadding: EdgeInsets.all(66),
@@ -154,7 +160,7 @@ ListView adminHorizontalCard(String ProductImageUrl, String restaurant, String l
                                   color: Colors.redAccent),
                             )),
                         LiteRollingSwitch(
-                           width: 100.w,
+                          width: 100.w,
                           textOnColor: Colors.white,
                           textOn: 'Online',
                           textOff: 'Offline',

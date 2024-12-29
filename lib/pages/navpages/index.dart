@@ -113,7 +113,7 @@ class _IndexState extends State<Index> {
         title: RichText(text: TextSpan(
           children: [
             TextSpan(text: "Meal", style: TextStyle(color: Colors.black, fontSize: 21.spMin, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
-            TextSpan(text: "Mate", style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 21.spMin, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
+            TextSpan(text: "Mate", style: TextStyle(color: Colors.redAccent, fontSize: 21.spMin, fontWeight: FontWeight.bold,fontFamily: 'Righteous',)),
 
 
           ]
@@ -604,14 +604,7 @@ class _IndexState extends State<Index> {
                             scrollDirection: Axis.horizontal,
                           );
                         } else if (snapshot.hasError) {
-                          return Center(child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image(image: AssetImage('assets/Icon/route.png'),height: 50.h,width: 70.w,),
-                              Text(' ${snapshot.error}', style: TextStyle(color: Colors.black, fontFamily: 'Poppins')),
-                              Text('Enable Location in your Settings',style: TextStyle(color: Colors.black, fontFamily: 'Poppins'),)
-                            ],
-                          ));
+                          return Center(child: Text('Error: ${snapshot.error}'));
                         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                           return ListView.builder(
                             itemCount: 5,
@@ -639,34 +632,17 @@ class _IndexState extends State<Index> {
                                   scrollDirection: Axis.horizontal,
                                 );
                               } else if (locationSnapshot.hasError) {
-                                return ListView.builder(
-                                  itemCount: 5,
-                                  itemBuilder: (context, index) {
-                                    return const Padding(
-                                      padding: EdgeInsets.all(4.0),
-                                      child: EmptyCollection(),
-                                    );
-                                  },
-                                  scrollDirection: Axis.horizontal,
-                                );
+                                return Center(child: Text('Error: ${locationSnapshot.error}'));
                               } else if (!locationSnapshot.hasData) {
-                                return ListView.builder(
-                                  itemCount: 5,
-                                  itemBuilder: (context, index) {
-                                    return const Padding(
-                                      padding: EdgeInsets.all(4.0),
-                                      child: EmptyCollection(),
-                                    );
-                                  },
-                                  scrollDirection: Axis.horizontal,
-                                );
+                                return const Center(child: Text('Unable to determine location'));
                               } else {
                                 LatLng userLocation = locationSnapshot.data!;
                                 List<FoodItem> nearbyRestaurants = snapshot.data!.where((foodItem) {
                                   double distance = Provider.of<LocationProvider>(context, listen: false)
                                       .calculateDistance(userLocation, LatLng(foodItem.latitude, foodItem.longitude));
-                                  return distance <= Provider.of<LocationProvider>(context,listen: false).distanceRangeToSearch; // Check if the restaurant is within 10 km
+                                  return distance <= Provider.of<LocationProvider>(context,listen: false).distanceRangeToSearch;// Check if the restaurant is within 10 km
                                 }).toList();
+
                                 return ListView.builder(
                                   itemCount: nearbyRestaurants.length,
                                   itemBuilder: (context, index) {
@@ -801,12 +777,12 @@ class _IndexState extends State<Index> {
                               Text(
                                 'view all',
                                 style: TextStyle(
-                                    fontSize: 12.spMin, color: Colors.deepOrangeAccent,fontWeight: FontWeight.bold),
+                                    fontSize: 12.spMin, color: Colors.redAccent,fontWeight: FontWeight.bold),
                               ),
                               Icon(
                                 Icons.arrow_forward_ios,
                                 size: 12.spMin,
-                                color: Colors.deepOrangeAccent,
+                                color: Colors.redAccent,
                               )
                             ],
                           ),
@@ -1023,12 +999,12 @@ class _IndexState extends State<Index> {
                               Text(
                                 'view all',
                                 style: TextStyle(
-                                    fontSize: 12.spMin, color: Colors.deepOrangeAccent,fontWeight: FontWeight.bold),
+                                    fontSize: 12.spMin, color: Colors.redAccent,fontWeight: FontWeight.bold),
                               ),
                               Icon(
                                 Icons.arrow_forward_ios,
                                 size: 12.spMin,
-                                color: Colors.deepOrangeAccent,
+                                color: Colors.redAccent,
                               )
                             ],
                           ),

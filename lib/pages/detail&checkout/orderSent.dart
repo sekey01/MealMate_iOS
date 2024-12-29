@@ -11,8 +11,8 @@ class OrderSent extends StatefulWidget {
   final adminContact;
   final deliveryFee;
   final isCashOnDelivery;
-  const OrderSent({super.key, 
-    required this.vendorId, 
+  const OrderSent({super.key,
+    required this.vendorId,
     required this.time,
     required this.restaurant,
     required this.adminEmail,
@@ -37,10 +37,10 @@ class _OrderSentState extends State<OrderSent> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
 
-               // Image(image: AssetImage('assets/images/logo.png'), height: 250,width: 150,),
+                // Image(image: AssetImage('assets/images/logo.png'), height: 250,width: 150,),
 
                 SizedBox(height: 30,),
-              LottieBuilder.asset('assets/Icon/success.json', height: 200, width: 200),
+                LottieBuilder.asset('assets/Icon/success.json', height: 200, width: 200),
 
                 Padding(
                   padding: EdgeInsets.all(10),
@@ -78,7 +78,7 @@ class _OrderSentState extends State<OrderSent> {
                       child: Text(
                         'Track Order Now',
                         style: TextStyle(
-                          fontFamily: 'Righteous',
+                            fontFamily: 'Righteous',
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 15.sp),

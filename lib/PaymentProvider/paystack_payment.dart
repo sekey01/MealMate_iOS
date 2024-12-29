@@ -3,7 +3,6 @@ import 'package:easy_url_launcher/easy_url_launcher.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import '../pages/navpages/index.dart';
 
 class PaymentResult {
@@ -39,11 +38,16 @@ class PaystackPaymentProvider extends ChangeNotifier {
 
         // Verify the transaction
         final result = await _verifyTransaction(reference);
-/*
-        if (result.success) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Index()));
-        }*/
 
+        if (result.success) {
+          //Provider.of<PaymentProvider>(context,listen: false).addMoneyToCourierAccount(context, VendorID, amount.toDouble(), '0553767177');
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Index(),
+            ),
+          );
+        }
         return result;
       } else {
         print('Payment initialization failed: ${response.body}');

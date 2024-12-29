@@ -48,4 +48,89 @@ class PaymentProvider extends ChangeNotifier {
       print('Error updating account balance: $e');
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+  ///   ///THIS FUNCTION ADDS MONEY TO THE VENDOR ACCOUNT BALANCE
+//   ///IT TAKES IN THE COURIER ID AND THE AMOUNT TO BE ADDED
+//   ///IT UPDATES THE COURIER ACCOUNT BALANCE IN THE FIREBASE DATABASE
+//   ///AND SENDS AN SMS TO THE VENDOR TO NOTIFY THEM OF THE TRANSACTION
+//   ///THE SMS IS SENT USING THE SENDSMS FUNCTION FROM THE NOTIFICATION PROVIDER
+//   ///THE FUNCTION RETURNS A FUTURE VOID
+
+  Future<void> addMoneyToVendorAccount(BuildContext context, String vendorId, double amount, String receiver) async {
+    final CollectionReference vendorsCollection = FirebaseFirestore.instance.collection('Vendors');
+
+    try {
+      // Get the document for the specified vendor
+      DocumentSnapshot vendorDoc = await vendorsCollection.doc(vendorId).get();
+
+      if (vendorDoc.exists) {
+        // Get the current balance
+        double currentBalance = (vendorDoc['vendorAccountBalance'] ?? 0.0).toDouble();
+
+        // Calculate the new balance
+        double newBalance = currentBalance + amount;
+
+        // Update the document with the new balance
+        await vendorsCollection.doc(vendorId).update({'vendorAccountBalance': newBalance});
+
+        await  Provider.of<NotificationProvider>(context, listen: false).sendSms(receiver, ' You have a new Order,'
+            'Transaction Successful \n'
+            'You have received GHC $amount in your MealMate Vendor account, from this Order,'
+            'MealMate will take 15% of the total amount as commission,'
+            'Your current balance is: \n GHC $newBalance');
+
+        print('Money added to vendor account');
+      } else {
+        debugPrint('Vendor not found');
+      }
+    } catch (e) {
+      print('Error updating account balance: $e');
+    }
+  }
+
+
+  Future<void> addMoneyToVendorAccountCashOnDelivery(BuildContext context, String vendorId, double amount, String receiver) async {
+    final CollectionReference vendorsCollection = FirebaseFirestore.instance.collection('Vendors');
+
+    try {
+      // Get the document for the specified vendor
+      DocumentSnapshot vendorDoc = await vendorsCollection.doc(vendorId).get();
+
+      if (vendorDoc.exists) {
+        // Get the current balance
+        double currentBalance = (vendorDoc['vendorAccountBalance'] ?? 0.0).toDouble();
+
+        // Calculate the new balance
+        double newBalance = currentBalance + amount;
+
+        // Update the document with the new balance
+        await vendorsCollection.doc(vendorId).update({'vendorAccountBalance': newBalance});
+
+        await  Provider.of<NotificationProvider>(context, listen: false).sendSms(receiver, ' You have a new Order,'
+            'It is Cash on Delivery \n'
+            'Therefore,money will be added to your MealMate Vendor account, but MealMate will take a commission of 10% , which will be '
+            'deducted from total sales  \n'
+            'Your current balance is: \n GHC $newBalance');
+
+        print('Money added to vendor account');
+      } else {
+        debugPrint('Vendor not found');
+      }
+    } catch (e) {
+      print('Error updating account balance: $e');
+    }
+  }
+
+
+
 }
