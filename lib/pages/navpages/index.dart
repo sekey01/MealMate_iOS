@@ -977,7 +977,7 @@ class _IndexState extends State<Index> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '   Grocery 🛒 ',
+                          ' Others  ',
                           style: TextStyle(
                               fontFamily: 'Righteous',
                               color: Colors.blueGrey,

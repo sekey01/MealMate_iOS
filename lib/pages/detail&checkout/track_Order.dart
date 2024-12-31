@@ -2,11 +2,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_url_launcher/easy_url_launcher.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../Courier/courier_model.dart';
 import '../../Local_Storage/Locall_Storage_Provider/StoreCredentials.dart';
 import '../../Local_Storage/Locall_Storage_Provider/storeOrderModel.dart';
@@ -177,7 +177,10 @@ class _TrackOrderState extends State<TrackOrder> {
                     { return const Center(child: Text('Collecting Updates...', style: TextStyle(color: Colors.deepOrangeAccent, fontWeight: FontWeight.bold, fontSize: 20),));
                     }
                     else if (snapshot.hasError){
-                      print('Error: ${snapshot.error}');
+                      if(kDebugMode){
+                        print('Error: ${snapshot.error}');
+                      }
+
                       return Center(child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -209,8 +212,8 @@ class _TrackOrderState extends State<TrackOrder> {
                                   borderSide: BorderSide(color: Colors.black),
                                 ),
                                 hintText: 'FeedBack info',
-                                labelText: 'type here ...',
-                                labelStyle: TextStyle(color: Colors.black),
+                                labelText: 'your feedback helps us to serve you better ...',
+                                labelStyle: TextStyle(color: Colors.grey),
                                 hintStyle: TextStyle(color: Colors.black),
                               ),
                             ),
@@ -256,7 +259,7 @@ class _TrackOrderState extends State<TrackOrder> {
 
                       return Center(
 
-                        child: Column(
+                        child: Order!.isRejected ? Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             ///AMOUNT TO PAY COURIER
@@ -624,7 +627,53 @@ class _TrackOrderState extends State<TrackOrder> {
 
 
 
-                          ],),
+                          ],)  : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 150.h,),
+
+                            ///ORDER REJECTED
+                            ///
+                            ///
+                            ///
+                            const Text('Order Rejected', style: TextStyle(color: Colors.red, fontSize: 24, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
+                            const Text('Call the vendor for more info', style: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
+
+                            ValueListenableBuilder(valueListenable: isLoading, builder: (context, value, child){
+                              return value ? Column(
+                                children: [
+                                  SizedBox(height: 100.h,),
+
+                                  CustomLoGoLoading(),
+                                  Text('Please Wait ...', style: TextStyle(color: Colors.green, fontSize: 16.spMin, fontWeight: FontWeight.bold),),
+                                ],
+                              ) : Column(
+                                children: [
+
+                                  SizedBox(height: 30.h,),
+                                 widget.isCashOnDelivery ? Material(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.green,
+                                    elevation: 3,
+                                    child: TextButton(onPressed: () async{
+                                      isLoading.value = true;
+                                      await Provider.of<PaymentProvider>(context, listen: false).requestRefund(context, widget.vendorId, widget.deliveryFee, Order.phoneNumber, widget.adminContact.toString());
+                                      isLoading.value = false;
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    }, child: const Text('Request Refund', style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontFamily: 'Righteous'),)),
+                                  ) : const Text('Thank you', style: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
+
+                                ],
+                              );
+                            }),
+
+
+
+
+                          ],
+                        ),
                       );}
                   }),
             ),
