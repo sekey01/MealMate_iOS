@@ -11,6 +11,8 @@ class OrderSent extends StatefulWidget {
   final adminContact;
   final deliveryFee;
   final isCashOnDelivery;
+  final latitude;
+  final longitude;
   const OrderSent({super.key,
     required this.vendorId,
     required this.time,
@@ -19,6 +21,8 @@ class OrderSent extends StatefulWidget {
     required this.adminContact,
     required this.deliveryFee,
     required this.isCashOnDelivery,
+    required this.latitude,
+    required this.longitude,
   } );
 
   @override
@@ -67,6 +71,8 @@ class _OrderSentState extends State<OrderSent> {
                   child: TextButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context)=> TrackOrder(
+                          latitude: widget.latitude,
+                          longitude: widget.longitude,
                           isCashOnDelivery:widget.isCashOnDelivery,
                           vendorId: widget.vendorId,
                           time: widget.time,

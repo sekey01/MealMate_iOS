@@ -1411,6 +1411,7 @@ class _DetailedCardState extends State<DetailedCard> {
                                                   isCashOnDelivery: false,
                                                   isCourierDelivered: false,
                                                   isRejected: false,
+                                                  isRejectedRefunded: false,
 
                                                 ), widget.hasCourier,widget.vendorid, overAllPrice.toDouble(),widget.adminContact.toString()   ).then((_){
                                                   ///END SMS TO ALERT VENDOR FUNCTION OF NEW ORDER
@@ -1425,13 +1426,19 @@ class _DetailedCardState extends State<DetailedCard> {
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) => OrderSent(
+                                                          latitude: Provider.of<LocationProvider>(context, listen: false).Lat,
+                                                          longitude: Provider.of<LocationProvider>(context, listen: false).Long,
                                                           isCashOnDelivery: widget.hasCourier,
                                                           deliveryFee: deliveryFee,
                                                           vendorId: widget.vendorid,
                                                           time: time,
                                                           restaurant: widget.restaurant,
                                                           adminEmail: widget.adminEmail,
-                                                          adminContact: widget.adminContact),
+                                                          adminContact: widget.adminContact
+
+
+
+                                                      ),
                                                     ),
                                                   );
                                                 });
@@ -1522,6 +1529,7 @@ class _DetailedCardState extends State<DetailedCard> {
                                               isCashOnDelivery: false,
                                               isCourierDelivered: false,
                                               isRejected: false,
+                                              isRejectedRefunded: false,
 
                                             ), widget.hasCourier,widget.vendorid, overAllPrice.toDouble(),widget.adminContact.toString()   ).then((_){
                                               ///SEND SMS TO ALERT VENDOR FUNCTION
@@ -1536,6 +1544,8 @@ class _DetailedCardState extends State<DetailedCard> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) => OrderSent(
+                                                      latitude: Provider.of<LocationProvider>(context, listen: false).Lat,
+                                                      longitude: Provider.of<LocationProvider>(context, listen: false).Long,
                                                       isCashOnDelivery: widget.hasCourier,
                                                       deliveryFee: overAllPrice,
                                                       vendorId: widget.vendorid,

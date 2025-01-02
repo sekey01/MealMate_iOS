@@ -28,6 +28,8 @@ class TrackOrder extends StatefulWidget {
   final adminContact;
   final double deliveryFee;
   final bool isCashOnDelivery;
+  final latitude;
+  final longitude;
   const TrackOrder({super.key,
     required this.isCashOnDelivery,
     required this.vendorId,
@@ -36,6 +38,8 @@ class TrackOrder extends StatefulWidget {
     required this.adminEmail,
     required this.adminContact,
     required this.deliveryFee,
+    required this.latitude,
+    required this.longitude,
   } );
 
   @override
@@ -90,7 +94,11 @@ class _TrackOrderState extends State<TrackOrder> {
         .collection('OrdersCollection')
         .where('vendorId', isEqualTo: id)
         .where('phoneNumber', isEqualTo: phoneNumber)
-        .where('delivered', isEqualTo: false )
+        .where('delivered', isEqualTo: false ,)
+        .where('isRejectedRefunded', isEqualTo: false)
+        .where('Latitude', isEqualTo: widget.latitude)
+        .where('Longitude', isEqualTo: widget.longitude)
+
     ///token id is the Id given to every user when he or she signs up or logs in
     ///
     //.Where('tokenid',isEqualTo: tokenid)
@@ -122,7 +130,8 @@ class _TrackOrderState extends State<TrackOrder> {
       QuerySnapshot querySnapshot = await collectionRef
           .where('vendorId', isEqualTo: id)
           .where('phoneNumber', isEqualTo: phoneNumber)
-          .where('delivered', isEqualTo:false )
+          .where('delivered', isEqualTo:false)
+          //.where('isRejected', isEqualTo: false)
           .get();
 
       // Check if any documents were found
@@ -255,11 +264,58 @@ class _TrackOrderState extends State<TrackOrder> {
                         child: Text('Can not Track Order, call the restaurant ...',style: TextStyle(color: Colors.black),textAlign: TextAlign.center,),
                       );
                     } else {
-                      final Order = snapshot.data;
+                      final Order = snapshot.data!;
 
                       return Center(
 
-                        child: Order!.isRejected ? Column(
+                        child: Order.isRejected && !Order.isRejectedRefunded ?Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 150.h,),
+
+                            ///ORDER REJECTED
+                            ///
+                            ///
+                            ///
+                            const Text('Order Rejected', style: TextStyle(color: Colors.red, fontSize: 24, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
+                            const Text('Call the vendor for more info', style: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
+
+                            ValueListenableBuilder(valueListenable: isLoading, builder: (context, value, child){
+                              return value ? Column(
+                                children: [
+                                  SizedBox(height: 100.h,),
+
+                                  CustomLoGoLoading(),
+                                  Text('Please Wait ...', style: TextStyle(color: Colors.green, fontSize: 16.spMin, fontWeight: FontWeight.bold),),
+                                ],
+                              ) : Column(
+                                children: [
+
+                                  SizedBox(height: 30.h,),
+                                  widget.isCashOnDelivery ? Material(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.green,
+                                    elevation: 3,
+                                    child: TextButton(onPressed: () async{
+                                      isLoading.value = true;
+                                      await Provider.of<PaymentProvider>(context, listen: false).requestRefund(context, widget.vendorId, widget.deliveryFee, Order.phoneNumber, widget.adminContact.toString(), widget.latitude,widget.longitude);
+                                      isLoading.value = false;
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    }, child: const Text('Request Refund', style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontFamily: 'Righteous'),)),
+                                  ) : const Text('Thank you', style: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
+
+                                ],
+                              );
+                            }),
+
+
+
+
+                          ],
+                        )  :
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             ///AMOUNT TO PAY COURIER
@@ -627,53 +683,7 @@ class _TrackOrderState extends State<TrackOrder> {
 
 
 
-                          ],)  : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(height: 150.h,),
-
-                            ///ORDER REJECTED
-                            ///
-                            ///
-                            ///
-                            const Text('Order Rejected', style: TextStyle(color: Colors.red, fontSize: 24, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
-                            const Text('Call the vendor for more info', style: TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
-
-                            ValueListenableBuilder(valueListenable: isLoading, builder: (context, value, child){
-                              return value ? Column(
-                                children: [
-                                  SizedBox(height: 100.h,),
-
-                                  CustomLoGoLoading(),
-                                  Text('Please Wait ...', style: TextStyle(color: Colors.green, fontSize: 16.spMin, fontWeight: FontWeight.bold),),
-                                ],
-                              ) : Column(
-                                children: [
-
-                                  SizedBox(height: 30.h,),
-                                 widget.isCashOnDelivery ? Material(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.green,
-                                    elevation: 3,
-                                    child: TextButton(onPressed: () async{
-                                      isLoading.value = true;
-                                      await Provider.of<PaymentProvider>(context, listen: false).requestRefund(context, widget.vendorId, widget.deliveryFee, Order.phoneNumber, widget.adminContact.toString());
-                                      isLoading.value = false;
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
-                                      Navigator.pop(context);
-                                    }, child: const Text('Request Refund', style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontFamily: 'Righteous'),)),
-                                  ) : const Text('Thank you', style: TextStyle(color: Colors.green, fontSize: 16, fontWeight: FontWeight.bold,fontFamily: 'Righteous'),),
-
-                                ],
-                              );
-                            }),
-
-
-
-
-                          ],
-                        ),
+                          ],) ,
                       );}
                   }),
             ),

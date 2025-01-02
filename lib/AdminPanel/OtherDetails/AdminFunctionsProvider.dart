@@ -277,7 +277,6 @@ class AdminFunctions extends ChangeNotifier {
           .where('vendorId', isEqualTo: id)
           .where('phoneNumber', isEqualTo: phoneNumber)
           .where('delivered',isEqualTo: false)
-
           .get();
 
       // Check if any documents were found

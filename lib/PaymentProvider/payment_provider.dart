@@ -137,9 +137,11 @@ class PaymentProvider extends ChangeNotifier {
 
   ///REQUEST REFUND FUNCTION
 
-  Future<void> requestRefund(BuildContext context, String vendorId, double amount, String userNumber, String vendorNumber) async {
+  Future<void> requestRefund(BuildContext context, String vendorId, double amount, String userNumber, String vendorNumber, Latitude,Longitude) async {
     final CollectionReference vendorsCollection = FirebaseFirestore.instance
         .collection('Vendors');
+    final CollectionReference ordersCollection = FirebaseFirestore.instance
+        .collection('OrdersCollection');
 
     try {
       // Get the document for the specified vendor
@@ -157,6 +159,16 @@ class PaymentProvider extends ChangeNotifier {
         await vendorsCollection.doc(vendorId).update(
             {'vendorAccountBalance': newBalance});
 
+        await ordersCollection
+            .where('vendorId', isEqualTo: vendorId)
+            .where('Latitude', isEqualTo: Latitude)
+            .where('Longitude', isEqualTo: Longitude)
+            .get()
+            .then((querySnapshot) {
+          for (var doc in querySnapshot.docs) {
+            doc.reference.update({'isRejectedRefunded': true});
+          }
+        });
         await Provider.of<NotificationProvider>(context, listen: false).sendSms(
             userNumber, 'You have requested a refund,'
             'Transaction Pending \n'

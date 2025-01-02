@@ -20,6 +20,7 @@ class OrderInfo {
   final bool isCashOnDelivery;
   final bool isCourierDelivered;
   final bool isRejected;
+  final bool isRejectedRefunded;
 
 
 
@@ -45,6 +46,7 @@ class OrderInfo {
     required this.isCashOnDelivery,
     required this.isCourierDelivered,
     required this.isRejected,
+    required this.isRejectedRefunded,
   });
 
   Map<String, dynamic> toMap() {
@@ -70,6 +72,7 @@ class OrderInfo {
       'isCashOnDelivery': isCashOnDelivery,
       'isCourierDelivered': isCourierDelivered,
       'isRejected': isRejected,
+      'isRejectedRefunded': isRejectedRefunded,
 
 
     };
@@ -98,6 +101,8 @@ class OrderInfo {
       isCashOnDelivery: data['isCashOnDelivery']?? false,
       isCourierDelivered: data['isCourierDelivered']??false,
       isRejected: data['isRejected']?? false,
+      isRejectedRefunded: data['isRejectedRefunded']?? false,
+
     );
   }
 }
